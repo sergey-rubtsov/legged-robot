@@ -1,0 +1,1407 @@
+<?xml version="1.0"?>
+<!-- created with Phobos 1.0.1 "Capricious Choutengan" -->
+  <robot name="robot">
+
+    <link name="link_Head">
+      <inertial>
+        <origin xyz="0 170.00003 -3e-05" rpy="0 0 0"/>
+        <mass value="3.5"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_Head">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Head.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_Head">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_Head.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_Hips">
+      <inertial>
+        <origin xyz="0 99.71661 0.52174" rpy="0 0 0"/>
+        <mass value="5.5"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_Hips">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Hips.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_Hips">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_Hips.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftArm">
+      <inertial>
+        <origin xyz="28.0 143.00017 -4.00003" rpy="0 0 0"/>
+        <mass value="1.3"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftArm">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftArm.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftArm">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftArm.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftFoot">
+      <inertial>
+        <origin xyz="9.0 0.99695 -0.01042" rpy="0 0 0"/>
+        <mass value="0.7"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftFoot">
+        <origin xyz="0 -3e-05 -0.00012" rpy="0.0014 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftFoot.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftFoot">
+        <origin xyz="0 -3e-05 -0.00012" rpy="0.0014 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftFoot.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftForeArm">
+      <inertial>
+        <origin xyz="56.00001 144.00035 -5.00003" rpy="0 0 0"/>
+        <mass value="0.8"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftForeArm">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftForeArm.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftForeArm">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftForeArm.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftHand">
+      <inertial>
+        <origin xyz="77.00001 145.00041 -5.00059" rpy="0 0 0"/>
+        <mass value="0.6"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftHand">
+        <origin xyz="0 2e-05 0.00065" rpy="-0.00045 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftHand.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftHand">
+        <origin xyz="0 2e-05 0.00065" rpy="-0.00045 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftHand.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftHandIndex1">
+      <inertial>
+        <origin xyz="81.99999 143.99997 -3.00002" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftHandIndex1">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftHandIndex1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftHandIndex1">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftHandIndex.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftHandIndex2">
+      <inertial>
+        <origin xyz="84.99999 142.99998 -2.50002" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftHandIndex2">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftHandIndex2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftHandIndex2">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftHandIndex2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftHandIndex3">
+      <inertial>
+        <origin xyz="88.00004 143.0 -2.50003" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftHandIndex3">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftHandIndex3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftHandIndex3">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftHandIndex3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftHandMiddle1">
+      <inertial>
+        <origin xyz="82.0 143.99995 -5.00002" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftHandMiddle1">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftHandMiddle1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftHandMiddle1">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftHandMiddle1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftHandMiddle2">
+      <inertial>
+        <origin xyz="85.99999 144.0 -5.00003" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftHandMiddle2">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftHandMiddle2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftHandMiddle2">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftHandMiddle2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftHandMiddle3">
+      <inertial>
+        <origin xyz="89.00001 144.0 -4.90003" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftHandMiddle3">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftHandMiddle3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftHandMiddle3">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftHandMiddle3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftHandPinky1">
+      <inertial>
+        <origin xyz="81.50001 143.49995 -8.75002" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftHandPinky1">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftHandPinky1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftHandPinky1">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftHandPinky1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftHandPinky2">
+      <inertial>
+        <origin xyz="83.99997 143.49995 -8.90002" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftHandPinky2">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftHandPinky2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftHandPinky2">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftHandPinky2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftHandPinky3">
+      <inertial>
+        <origin xyz="86.50002 143.00006 -8.50003" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftHandPinky3">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftHandPinky3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftHandPinky3">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftHandPinky3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftHandRing1">
+      <inertial>
+        <origin xyz="81.00001 143.99997 -7.00003" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftHandRing1">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftHandRing1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftHandRing1">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftHandRing1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftHandRing2">
+      <inertial>
+        <origin xyz="85.00003 144.00006 -6.70002" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftHandRing2">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftHandRing2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftHandRing2">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftHandRing2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftHandRing3">
+      <inertial>
+        <origin xyz="88.00002 143.99997 -6.80003" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftHandRing3">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftHandRing3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftHandRing3">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftHandRing3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftHandThumb1">
+      <inertial>
+        <origin xyz="77.00068 143.99907 -0.00021" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftHandThumb1">
+        <origin xyz="0.00029 0.00451 -0.00334" rpy="0.00018 0.00016 -0.00015"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftHandThumb1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftHandThumb1">
+        <origin xyz="0.00029 0.00451 -0.00334" rpy="0.00018 0.00016 -0.00015"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftHandThumb1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftHandThumb2">
+      <inertial>
+        <origin xyz="77.99996 140.0011 0.00106" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftHandThumb2">
+        <origin xyz="-1e-05 0 0" rpy="0 0 -1e-05"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftHandThumb2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftHandThumb2">
+        <origin xyz="-1e-05 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftHandThumb2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftHandThumb3">
+      <inertial>
+        <origin xyz="81.00008 138.00008 1.99994" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftHandThumb3">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftHandThumb3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftHandThumb3">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftHandThumb3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftLeg">
+      <inertial>
+        <origin xyz="8.0 34.99799 0.05011" rpy="0 0 0"/>
+        <mass value="2.0"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftLeg">
+        <origin xyz="0 -2e-05 0.00148" rpy="-0.0028 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftLeg.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftLeg">
+        <origin xyz="0 -2e-05 0.00148" rpy="-0.0028 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftLeg.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftShoulder">
+      <inertial>
+        <origin xyz="14.0 145.00009 -2e-05" rpy="0 0 0"/>
+        <mass value="0.1"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftShoulder">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftShoulder.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="Beta_Joints_MAT"/>
+      </visual>
+      <collision name="collision_LeftShoulder">
+        <origin xyz="0.15163 1.43778 -0.05027" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.04861"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftToeBase">
+      <inertial>
+        <origin xyz="9.0 1.00006 12.0" rpy="0 0 0"/>
+        <mass value="0.2"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftToeBase">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftToeBase.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftToeBase">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftToeBase.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_LeftUpLeg">
+      <inertial>
+        <origin xyz="10.00003 80.00072 -0.02422" rpy="0 0 0"/>
+        <mass value="7.0"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_LeftUpLeg">
+        <origin xyz="0 0 -0.00137" rpy="0.0014 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/LeftUpLeg.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_LeftUpLeg">
+        <origin xyz="0 0 -0.00137" rpy="0.0014 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_LeftUpLeg.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_Neck">
+      <inertial>
+        <origin xyz="0 153.0 -2e-05" rpy="0 0 0"/>
+        <mass value="0.8"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_Neck">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Neck.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="Beta_Joints_MAT"/>
+      </visual>
+      <collision name="collision_Neck">
+        <origin xyz="0 1.54142 -0.01356" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.05128"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightArm">
+      <inertial>
+        <origin xyz="-28.0 142.99991 -5.00002" rpy="0 0 0"/>
+        <mass value="1.3"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightArm">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightArm.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightArm">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightArm.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightFoot">
+      <inertial>
+        <origin xyz="-8.99999 0.99696 -0.01001" rpy="0 0 0"/>
+        <mass value="0.7"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightFoot">
+        <origin xyz="0 -3e-05 -0.00011" rpy="0.00134 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightFoot.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+    </link>
+
+    <link name="link_RightForeArm">
+      <inertial>
+        <origin xyz="-55.99999 143.99985 -4.99998" rpy="0 0 0"/>
+        <mass value="0.8"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightForeArm">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightForeArm.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightForeArm">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightForeArm.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightHand">
+      <inertial>
+        <origin xyz="-77.00002 144.99977 -5.00062" rpy="0 0 0"/>
+        <mass value="0.6"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightHand">
+        <origin xyz="0 2e-05 0.00067" rpy="-0.00047 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightHand.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightHand">
+        <origin xyz="0 2e-05 0.00067" rpy="-0.00047 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightHand.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightHandIndex1">
+      <inertial>
+        <origin xyz="-81.99999 143.49998 -2.50002" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightHandIndex1">
+        <origin xyz="0.00218 0.00228 -0.00555" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightHandIndex1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="Beta_Joints_MAT"/>
+      </visual>
+      <collision name="collision_RightHandIndex1">
+        <origin xyz="0.00218 0.00228 -0.00555" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightHandIndex1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightHandIndex2">
+      <inertial>
+        <origin xyz="-85.49999 143.00005 -3.00002" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightHandIndex2">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightHandIndex2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightHandIndex2">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightHandIndex2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightHandIndex3">
+      <inertial>
+        <origin xyz="-87.99998 143.50005 -2.70002" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightHandIndex3">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightHandIndex3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightHandIndex3">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightHandIndex3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightHandMiddle1">
+      <inertial>
+        <origin xyz="-82.50005 143.49998 -5.00003" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightHandMiddle1">
+        <origin xyz="-0.00033 -0.00058 0.00514" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightHandMiddle1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightHandMiddle1">
+        <origin xyz="-0.00033 -0.00058 0.00514" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightHandMiddle1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightHandMiddle2">
+      <inertial>
+        <origin xyz="-86.00002 143.5 -5.00002" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightHandMiddle2">
+        <origin xyz="0 0.0011 0.0002" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightHandMiddle2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightHandMiddle2">
+        <origin xyz="0 0.0011 0.0002" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightHandMiddle2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightHandMiddle3">
+      <inertial>
+        <origin xyz="-89.0 143.49998 -4.99997" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightHandMiddle3">
+        <origin xyz="0.00163 0.00426 -0.0055" rpy="0 4e-05 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightHandMiddle3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="Beta_Joints_MAT"/>
+      </visual>
+      <collision name="collision_RightHandMiddle3">
+        <origin xyz="0.00163 0.00426 -0.0055" rpy="0 4e-05 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightHandMiddle3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightHandPinky1">
+      <inertial>
+        <origin xyz="-81.50001 143.49998 -8.99997" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightHandPinky1">
+        <origin xyz="0 0 -2e-05" rpy="0 3e-05 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightHandPinky1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightHandPinky1">
+        <origin xyz="0 0 -2e-05" rpy="0 3e-05 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightHandPinky1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightHandPinky2">
+      <inertial>
+        <origin xyz="-84.00005 143.49997 -8.70018" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightHandPinky2">
+        <origin xyz="0 0.0029 -0.00488" rpy="0 -3e-05 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightHandPinky2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="Beta_Joints_MAT"/>
+      </visual>
+      <collision name="collision_RightHandPinky2">
+        <origin xyz="0 0.0029 -0.00488" rpy="0 -3e-05 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightHandPinky2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightHandPinky3">
+      <inertial>
+        <origin xyz="-85.99999 143.00005 -8.79994" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightHandPinky3">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightHandPinky3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightHandPinky3">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightHandPinky3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightHandRing1">
+      <inertial>
+        <origin xyz="-82.00002 144.00002 -7.00002" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightHandRing1">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightHandRing1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightHandRing1">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightHandRing1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightHandRing2">
+      <inertial>
+        <origin xyz="-84.99997 143.50002 -7.00002" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightHandRing2">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightHandRing2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightHandRing2">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightHandRing2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightHandRing3">
+      <inertial>
+        <origin xyz="-87.99998 143.79999 -6.80003" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightHandRing3">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightHandRing3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightHandRing3">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightHandRing3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightHandThumb1">
+      <inertial>
+        <origin xyz="-75.00003 140.9996 -1.00045" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightHandThumb1">
+        <origin xyz="0.00022 0.00011 -0.00014" rpy="0.00019 -0.00017 0.00016"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightHandThumb1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightHandThumb1">
+        <origin xyz="0.00022 0.00011 -0.00014" rpy="0.00019 -0.00017 0.00016"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightHandThumb1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightHandThumb2">
+      <inertial>
+        <origin xyz="-77.99995 140.00121 0.00107" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightHandThumb2">
+        <origin xyz="-2e-05 0 1e-05" rpy="0 -1e-05 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightHandThumb2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightHandThumb2">
+        <origin xyz="-2e-05 0 1e-05" rpy="0 -1e-05 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightHandThumb2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightHandThumb3">
+      <inertial>
+        <origin xyz="-80.99992 137.99997 1.50006" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightHandThumb3">
+        <origin xyz="3e-05 2e-05 -2e-05" rpy="0 2e-05 2e-05"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightHandThumb3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightHandThumb3">
+        <origin xyz="3e-05 2e-05 -2e-05" rpy="0 2e-05 2e-05"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightHandThumb3.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightLeg">
+      <inertial>
+        <origin xyz="-7.99999 34.99797 0.04811" rpy="0 0 0"/>
+        <mass value="2.0"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightLeg">
+        <origin xyz="0 -2e-05 0.00142" rpy="-0.00269 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightLeg.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightLeg">
+        <origin xyz="0 -2e-05 0.00142" rpy="-0.00269 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightLeg.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightShoulder">
+      <inertial>
+        <origin xyz="-14.0 145.00005 -2e-05" rpy="0 0 0"/>
+        <mass value="0.1"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightShoulder">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightShoulder.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="Beta_Joints_MAT"/>
+      </visual>
+      <collision name="collision_RightShoulder">
+        <origin xyz="-0.15163 1.43778 -0.05027" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.04861"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightToeBase">
+      <inertial>
+        <origin xyz="-8.99999 0.99995 12.0" rpy="0 0 0"/>
+        <mass value="0.2"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightToeBase">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightToeBase.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightToeBase">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightToeBase.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_RightUpLeg">
+      <inertial>
+        <origin xyz="-9.99997 80.00065 -0.02324" rpy="0 0 0"/>
+        <mass value="7.0"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_RightUpLeg">
+        <origin xyz="0 0 -0.00131" rpy="0.00135 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/RightUpLeg.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_RightUpLeg">
+        <origin xyz="-0.08 0.96828 0.00828" rpy="-1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_RightUpLeg.stl" scale="0.08 0.08 0.08"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_Spine">
+      <inertial>
+        <origin xyz="2e-05 100.00002 -2e-05" rpy="0 0 0"/>
+        <mass value="5.5"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_Spine">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Spine.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="Beta_Joints_MAT"/>
+      </visual>
+      <collision name="collision_Spine">
+        <origin xyz="0 1.03731 0.00277" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.12746"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_Spine1">
+      <inertial>
+        <origin xyz="0 128.0 -2e-05" rpy="0 0 0"/>
+        <mass value="8.0"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_Spine1">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Spine1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="Beta_Joints_MAT"/>
+      </visual>
+      <collision name="collision_Spine1">
+        <origin xyz="0 1.27009 0.01686" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.10869"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_Spine2">
+      <inertial>
+        <origin xyz="0 138.00006 -2e-05" rpy="0 0 0"/>
+        <mass value="8.0"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="visual_Spine2">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Spine2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="asdf1:Beta_HighLimbsGeoSG2"/>
+      </visual>
+      <collision name="collision_Spine2">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/c_Spine2.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="link_Head" type="revolute">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_Neck"/>
+      <child link="link_Head"/>
+      <axis xyz="0 1.0 0"/>
+      <limit lower="-4.0" upper="4.0" effort="500.0" velocity="40.0"/>
+    </joint>
+
+    <joint name="link_LeftArm" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftShoulder"/>
+      <child link="link_LeftArm"/>
+    </joint>
+
+    <joint name="link_LeftFoot" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftLeg"/>
+      <child link="link_LeftFoot"/>
+    </joint>
+
+    <joint name="link_LeftForeArm" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftArm"/>
+      <child link="link_LeftForeArm"/>
+    </joint>
+
+    <joint name="link_LeftHand" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftForeArm"/>
+      <child link="link_LeftHand"/>
+    </joint>
+
+    <joint name="link_LeftHandIndex1" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftHand"/>
+      <child link="link_LeftHandIndex1"/>
+    </joint>
+
+    <joint name="link_LeftHandIndex2" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftHandIndex1"/>
+      <child link="link_LeftHandIndex2"/>
+    </joint>
+
+    <joint name="link_LeftHandIndex3" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftHandIndex2"/>
+      <child link="link_LeftHandIndex3"/>
+    </joint>
+
+    <joint name="link_LeftHandMiddle1" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftHand"/>
+      <child link="link_LeftHandMiddle1"/>
+    </joint>
+
+    <joint name="link_LeftHandMiddle2" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftHandMiddle1"/>
+      <child link="link_LeftHandMiddle2"/>
+    </joint>
+
+    <joint name="link_LeftHandMiddle3" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftHandMiddle2"/>
+      <child link="link_LeftHandMiddle3"/>
+    </joint>
+
+    <joint name="link_LeftHandPinky1" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftHand"/>
+      <child link="link_LeftHandPinky1"/>
+    </joint>
+
+    <joint name="link_LeftHandPinky2" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftHandPinky1"/>
+      <child link="link_LeftHandPinky2"/>
+    </joint>
+
+    <joint name="link_LeftHandPinky3" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftHandPinky2"/>
+      <child link="link_LeftHandPinky3"/>
+    </joint>
+
+    <joint name="link_LeftHandRing1" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftHand"/>
+      <child link="link_LeftHandRing1"/>
+    </joint>
+
+    <joint name="link_LeftHandRing2" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftHandRing1"/>
+      <child link="link_LeftHandRing2"/>
+    </joint>
+
+    <joint name="link_LeftHandRing3" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftHandRing2"/>
+      <child link="link_LeftHandRing3"/>
+    </joint>
+
+    <joint name="link_LeftHandThumb1" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftHand"/>
+      <child link="link_LeftHandThumb1"/>
+    </joint>
+
+    <joint name="link_LeftHandThumb2" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftHandThumb1"/>
+      <child link="link_LeftHandThumb2"/>
+    </joint>
+
+    <joint name="link_LeftHandThumb3" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftHandThumb2"/>
+      <child link="link_LeftHandThumb3"/>
+    </joint>
+
+    <joint name="link_LeftLeg" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftUpLeg"/>
+      <child link="link_LeftLeg"/>
+    </joint>
+
+    <joint name="link_LeftShoulder" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_Spine2"/>
+      <child link="link_LeftShoulder"/>
+    </joint>
+
+    <joint name="link_LeftToeBase" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_LeftFoot"/>
+      <child link="link_LeftToeBase"/>
+    </joint>
+
+    <joint name="link_LeftUpLeg" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_Hips"/>
+      <child link="link_LeftUpLeg"/>
+    </joint>
+
+    <joint name="link_Neck" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_Spine2"/>
+      <child link="link_Neck"/>
+    </joint>
+
+    <joint name="link_RightArm" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightShoulder"/>
+      <child link="link_RightArm"/>
+    </joint>
+
+    <joint name="link_RightFoot" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightLeg"/>
+      <child link="link_RightFoot"/>
+    </joint>
+
+    <joint name="link_RightForeArm" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightArm"/>
+      <child link="link_RightForeArm"/>
+    </joint>
+
+    <joint name="link_RightHand" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightForeArm"/>
+      <child link="link_RightHand"/>
+    </joint>
+
+    <joint name="link_RightHandIndex1" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightHand"/>
+      <child link="link_RightHandIndex1"/>
+    </joint>
+
+    <joint name="link_RightHandIndex2" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightHandIndex1"/>
+      <child link="link_RightHandIndex2"/>
+    </joint>
+
+    <joint name="link_RightHandIndex3" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightHandIndex2"/>
+      <child link="link_RightHandIndex3"/>
+    </joint>
+
+    <joint name="link_RightHandMiddle1" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightHand"/>
+      <child link="link_RightHandMiddle1"/>
+    </joint>
+
+    <joint name="link_RightHandMiddle2" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightHandMiddle1"/>
+      <child link="link_RightHandMiddle2"/>
+    </joint>
+
+    <joint name="link_RightHandMiddle3" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightHandMiddle2"/>
+      <child link="link_RightHandMiddle3"/>
+    </joint>
+
+    <joint name="link_RightHandPinky1" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightHand"/>
+      <child link="link_RightHandPinky1"/>
+    </joint>
+
+    <joint name="link_RightHandPinky2" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightHandPinky1"/>
+      <child link="link_RightHandPinky2"/>
+    </joint>
+
+    <joint name="link_RightHandPinky3" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightHandPinky2"/>
+      <child link="link_RightHandPinky3"/>
+    </joint>
+
+    <joint name="link_RightHandRing1" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightHand"/>
+      <child link="link_RightHandRing1"/>
+    </joint>
+
+    <joint name="link_RightHandRing2" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightHandRing1"/>
+      <child link="link_RightHandRing2"/>
+    </joint>
+
+    <joint name="link_RightHandRing3" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightHandRing2"/>
+      <child link="link_RightHandRing3"/>
+    </joint>
+
+    <joint name="link_RightHandThumb1" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightHand"/>
+      <child link="link_RightHandThumb1"/>
+    </joint>
+
+    <joint name="link_RightHandThumb2" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightHandThumb1"/>
+      <child link="link_RightHandThumb2"/>
+    </joint>
+
+    <joint name="link_RightHandThumb3" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightHandThumb2"/>
+      <child link="link_RightHandThumb3"/>
+    </joint>
+
+    <joint name="link_RightLeg" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightUpLeg"/>
+      <child link="link_RightLeg"/>
+    </joint>
+
+    <joint name="link_RightShoulder" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_Spine2"/>
+      <child link="link_RightShoulder"/>
+    </joint>
+
+    <joint name="link_RightToeBase" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_RightFoot"/>
+      <child link="link_RightToeBase"/>
+    </joint>
+
+    <joint name="link_RightUpLeg" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_Hips"/>
+      <child link="link_RightUpLeg"/>
+    </joint>
+
+    <joint name="link_Spine" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_Hips"/>
+      <child link="link_Spine"/>
+    </joint>
+
+    <joint name="link_Spine1" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_Spine"/>
+      <child link="link_Spine1"/>
+    </joint>
+
+    <joint name="link_Spine2" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="link_Spine1"/>
+      <child link="link_Spine2"/>
+    </joint>
+
+    <material name="Beta_Joints_MAT">
+      <color rgba="0.26667 0.09962 0.08081 1.0"/>
+    </material>
+
+    <material name="asdf1:Beta_HighLimbsGeoSG2">
+      <color rgba="0.6696 0.24185 0.21092 1.0"/>
+    </material>
+
+  </robot>
