@@ -1132,13 +1132,13 @@
       <limit lower="-4.0" upper="4.0" effort="500.0" velocity="40.0"/>
     </joint>
 
-    <joint name="link_LeftArm" type="spherical">
+    <joint name="link_LeftArm" type="fixed">
       <origin xyz="0.1519 0.0513 1.4367" rpy="0 0 0"/>
       <parent link="link_LeftShoulder"/>
       <child link="link_LeftArm"/>
     </joint>
 
-    <joint name="link_LeftFoot" type="spherical">
+    <joint name="link_LeftFoot" type="fixed">
       <origin xyz="0.083248 0.021837 0.083976" rpy="0 0 0"/>
       <parent link="link_LeftLeg"/>
       <child link="link_LeftFoot"/>
@@ -1152,7 +1152,7 @@
       <child link="link_LeftForeArm"/>
     </joint>
 
-    <joint name="link_LeftHand" type="spherical">
+    <joint name="link_LeftHand" type="fixed">
       <origin xyz="0.713253 0.050178 1.43734" rpy="0 0 0"/>
       <parent link="link_LeftForeArm"/>
       <child link="link_LeftHand"/>
@@ -1248,7 +1248,7 @@
       <child link="link_LeftHandThumb3"/>
     </joint>
 
-    <joint name="link_LeftLeg" type="revolute">
+    <joint name="link_LeftLeg" type="fixed">
       <limit effort="1000.0" lower="-3.14" upper="0." velocity="0.5"/>
 	  <origin rpy = "0 0 0" xyz = "0.08207 -0.007886 0.529471" />
 	  <axis xyz = "0.000000 0.000000 1.000000" />
@@ -1270,25 +1270,25 @@
       <axis xyz = "0.000000 0.000000 1.000000" />
     </joint>
 
-    <joint name="link_LeftUpLeg" type="spherical">
+    <joint name="link_LeftUpLeg" type="fixed">
       <origin xyz="0.08208 -0.004943 0.973233" rpy="0 0 0"/>
       <parent link="link_Hips"/>
       <child link="link_LeftUpLeg"/>
     </joint>
 
-    <joint name="link_Neck" type="spherical">
+    <joint name="link_Neck" type="fixed">
       <origin xyz="0 0 1.5" rpy="0 0 0"/>
       <parent link="link_Spine2"/>
       <child link="link_Neck"/>
     </joint>
 
-    <joint name="link_RightArm" type="spherical">
+    <joint name="link_RightArm" type="fixed">
       <origin xyz="-0.1519 0.0513 1.4367" rpy="0 0 0"/>
       <parent link="link_RightShoulder"/>
       <child link="link_RightArm"/>
     </joint>
 
-    <joint name="link_RightFoot" type="spherical">
+    <joint name="link_RightFoot" type="fixed">
       <origin xyz="-0.083248 0.021837 0.083976" rpy="0 0 0"/>
       <parent link="link_RightLeg"/>
       <child link="link_RightFoot"/>
@@ -1303,7 +1303,7 @@
       <child link="link_RightForeArm"/>
     </joint>
 
-    <joint name="link_RightHand" type="spherical">
+    <joint name="link_RightHand" type="fixed">
       <origin xyz="-0.713253 0.050178 1.43734" rpy="0 0 0"/>
       <parent link="link_RightForeArm"/>
       <child link="link_RightHand"/>
@@ -1399,7 +1399,7 @@
       <child link="link_RightHandThumb3"/>
     </joint>
 
-    <joint name="link_RightLeg" type="revolute">
+    <joint name="link_RightLeg" type="fixed">
       <limit effort="1000.0" lower="-3.14" upper="0." velocity="0.5"/>
 	  <origin rpy = "0 0 0" xyz = "-0.08207 -0.007886 0.529471" />
 	  <axis xyz = "0.000000 0.000000 1.000000" />
@@ -1413,7 +1413,7 @@
       <child link="link_RightShoulder"/>
     </joint>
 
-    <joint name="link_RightToeBase" type="revolute">
+    <joint name="link_RightToeBase" type="fixed">
       <origin xyz="-0.082356 -0.085772 0" rpy="0 0 0"/>
       <parent link="link_RightFoot"/>
       <child link="link_RightToeBase"/>
@@ -1421,7 +1421,7 @@
       <axis xyz = "0.000000 0.000000 1.000000" />
     </joint>
 
-    <joint name="link_RightUpLeg" type="spherical">
+    <joint name="link_RightUpLeg" type="fixed">
       <origin xyz="-0.08208 -0.004943 0.973233" rpy="0 0 0"/>
       <parent link="link_Hips"/>
       <child link="link_RightUpLeg"/>
@@ -1433,7 +1433,7 @@
       <child link="link_Spine"/>
     </joint>
 
-    <joint name="link_Spine1" type="spherical">
+    <joint name="link_Spine1" type="fixed">
       <origin xyz="0 -0.012 1.2418" rpy="0 0 0"/>
       <parent link="link_Spine"/>
       <child link="link_Spine1"/>
