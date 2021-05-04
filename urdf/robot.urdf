@@ -1125,292 +1125,304 @@
     </link>
 
     <joint name="link_Head" type="revolute">
-      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <origin xyz="0 0 1.6" rpy="1.5708 0 0"/>
       <parent link="link_Neck"/>
       <child link="link_Head"/>
       <axis xyz="0 1.0 0"/>
       <limit lower="-4.0" upper="4.0" effort="500.0" velocity="40.0"/>
     </joint>
 
-    <joint name="link_LeftArm" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+    <joint name="link_LeftArm" type="spherical">
+      <origin xyz="0.1519 0.0513 1.4367" rpy="0 0 0"/>
       <parent link="link_LeftShoulder"/>
       <child link="link_LeftArm"/>
     </joint>
 
-    <joint name="link_LeftFoot" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+    <joint name="link_LeftFoot" type="spherical">
+      <origin xyz="0.083248 0.021837 0.083976" rpy="0 0 0"/>
       <parent link="link_LeftLeg"/>
       <child link="link_LeftFoot"/>
     </joint>
 
-    <joint name="link_LeftForeArm" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+    <joint name="link_LeftForeArm" type="revolute">
+      <limit effort="1000.0" lower="0" upper="3.14" velocity="0.5"/>
+	  <origin rpy="0 0 0" xyz="0.4308 0.0513 1.4377"/>
+	  <axis xyz="0.000000 0.000000 1.000000"/>
       <parent link="link_LeftArm"/>
       <child link="link_LeftForeArm"/>
     </joint>
 
-    <joint name="link_LeftHand" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+    <joint name="link_LeftHand" type="spherical">
+      <origin xyz="0.713253 0.050178 1.43734" rpy="0 0 0"/>
       <parent link="link_LeftForeArm"/>
       <child link="link_LeftHand"/>
     </joint>
 
     <joint name="link_LeftHandIndex1" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.804532 0.026772 1.43359" rpy="0 0 0"/>
       <parent link="link_LeftHand"/>
       <child link="link_LeftHandIndex1"/>
     </joint>
 
     <joint name="link_LeftHandIndex2" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.841082 0.027373 1.43234" rpy="0 0 0"/>
       <parent link="link_LeftHandIndex1"/>
       <child link="link_LeftHandIndex2"/>
     </joint>
 
     <joint name="link_LeftHandIndex3" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.869889 0.027973 1.43275" rpy="0 0 0"/>
       <parent link="link_LeftHandIndex2"/>
       <child link="link_LeftHandIndex3"/>
     </joint>
 
     <joint name="link_LeftHandMiddle1" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.808261 0.050178 1.43796" rpy="0 0 0"/>
       <parent link="link_LeftHand"/>
       <child link="link_LeftHandMiddle1"/>
     </joint>
 
     <joint name="link_LeftHandMiddle2" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.845307 0.050178 1.43738" rpy="0 0 0"/>
       <parent link="link_LeftHandMiddle1"/>
       <child link="link_LeftHandMiddle2"/>
     </joint>
 
     <joint name="link_LeftHandMiddle3" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.874827 0.050178 1.43709" rpy="0 0 0"/>
       <parent link="link_LeftHandMiddle2"/>
       <child link="link_LeftHandMiddle3"/>
     </joint>
 
     <joint name="link_LeftHandPinky1" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.794072 0.087987 1.43272" rpy="0 0 0"/>
       <parent link="link_LeftHand"/>
       <child link="link_LeftHandPinky1"/>
     </joint>
 
     <joint name="link_LeftHandPinky2" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.830049 0.087987 1.43272" rpy="0 0 0"/>
       <parent link="link_LeftHandPinky1"/>
       <child link="link_LeftHandPinky2"/>
     </joint>
 
     <joint name="link_LeftHandPinky3" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.851314 0.087988 1.43312" rpy="0 0 0"/>
       <parent link="link_LeftHandPinky2"/>
       <child link="link_LeftHandPinky3"/>
     </joint>
 
     <joint name="link_LeftHandRing1" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.804523 0.06889 1.43754" rpy="0 0 0"/>
       <parent link="link_LeftHand"/>
       <child link="link_LeftHandRing1"/>
     </joint>
 
     <joint name="link_LeftHandRing2" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.835685 0.068886 1.43714" rpy="0 0 0"/>
       <parent link="link_LeftHandRing1"/>
       <child link="link_LeftHandRing2"/>
     </joint>
 
     <joint name="link_LeftHandRing3" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.865221 0.068886 1.43734" rpy="0 0 0"/>
       <parent link="link_LeftHandRing2"/>
       <child link="link_LeftHandRing3"/>
     </joint>
 
     <joint name="link_LeftHandThumb1" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.737745 0.02339 1.42165" rpy="0 0 0"/>
       <parent link="link_LeftHand"/>
       <child link="link_LeftHandThumb1"/>
     </joint>
 
     <joint name="link_LeftHandThumb2" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.770044 0.003941 1.40342" rpy="0 0 0"/>
       <parent link="link_LeftHandThumb1"/>
       <child link="link_LeftHandThumb2"/>
     </joint>
 
     <joint name="link_LeftHandThumb3" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.796849 -0.010757 1.38807" rpy="0 0 0"/>
       <parent link="link_LeftHandThumb2"/>
       <child link="link_LeftHandThumb3"/>
     </joint>
 
-    <joint name="link_LeftLeg" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+    <joint name="link_LeftLeg" type="revolute">
+      <limit effort="1000.0" lower="-3.14" upper="0." velocity="0.5"/>
+	  <origin rpy = "0 0 0" xyz = "0.08207 -0.007886 0.529471" />
+	  <axis xyz = "0.000000 0.000000 1.000000" />
       <parent link="link_LeftUpLeg"/>
       <child link="link_LeftLeg"/>
     </joint>
 
     <joint name="link_LeftShoulder" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.04606 0.027266 1.44328" rpy="0 0 0"/>
       <parent link="link_Spine2"/>
       <child link="link_LeftShoulder"/>
     </joint>
 
-    <joint name="link_LeftToeBase" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+    <joint name="link_LeftToeBase" type="revolute">
+      <origin xyz="0.082356 -0.085772 0" rpy="0 0 0"/>
       <parent link="link_LeftFoot"/>
       <child link="link_LeftToeBase"/>
+      <limit effort="1000.0" lower="-.14" upper="1" velocity="0.5"/>
+      <axis xyz = "0.000000 0.000000 1.000000" />
     </joint>
 
-    <joint name="link_LeftUpLeg" type="fixed">
-      <origin xyz="0 0.02076 -1.09271" rpy="0 0 0"/>
+    <joint name="link_LeftUpLeg" type="spherical">
+      <origin xyz="0.08208 -0.004943 0.973233" rpy="0 0 0"/>
       <parent link="link_Hips"/>
       <child link="link_LeftUpLeg"/>
     </joint>
 
-    <joint name="link_Neck" type="floating">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+    <joint name="link_Neck" type="spherical">
+      <origin xyz="0 0 1.5" rpy="0 0 0"/>
       <parent link="link_Spine2"/>
       <child link="link_Neck"/>
-      <limit effort="200.0" velocity="40.0"/>
     </joint>
 
-    <joint name="link_RightArm" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+    <joint name="link_RightArm" type="spherical">
+      <origin xyz="-0.1519 0.0513 1.4367" rpy="0 0 0"/>
       <parent link="link_RightShoulder"/>
       <child link="link_RightArm"/>
     </joint>
 
-    <joint name="link_RightFoot" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+    <joint name="link_RightFoot" type="spherical">
+      <origin xyz="-0.083248 0.021837 0.083976" rpy="0 0 0"/>
       <parent link="link_RightLeg"/>
       <child link="link_RightFoot"/>
     </joint>
 
-    <joint name="link_RightForeArm" type="fixed">
+    <joint name="link_RightForeArm" type="revolute">
+      <limit effort="1000.0" lower="0" upper="3.14" velocity="0.5"/>
+	  <origin rpy="0 0 0" xyz="-0.4308 0.0513 1.4377"/>
+	  <axis xyz="0.000000 0.000000 1.000000"/>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="link_RightArm"/>
       <child link="link_RightForeArm"/>
     </joint>
 
-    <joint name="link_RightHand" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+    <joint name="link_RightHand" type="spherical">
+      <origin xyz="-0.713253 0.050178 1.43734" rpy="0 0 0"/>
       <parent link="link_RightForeArm"/>
       <child link="link_RightHand"/>
     </joint>
 
     <joint name="link_RightHandIndex1" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.804532 0.026772 1.43359" rpy="0 0 0"/>
       <parent link="link_RightHand"/>
       <child link="link_RightHandIndex1"/>
     </joint>
 
     <joint name="link_RightHandIndex2" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.841082 0.027373 1.43234" rpy="0 0 0"/>
       <parent link="link_RightHandIndex1"/>
       <child link="link_RightHandIndex2"/>
     </joint>
 
     <joint name="link_RightHandIndex3" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.869889 0.027973 1.43275" rpy="0 0 0"/>
       <parent link="link_RightHandIndex2"/>
       <child link="link_RightHandIndex3"/>
     </joint>
 
     <joint name="link_RightHandMiddle1" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.808261 0.050178 1.43796" rpy="0 0 0"/>
       <parent link="link_RightHand"/>
       <child link="link_RightHandMiddle1"/>
     </joint>
 
     <joint name="link_RightHandMiddle2" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.845307 0.050178 1.43738" rpy="0 0 0"/>
       <parent link="link_RightHandMiddle1"/>
       <child link="link_RightHandMiddle2"/>
     </joint>
 
     <joint name="link_RightHandMiddle3" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.874827 0.050178 1.43709" rpy="0 0 0"/>
       <parent link="link_RightHandMiddle2"/>
       <child link="link_RightHandMiddle3"/>
     </joint>
 
     <joint name="link_RightHandPinky1" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.794072 0.087987 1.43272" rpy="0 0 0"/>
       <parent link="link_RightHand"/>
       <child link="link_RightHandPinky1"/>
     </joint>
 
     <joint name="link_RightHandPinky2" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.830049 0.087987 1.43272" rpy="0 0 0"/>
       <parent link="link_RightHandPinky1"/>
       <child link="link_RightHandPinky2"/>
     </joint>
 
     <joint name="link_RightHandPinky3" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.851314 0.087988 1.43312" rpy="0 0 0"/>
       <parent link="link_RightHandPinky2"/>
       <child link="link_RightHandPinky3"/>
     </joint>
 
     <joint name="link_RightHandRing1" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.804523 0.06889 1.43754" rpy="0 0 0"/>
       <parent link="link_RightHand"/>
       <child link="link_RightHandRing1"/>
     </joint>
 
     <joint name="link_RightHandRing2" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.835685 0.068886 1.43714" rpy="0 0 0"/>
       <parent link="link_RightHandRing1"/>
       <child link="link_RightHandRing2"/>
     </joint>
 
     <joint name="link_RightHandRing3" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.865221 0.068886 1.43734" rpy="0 0 0"/>
       <parent link="link_RightHandRing2"/>
       <child link="link_RightHandRing3"/>
     </joint>
 
     <joint name="link_RightHandThumb1" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.737745 0.02339 1.42165" rpy="0 0 0"/>
       <parent link="link_RightHand"/>
       <child link="link_RightHandThumb1"/>
     </joint>
 
     <joint name="link_RightHandThumb2" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.770044 0.003941 1.40342" rpy="0 0 0"/>
       <parent link="link_RightHandThumb1"/>
       <child link="link_RightHandThumb2"/>
     </joint>
 
     <joint name="link_RightHandThumb3" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.796849 -0.010757 1.38807" rpy="0 0 0"/>
       <parent link="link_RightHandThumb2"/>
       <child link="link_RightHandThumb3"/>
     </joint>
 
-    <joint name="link_RightLeg" type="fixed">
-      <origin xyz="0.08208 0.00477 -1.19426" rpy="0 0 0"/>
+    <joint name="link_RightLeg" type="revolute">
+      <limit effort="1000.0" lower="-3.14" upper="0." velocity="0.5"/>
+	  <origin rpy = "0 0 0" xyz = "-0.08207 -0.007886 0.529471" />
+	  <axis xyz = "0.000000 0.000000 1.000000" />
       <parent link="link_RightUpLeg"/>
       <child link="link_RightLeg"/>
     </joint>
 
     <joint name="link_RightShoulder" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.04606 0.027266 1.44328" rpy="0 0 0"/>
       <parent link="link_Spine2"/>
       <child link="link_RightShoulder"/>
     </joint>
 
-    <joint name="link_RightToeBase" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+    <joint name="link_RightToeBase" type="revolute">
+      <origin xyz="-0.082356 -0.085772 0" rpy="0 0 0"/>
       <parent link="link_RightFoot"/>
       <child link="link_RightToeBase"/>
+      <limit effort="1000.0" lower="-.14" upper="1" velocity="0.5"/>
+      <axis xyz = "0.000000 0.000000 1.000000" />
     </joint>
 
-    <joint name="link_RightUpLeg" type="fixed">
-      <origin xyz="-0.08208 0.016 0.10154" rpy="0 0 0"/>
+    <joint name="link_RightUpLeg" type="spherical">
+      <origin xyz="-0.08208 -0.004943 0.973233" rpy="0 0 0"/>
       <parent link="link_Hips"/>
       <child link="link_RightUpLeg"/>
     </joint>
@@ -1421,15 +1433,15 @@
       <child link="link_Spine"/>
     </joint>
 
-    <joint name="link_Spine1" type="floating">
-      <origin xyz="0 0.01001 0.09618" rpy="0 0 0"/>
+    <joint name="link_Spine1" type="spherical">
+      <origin xyz="0 -0.012 1.2418" rpy="0 0 0"/>
       <parent link="link_Spine"/>
       <child link="link_Spine1"/>
       <limit effort="500.0" velocity="40.0"/>
     </joint>
 
-    <joint name="link_Spine2" type="floating">
-      <origin xyz="0 0.01207 -1.28858" rpy="0 0 0"/>
+    <joint name="link_Spine2" type="fixed">
+      <origin xyz="0 0.0015 1.3336" rpy="0 0 0"/>
       <parent link="link_Spine1"/>
       <child link="link_Spine2"/>
       <limit effort="200.0" velocity="40.0"/>
