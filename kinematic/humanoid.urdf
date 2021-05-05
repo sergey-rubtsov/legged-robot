@@ -72,7 +72,7 @@
 				<capsule length="1.200000" radius="0.220000"/>
 			</geometry>
 		</collision>
-	</link>
+	</link>jnvtybnm
 	<joint name="right_hip" type="spherical" >
 		<parent link="root" />
 		<child link="right_hip" />
@@ -170,7 +170,7 @@
 	<joint name="right_wrist" type="fixed" >
 		<parent link="right_elbow" />
 		<child link="right_wrist" />
-				<origin rpy = "0 0 0" xyz = "0.000000 -1.035788 0.000000" />
+				<origin rpy = "0 0 0" xyz = "0.000000 -5.035788 0.000000" />
 	</joint>
 	<link name="left_hip" >
 		<inertial>
