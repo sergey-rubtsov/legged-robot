@@ -4,7 +4,7 @@
 
     <link name="link_Head">
       <inertial>
-        <origin xyz="0 170.00005 -3e-05" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="3.5"/>
         <inertia ixx="100000.00475" ixy="0" ixz="0" iyy="100000.00475" iyz="0" izz="100000.00475"/>
       </inertial>
@@ -25,19 +25,19 @@
 
     <link name="link_Hips">
       <inertial>
-        <origin xyz="0 0.01554 -0.09554" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="5.5"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_Hips">
-        <origin xyz="0 0.02076 -1.09271" rpy="0 0 0"/>
+        <origin xyz="7e-05 -0.00012 0.00035" rpy="0 0 0"/>
         <geometry>
           <mesh filename="Hips.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
       <collision name="collision_Hips">
-        <origin xyz="0 0.02076 -1.09271" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_Hips.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -46,7 +46,7 @@
 
     <link name="link_LeftArm">
       <inertial>
-        <origin xyz="0.28 0.04 1.43" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="1.3"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -88,7 +88,7 @@
 
     <link name="link_LeftForeArm">
       <inertial>
-        <origin xyz="0.56 0.05 1.44" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.8"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -109,19 +109,19 @@
 
     <link name="link_LeftHand">
       <inertial>
-        <origin xyz="0.77 0.05001 1.45" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.6"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_LeftHand">
-        <origin xyz="0 -0.00065 2e-05" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="LeftHand.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
       <collision name="collision_LeftHand">
-        <origin xyz="0 -0.00065 2e-05" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_LeftHand.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -130,7 +130,7 @@
 
     <link name="link_LeftHandIndex1">
       <inertial>
-        <origin xyz="0.82 0.03 1.44" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -151,7 +151,7 @@
 
     <link name="link_LeftHandIndex2">
       <inertial>
-        <origin xyz="0.85 0.025 1.43" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -172,7 +172,7 @@
 
     <link name="link_LeftHandIndex3">
       <inertial>
-        <origin xyz="0.88 0.025 1.43" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -193,7 +193,7 @@
 
     <link name="link_LeftHandMiddle1">
       <inertial>
-        <origin xyz="0.82 0.05 1.44" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -214,7 +214,7 @@
 
     <link name="link_LeftHandMiddle2">
       <inertial>
-        <origin xyz="0.86 0.05 1.44" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -235,7 +235,7 @@
 
     <link name="link_LeftHandMiddle3">
       <inertial>
-        <origin xyz="0.89 0.049 1.44" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -256,7 +256,7 @@
 
     <link name="link_LeftHandPinky1">
       <inertial>
-        <origin xyz="0.815 0.0875 1.435" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -277,7 +277,7 @@
 
     <link name="link_LeftHandPinky2">
       <inertial>
-        <origin xyz="0.84 0.089 1.435" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -298,7 +298,7 @@
 
     <link name="link_LeftHandPinky3">
       <inertial>
-        <origin xyz="0.865 0.085 1.43" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -319,7 +319,7 @@
 
     <link name="link_LeftHandRing1">
       <inertial>
-        <origin xyz="0.81 0.07 1.44" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -340,7 +340,7 @@
 
     <link name="link_LeftHandRing2">
       <inertial>
-        <origin xyz="0.85 0.067 1.44" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -361,7 +361,7 @@
 
     <link name="link_LeftHandRing3">
       <inertial>
-        <origin xyz="0.88 0.068 1.44" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -382,25 +382,25 @@
 
     <link name="link_LeftHandThumb1">
       <inertial>
-        <origin xyz="0.77001 0 1.43999" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_LeftHandThumb1">
-        <origin xyz="0.00029 0.00334 0.00451" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="LeftHandThumb1.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
       <collision name="collision_LeftHandThumb1">
-        <origin xyz="0.73799 0.02344 1.42203" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <sphere radius="0.01773"/>
         </geometry>
       </collision>
       <collision name="collision_LeftHandThumb1.1">
-        <origin xyz="0.00029 0.00334 0.00451" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_LeftHandThumb1.001.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -409,25 +409,25 @@
 
     <link name="link_LeftHandThumb2">
       <inertial>
-        <origin xyz="0.78 -1e-05 1.40001" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_LeftHandThumb2">
-        <origin xyz="-1e-05 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="LeftHandThumb2.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
       <collision name="collision_LeftHandThumb2">
-        <origin xyz="0.77029 0.00479 1.40338" rpy="1.5708 0 -1e-05"/>
+        <origin xyz="0 0 0" rpy="1.5708 0 -1e-05"/>
         <geometry>
           <sphere radius="0.01069"/>
         </geometry>
       </collision>
       <collision name="collision_LeftHandThumb2.1">
-        <origin xyz="-1e-05 0 0" rpy="1.5708 0 -1e-05"/>
+        <origin xyz="0 0 0" rpy="1.5708 0 -1e-05"/>
         <geometry>
           <mesh filename="c_LeftHandThumb2.001.stl" scale="0.01 0.01 0.01"/>
         </geometry>
@@ -436,7 +436,7 @@
 
     <link name="link_LeftHandThumb3">
       <inertial>
-        <origin xyz="0.81 -0.02 1.38" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -448,7 +448,7 @@
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
       <collision name="collision_LeftHandThumb3">
-        <origin xyz="0.79681 -0.01052 1.38807" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <sphere radius="0.00798"/>
         </geometry>
@@ -484,19 +484,19 @@
 
     <link name="link_LeftShoulder">
       <inertial>
-        <origin xyz="0.14 0 1.45" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.1"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_LeftShoulder">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0.10542 0.02294 -0.0055" rpy="0 0 0"/>
         <geometry>
           <mesh filename="LeftShoulder.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="Beta_Joints_MAT"/>
       </visual>
       <collision name="collision_LeftShoulder">
-        <origin xyz="0.15163 0.05027 1.43778" rpy="0 0 0"/>
+        <origin xyz="0.10542 0.02293 -0.0055" rpy="0 0 0"/>
         <geometry>
           <sphere radius="0.04861"/>
         </geometry>
@@ -547,19 +547,19 @@
 
     <link name="link_Neck">
       <inertial>
-        <origin xyz="0 0 1.53" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.8"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_Neck">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="-0.00019 -0.01339 0.04229" rpy="0 0 0"/>
         <geometry>
           <mesh filename="Neck.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="Beta_Joints_MAT"/>
       </visual>
       <collision name="collision_Neck">
-        <origin xyz="0 0.01356 1.54142" rpy="0 0 0"/>
+        <origin xyz="-0.00019 -0.01339 0.04229" rpy="0 0 0"/>
         <geometry>
           <sphere radius="0.05128"/>
         </geometry>
@@ -568,7 +568,7 @@
 
     <link name="link_RightArm">
       <inertial>
-        <origin xyz="-0.28 0.05 1.43" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="1.3"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -610,7 +610,7 @@
 
     <link name="link_RightForeArm">
       <inertial>
-        <origin xyz="-0.56 0.05 1.44" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.8"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -631,19 +631,19 @@
 
     <link name="link_RightHand">
       <inertial>
-        <origin xyz="-0.77 0.05001 1.45" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.6"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_RightHand">
-        <origin xyz="0 -0.00067 2e-05" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="RightHand.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
       <collision name="collision_RightHand">
-        <origin xyz="0 -0.00067 2e-05" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_RightHand.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -652,19 +652,19 @@
 
     <link name="link_RightHandIndex1">
       <inertial>
-        <origin xyz="-0.82 0.025 1.435" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_RightHandIndex1">
-        <origin xyz="0.00218 0.00555 0.00228" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="RightHandIndex1.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="Beta_Joints_MAT"/>
       </visual>
       <collision name="collision_RightHandIndex1">
-        <origin xyz="0.00218 0.00555 0.00228" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_RightHandIndex1.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -673,7 +673,7 @@
 
     <link name="link_RightHandIndex2">
       <inertial>
-        <origin xyz="-0.855 0.03 1.43" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -694,7 +694,7 @@
 
     <link name="link_RightHandIndex3">
       <inertial>
-        <origin xyz="-0.88 0.027 1.435" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -715,19 +715,19 @@
 
     <link name="link_RightHandMiddle1">
       <inertial>
-        <origin xyz="-0.825 0.05 1.435" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_RightHandMiddle1">
-        <origin xyz="-0.00033 -0.00514 -0.00058" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="RightHandMiddle1.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
       <collision name="collision_RightHandMiddle1">
-        <origin xyz="-0.00033 -0.00514 -0.00058" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_RightHandMiddle1.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -736,19 +736,19 @@
 
     <link name="link_RightHandMiddle2">
       <inertial>
-        <origin xyz="-0.86 0.05 1.435" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_RightHandMiddle2">
-        <origin xyz="0 -0.0002 0.0011" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="RightHandMiddle2.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
       <collision name="collision_RightHandMiddle2">
-        <origin xyz="0 -0.0002 0.0011" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_RightHandMiddle2.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -757,19 +757,19 @@
 
     <link name="link_RightHandMiddle3">
       <inertial>
-        <origin xyz="-0.89 0.05 1.435" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_RightHandMiddle3">
-        <origin xyz="0.00163 0.0055 0.00426" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="RightHandMiddle3.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="Beta_Joints_MAT"/>
       </visual>
       <collision name="collision_RightHandMiddle3">
-        <origin xyz="0.00163 0.0055 0.00426" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_RightHandMiddle3.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -778,19 +778,19 @@
 
     <link name="link_RightHandPinky1">
       <inertial>
-        <origin xyz="-0.815 0.09 1.435" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_RightHandPinky1">
-        <origin xyz="0 2e-05 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="RightHandPinky1.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
       <collision name="collision_RightHandPinky1">
-        <origin xyz="0 2e-05 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_RightHandPinky1.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -799,19 +799,19 @@
 
     <link name="link_RightHandPinky2">
       <inertial>
-        <origin xyz="-0.84 0.087 1.435" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_RightHandPinky2">
-        <origin xyz="0 0.00488 0.0029" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="RightHandPinky2.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="Beta_Joints_MAT"/>
       </visual>
       <collision name="collision_RightHandPinky2">
-        <origin xyz="0 0.00488 0.0029" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_RightHandPinky2.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -820,7 +820,7 @@
 
     <link name="link_RightHandPinky3">
       <inertial>
-        <origin xyz="-0.86 0.088 1.43" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -841,7 +841,7 @@
 
     <link name="link_RightHandRing1">
       <inertial>
-        <origin xyz="-0.82 0.07 1.44" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -862,7 +862,7 @@
 
     <link name="link_RightHandRing2">
       <inertial>
-        <origin xyz="-0.85 0.07 1.435" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -883,7 +883,7 @@
 
     <link name="link_RightHandRing3">
       <inertial>
-        <origin xyz="-0.88 0.068 1.438" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -904,19 +904,19 @@
 
     <link name="link_RightHandThumb1">
       <inertial>
-        <origin xyz="-0.75 0.01 1.41" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_RightHandThumb1">
-        <origin xyz="0.00022 0.00014 0.00011" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="RightHandThumb1.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
       <collision name="collision_RightHandThumb1">
-        <origin xyz="0.00022 0.00014 0.00011" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_RightHandThumb1.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -925,25 +925,25 @@
 
     <link name="link_RightHandThumb2">
       <inertial>
-        <origin xyz="-0.78 -1e-05 1.40001" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_RightHandThumb2">
-        <origin xyz="-2e-05 -1e-05 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="RightHandThumb2.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
       <collision name="collision_RightHandThumb2">
-        <origin xyz="-0.77029 0.00479 1.40337" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <sphere radius="0.01094"/>
         </geometry>
       </collision>
       <collision name="collision_RightHandThumb2.1">
-        <origin xyz="-2e-05 -1e-05 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_RightHandThumb2.001.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -952,25 +952,25 @@
 
     <link name="link_RightHandThumb3">
       <inertial>
-        <origin xyz="-0.81 -0.015 1.38" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_RightHandThumb3">
-        <origin xyz="3e-05 2e-05 2e-05" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="RightHandThumb3.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
       <collision name="collision_RightHandThumb3">
-        <origin xyz="-0.79681 -0.01052 1.38806" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <sphere radius="0.00816"/>
         </geometry>
       </collision>
       <collision name="collision_RightHandThumb3.1">
-        <origin xyz="3e-05 2e-05 2e-05" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_RightHandThumb3.001.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -1000,19 +1000,19 @@
 
     <link name="link_RightShoulder">
       <inertial>
-        <origin xyz="-0.14 0 1.45" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.1"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_RightShoulder">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="-0.10623 0.02179 -0.00584" rpy="0 0 0"/>
         <geometry>
           <mesh filename="RightShoulder.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="Beta_Joints_MAT"/>
       </visual>
       <collision name="collision_RightShoulder">
-        <origin xyz="-0.15163 0.05027 1.43778" rpy="0 0 0"/>
+        <origin xyz="-0.10623 0.02179 -0.00584" rpy="0 0 0"/>
         <geometry>
           <sphere radius="0.04861"/>
         </geometry>
@@ -1063,19 +1063,19 @@
 
     <link name="link_Spine">
       <inertial>
-        <origin xyz="0 0.02208 -1.1924" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="5.5"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_Spine">
-        <origin xyz="0 0.02208 -1.19239" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="Spine.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="Beta_Joints_MAT"/>
       </visual>
       <collision name="collision_Spine">
-        <origin xyz="0 0.02208 -1.19239" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_Spine.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -1084,19 +1084,19 @@
 
     <link name="link_Spine1">
       <inertial>
-        <origin xyz="0 0.01207 -0.00858" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="8.0"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_Spine1">
-        <origin xyz="0 0.01207 -1.28858" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="Spine1.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="Beta_Joints_MAT"/>
       </visual>
       <collision name="collision_Spine1">
-        <origin xyz="0 -0.00479 -0.01849" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <sphere radius="0.10869"/>
         </geometry>
@@ -1105,7 +1105,7 @@
 
     <link name="link_Spine2">
       <inertial>
-        <origin xyz="0 0 1.38" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="8.0"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -1125,323 +1125,328 @@
     </link>
 
     <joint name="link_Head" type="revolute">
-      <origin xyz="0 0 1.6" rpy="1.5708 0 0"/>
+      <origin xyz="7e-05 -0.01698 0.0968" rpy="1.5708 0 0"/>
       <parent link="link_Neck"/>
       <child link="link_Head"/>
       <axis xyz="0 1.0 0"/>
       <limit lower="-4.0" upper="4.0" effort="500.0" velocity="40.0"/>
     </joint>
 
-    <joint name="link_LeftArm" type="fixed">
-      <origin xyz="0.1519 0.0513 1.4367" rpy="0 0 0"/>
+    <joint name="link_LeftArm" type="spherical">
+      <origin xyz="0.1055 0.02299 -0.00565" rpy="0 0 0"/>
       <parent link="link_LeftShoulder"/>
       <child link="link_LeftArm"/>
+      <axis xyz="1.000000 0.000000 -1.000000"/>
     </joint>
 
-    <joint name="link_LeftFoot" type="fixed">
-      <origin xyz="0.083248 0.021837 0.083976" rpy="0 0 0"/>
+    <joint name="link_LeftFoot" type="spherical">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="link_LeftLeg"/>
       <child link="link_LeftFoot"/>
     </joint>
 
     <joint name="link_LeftForeArm" type="revolute">
+      <origin xyz="0.27874 1e-05 0" rpy="0 0 0"/>
       <limit effort="1000.0" lower="0" upper="3.14" velocity="0.5"/>
-	  <origin rpy="0 0 0" xyz="0.4308 0.0513 1.4377"/>
-	  <axis xyz="0.000000 0.000000 1.000000"/>
+	  <axis xyz="0.000000 0.000000 -1.000000"/>
       <parent link="link_LeftArm"/>
       <child link="link_LeftForeArm"/>
     </joint>
 
-    <joint name="link_LeftHand" type="fixed">
-      <origin xyz="0.713253 0.050178 1.43734" rpy="0 0 0"/>
+    <joint name="link_LeftHand" type="spherical">
+      <origin xyz="0.28308 -0.0001 0" rpy="0 0 0"/>
       <parent link="link_LeftForeArm"/>
       <child link="link_LeftHand"/>
     </joint>
 
     <joint name="link_LeftHandIndex1" type="fixed">
-      <origin xyz="0.804532 0.026772 1.43359" rpy="0 0 0"/>
+      <origin xyz="0.09078 -0.02254 -0.0049" rpy="0 0 0"/>
       <parent link="link_LeftHand"/>
       <child link="link_LeftHandIndex1"/>
     </joint>
 
     <joint name="link_LeftHandIndex2" type="fixed">
-      <origin xyz="0.841082 0.027373 1.43234" rpy="0 0 0"/>
+      <origin xyz="0.03621 -0.00028 0" rpy="0 0 0"/>
       <parent link="link_LeftHandIndex1"/>
       <child link="link_LeftHandIndex2"/>
     </joint>
 
     <joint name="link_LeftHandIndex3" type="fixed">
-      <origin xyz="0.869889 0.027973 1.43275" rpy="0 0 0"/>
+      <origin xyz="0.02964 0.00028 -0.0003" rpy="0 0 0"/>
       <parent link="link_LeftHandIndex2"/>
       <child link="link_LeftHandIndex3"/>
     </joint>
 
     <joint name="link_LeftHandMiddle1" type="fixed">
-      <origin xyz="0.808261 0.050178 1.43796" rpy="0 0 0"/>
+      <origin xyz="0.09542 0.00018 -0.00011" rpy="0 0 0"/>
       <parent link="link_LeftHand"/>
       <child link="link_LeftHandMiddle1"/>
     </joint>
 
     <joint name="link_LeftHandMiddle2" type="fixed">
-      <origin xyz="0.845307 0.050178 1.43738" rpy="0 0 0"/>
+      <origin xyz="0.03673 -0.00047 0" rpy="0 0 0"/>
       <parent link="link_LeftHandMiddle1"/>
       <child link="link_LeftHandMiddle2"/>
     </joint>
 
     <joint name="link_LeftHandMiddle3" type="fixed">
-      <origin xyz="0.874827 0.050178 1.43709" rpy="0 0 0"/>
+      <origin xyz="0.02993 0 0" rpy="0 0 0"/>
       <parent link="link_LeftHandMiddle2"/>
       <child link="link_LeftHandMiddle3"/>
     </joint>
 
     <joint name="link_LeftHandPinky1" type="fixed">
-      <origin xyz="0.794072 0.087987 1.43272" rpy="0 0 0"/>
+      <origin xyz="0.08091 0.03815 -0.00528" rpy="0 0 0"/>
       <parent link="link_LeftHand"/>
       <child link="link_LeftHandPinky1"/>
     </joint>
 
     <joint name="link_LeftHandPinky2" type="fixed">
-      <origin xyz="0.830049 0.087987 1.43272" rpy="0 0 0"/>
+      <origin xyz="0.03582 0 0.00038" rpy="0 0 0"/>
       <parent link="link_LeftHandPinky1"/>
       <child link="link_LeftHandPinky2"/>
     </joint>
 
     <joint name="link_LeftHandPinky3" type="fixed">
-      <origin xyz="0.851314 0.087988 1.43312" rpy="0 0 0"/>
+      <origin xyz="0.02092 0 -0.00038" rpy="0 0 0"/>
       <parent link="link_LeftHandPinky2"/>
       <child link="link_LeftHandPinky3"/>
     </joint>
 
     <joint name="link_LeftHandRing1" type="fixed">
-      <origin xyz="0.804523 0.06889 1.43754" rpy="0 0 0"/>
+      <origin xyz="0.09094 0.01855 -0.00038" rpy="0 0 0"/>
       <parent link="link_LeftHand"/>
       <child link="link_LeftHandRing1"/>
     </joint>
 
     <joint name="link_LeftHandRing2" type="fixed">
-      <origin xyz="0.835685 0.068886 1.43714" rpy="0 0 0"/>
+      <origin xyz="0.03149 0.00018 0" rpy="0 0 0"/>
       <parent link="link_LeftHandRing1"/>
       <child link="link_LeftHandRing2"/>
     </joint>
 
     <joint name="link_LeftHandRing3" type="fixed">
-      <origin xyz="0.865221 0.068886 1.43734" rpy="0 0 0"/>
+      <origin xyz="0.02939 0.0002 -0.00038" rpy="0 0 0"/>
       <parent link="link_LeftHandRing2"/>
       <child link="link_LeftHandRing3"/>
     </joint>
 
     <joint name="link_LeftHandThumb1" type="fixed">
-      <origin xyz="0.737745 0.02339 1.42165" rpy="0 0 0"/>
+      <origin xyz="0.02428 -0.02706 -0.01583" rpy="0 0 0"/>
       <parent link="link_LeftHand"/>
       <child link="link_LeftHandThumb1"/>
     </joint>
 
     <joint name="link_LeftHandThumb2" type="fixed">
-      <origin xyz="0.770044 0.003941 1.40342" rpy="0 0 0"/>
+      <origin xyz="0.03265 -0.01871 -0.01922" rpy="0 0 0"/>
       <parent link="link_LeftHandThumb1"/>
       <child link="link_LeftHandThumb2"/>
     </joint>
 
     <joint name="link_LeftHandThumb3" type="fixed">
-      <origin xyz="0.796849 -0.010757 1.38807" rpy="0 0 0"/>
+      <origin xyz="0.02612 -0.01522 -0.01508" rpy="0 0 0"/>
       <parent link="link_LeftHandThumb2"/>
       <child link="link_LeftHandThumb3"/>
     </joint>
 
-    <joint name="link_LeftLeg" type="fixed">
-      <limit effort="1000.0" lower="-3.14" upper="0." velocity="0.5"/>
-	  <origin rpy = "0 0 0" xyz = "0.08207 -0.007886 0.529471" />
-	  <axis xyz = "0.000000 0.000000 1.000000" />
+    <joint name="link_LeftLeg" type="revolute">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="link_LeftUpLeg"/>
       <child link="link_LeftLeg"/>
+      <limit effort="1000.0" lower="-3.14" upper="0." velocity="0.5"/>
+	  <axis xyz = "0.000000 1.000000 0.000000" />
     </joint>
 
     <joint name="link_LeftShoulder" type="fixed">
-      <origin xyz="0.04606 0.027266 1.44328" rpy="0 0 0"/>
+      <origin xyz="0.04625 0.02549 0.10964" rpy="0 0 0"/>
       <parent link="link_Spine2"/>
       <child link="link_LeftShoulder"/>
     </joint>
 
     <joint name="link_LeftToeBase" type="revolute">
-      <origin xyz="0.082356 -0.085772 0" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="link_LeftFoot"/>
       <child link="link_LeftToeBase"/>
       <limit effort="1000.0" lower="-.14" upper="1" velocity="0.5"/>
-      <axis xyz = "0.000000 0.000000 1.000000" />
+      <axis xyz = "0.000000 1.000000 0.000000" />
     </joint>
 
-    <joint name="link_LeftUpLeg" type="fixed">
-      <origin xyz="0.08208 -0.004943 0.973233" rpy="0 0 0"/>
+    <joint name="link_LeftUpLeg" type="revolute">
+      <origin xyz="0.00015 0.02076 -1.03935" rpy="0 0 0"/>
       <parent link="link_Hips"/>
       <child link="link_LeftUpLeg"/>
+      <limit effort="1000.0" lower="-.14" upper="1" velocity="0.5"/>
+      <axis xyz = "0.000000 -1.000000 0.000000" />
     </joint>
 
-    <joint name="link_Neck" type="fixed">
-      <origin xyz="0 0 1.5" rpy="0 0 0"/>
+    <joint name="link_Neck" type="spherical">
+      <origin xyz="0.00024 0.02511 0.16549" rpy="0 0 0"/>
       <parent link="link_Spine2"/>
       <child link="link_Neck"/>
+      <limit effort="200.0" velocity="40.0"/>
     </joint>
 
-    <joint name="link_RightArm" type="fixed">
-      <origin xyz="-0.1519 0.0513 1.4367" rpy="0 0 0"/>
+    <joint name="link_RightArm" type="spherical">
+      <origin xyz="-0.10656 0.02189 -0.00656" rpy="0 0 0"/>
       <parent link="link_RightShoulder"/>
       <child link="link_RightArm"/>
     </joint>
 
-    <joint name="link_RightFoot" type="fixed">
-      <origin xyz="-0.083248 0.021837 0.083976" rpy="0 0 0"/>
+    <joint name="link_RightFoot" type="revolute">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="link_RightLeg"/>
       <child link="link_RightFoot"/>
+      <limit effort="1000.0" lower="0" upper="3.14" velocity="0.5"/>
+      <axis xyz="0 0 1"/>
     </joint>
 
     <joint name="link_RightForeArm" type="revolute">
-      <limit effort="1000.0" lower="0" upper="3.14" velocity="0.5"/>
-	  <origin rpy="0 0 0" xyz="-0.4308 0.0513 1.4377"/>
-	  <axis xyz="0.000000 0.000000 1.000000"/>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.2773 0 0.00236" rpy="0 0 0"/>
       <parent link="link_RightArm"/>
       <child link="link_RightForeArm"/>
+      <limit effort="1000.0" lower="0" upper="2" velocity="0.5"/>
+	  <axis xyz="0 0 1"/>
     </joint>
 
-    <joint name="link_RightHand" type="fixed">
-      <origin xyz="-0.713253 0.050178 1.43734" rpy="0 0 0"/>
+    <joint name="link_RightHand" type="spherical">
+      <origin xyz="-0.2841 0 -0.00198" rpy="0 0 0"/>
       <parent link="link_RightForeArm"/>
       <child link="link_RightHand"/>
     </joint>
 
     <joint name="link_RightHandIndex1" type="fixed">
-      <origin xyz="-0.804532 0.026772 1.43359" rpy="0 0 0"/>
+      <origin xyz="-0.09108 -0.02257 -0.00555" rpy="0 0 0"/>
       <parent link="link_RightHand"/>
       <child link="link_RightHandIndex1"/>
     </joint>
 
     <joint name="link_RightHandIndex2" type="fixed">
-      <origin xyz="-0.841082 0.027373 1.43234" rpy="0 0 0"/>
+      <origin xyz="-0.03691 0 0.00054" rpy="0 0 0"/>
       <parent link="link_RightHandIndex1"/>
       <child link="link_RightHandIndex2"/>
     </joint>
 
     <joint name="link_RightHandIndex3" type="fixed">
-      <origin xyz="-0.869889 0.027973 1.43275" rpy="0 0 0"/>
+      <origin xyz="-0.02823 -5e-05 0.00027" rpy="0 0 0"/>
       <parent link="link_RightHandIndex2"/>
       <child link="link_RightHandIndex3"/>
     </joint>
 
     <joint name="link_RightHandMiddle1" type="fixed">
-      <origin xyz="-0.808261 0.050178 1.43796" rpy="0 0 0"/>
+      <origin xyz="-0.09542 -5e-05 0.00011" rpy="0 0 0"/>
       <parent link="link_RightHand"/>
       <child link="link_RightHandMiddle1"/>
     </joint>
 
     <joint name="link_RightHandMiddle2" type="fixed">
-      <origin xyz="-0.845307 0.050178 1.43738" rpy="0 0 0"/>
+      <origin xyz="-0.03677 0 0" rpy="0 0 0"/>
       <parent link="link_RightHandMiddle1"/>
       <child link="link_RightHandMiddle2"/>
     </joint>
 
     <joint name="link_RightHandMiddle3" type="fixed">
-      <origin xyz="-0.874827 0.050178 1.43709" rpy="0 0 0"/>
+      <origin xyz="-0.02945 0 -0.00023" rpy="0 0 0"/>
       <parent link="link_RightHandMiddle2"/>
       <child link="link_RightHandMiddle3"/>
     </joint>
 
     <joint name="link_RightHandPinky1" type="fixed">
-      <origin xyz="-0.794072 0.087987 1.43272" rpy="0 0 0"/>
+      <origin xyz="-0.08131 0.03814 -0.00471" rpy="0 0 0"/>
       <parent link="link_RightHand"/>
       <child link="link_RightHandPinky1"/>
     </joint>
 
     <joint name="link_RightHandPinky2" type="fixed">
-      <origin xyz="-0.830049 0.087987 1.43272" rpy="0 0 0"/>
+      <origin xyz="-0.03544 0 9e-05" rpy="0 0 0"/>
       <parent link="link_RightHandPinky1"/>
       <child link="link_RightHandPinky2"/>
     </joint>
 
     <joint name="link_RightHandPinky3" type="fixed">
-      <origin xyz="-0.851314 0.087988 1.43312" rpy="0 0 0"/>
+      <origin xyz="-0.02094 0 -0.00026" rpy="0 0 0"/>
       <parent link="link_RightHandPinky2"/>
       <child link="link_RightHandPinky3"/>
     </joint>
 
     <joint name="link_RightHandRing1" type="fixed">
-      <origin xyz="-0.804523 0.06889 1.43754" rpy="0 0 0"/>
+      <origin xyz="-0.0911 0.01826 -0.00061" rpy="0 0 0"/>
       <parent link="link_RightHand"/>
       <child link="link_RightHandRing1"/>
     </joint>
 
     <joint name="link_RightHandRing2" type="fixed">
-      <origin xyz="-0.835685 0.068886 1.43714" rpy="0 0 0"/>
+      <origin xyz="-0.03141 0.00031 0.00031" rpy="0 0 0"/>
       <parent link="link_RightHandRing1"/>
       <child link="link_RightHandRing2"/>
     </joint>
 
     <joint name="link_RightHandRing3" type="fixed">
-      <origin xyz="-0.865221 0.068886 1.43734" rpy="0 0 0"/>
+      <origin xyz="-0.02942 0.00031 0" rpy="0 0 0"/>
       <parent link="link_RightHandRing2"/>
       <child link="link_RightHandRing3"/>
     </joint>
 
     <joint name="link_RightHandThumb1" type="fixed">
-      <origin xyz="-0.737745 0.02339 1.42165" rpy="0 0 0"/>
+      <origin xyz="-0.02453 -0.02682 -0.01574" rpy="0 0 0"/>
       <parent link="link_RightHand"/>
       <child link="link_RightHandThumb1"/>
     </joint>
 
     <joint name="link_RightHandThumb2" type="fixed">
-      <origin xyz="-0.770044 0.003941 1.40342" rpy="0 0 0"/>
+      <origin xyz="-0.03242 -0.01872 -0.01836" rpy="0 0 0"/>
       <parent link="link_RightHandThumb1"/>
       <child link="link_RightHandThumb2"/>
     </joint>
 
     <joint name="link_RightHandThumb3" type="fixed">
-      <origin xyz="-0.796849 -0.010757 1.38807" rpy="0 0 0"/>
+      <origin xyz="-0.02676 -0.01543 -0.01549" rpy="0 0 0"/>
       <parent link="link_RightHandThumb2"/>
       <child link="link_RightHandThumb3"/>
     </joint>
 
-    <joint name="link_RightLeg" type="fixed">
-      <limit effort="1000.0" lower="-3.14" upper="0." velocity="0.5"/>
-	  <origin rpy = "0 0 0" xyz = "-0.08207 -0.007886 0.529471" />
-	  <axis xyz = "0.000000 0.000000 1.000000" />
+    <joint name="link_RightLeg" type="revolute">
+      <origin xyz="0.08208 0.00477 -1.19426" rpy="0 0 0"/>
       <parent link="link_RightUpLeg"/>
       <child link="link_RightLeg"/>
+      <limit effort="1000.0" lower="-3.14" upper="0." velocity="0.5"/>
+	  <axis xyz = "0.000000 0.000000 1.000000" />
     </joint>
 
     <joint name="link_RightShoulder" type="fixed">
-      <origin xyz="-0.04606 0.027266 1.44328" rpy="0 0 0"/>
+      <origin xyz="-0.04536 0.02663 0.10998" rpy="0 0 0"/>
       <parent link="link_Spine2"/>
       <child link="link_RightShoulder"/>
     </joint>
 
-    <joint name="link_RightToeBase" type="fixed">
-      <origin xyz="-0.082356 -0.085772 0" rpy="0 0 0"/>
+    <joint name="link_RightToeBase" type="revolute">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="link_RightFoot"/>
       <child link="link_RightToeBase"/>
       <limit effort="1000.0" lower="-.14" upper="1" velocity="0.5"/>
       <axis xyz = "0.000000 0.000000 1.000000" />
     </joint>
 
-    <joint name="link_RightUpLeg" type="fixed">
-      <origin xyz="-0.08208 -0.004943 0.973233" rpy="0 0 0"/>
+    <joint name="link_RightUpLeg" type="spherical">
+      <origin xyz="-0.08193 0.01599 0.15491" rpy="0 0 0"/>
       <parent link="link_Hips"/>
       <child link="link_RightUpLeg"/>
     </joint>
 
     <joint name="link_Spine" type="fixed">
-      <origin xyz="0 -0.00132 0.09968" rpy="0 0 0"/>
+      <origin xyz="0.00037 -0.00172 0.10244" rpy="0 0 0"/>
       <parent link="link_Hips"/>
       <child link="link_Spine"/>
     </joint>
 
-    <joint name="link_Spine1" type="fixed">
-      <origin xyz="0 -0.012 1.2418" rpy="0 0 0"/>
+    <joint name="link_Spine1" type="spherical">
+      <origin xyz="-0.00026 0.01027 0.10076" rpy="0 0 0"/>
       <parent link="link_Spine"/>
       <child link="link_Spine1"/>
       <limit effort="500.0" velocity="40.0"/>
     </joint>
 
     <joint name="link_Spine2" type="fixed">
-      <origin xyz="0 0.0015 1.3336" rpy="0 0 0"/>
+      <origin xyz="0 0.01405 0.09109" rpy="0 0 0"/>
       <parent link="link_Spine1"/>
       <child link="link_Spine2"/>
       <limit effort="200.0" velocity="40.0"/>
