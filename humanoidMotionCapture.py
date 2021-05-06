@@ -2,6 +2,7 @@ import pybullet as p
 import json
 import time
 import pybullet_data
+import pathlib
 
 useGUI = True
 if useGUI:
@@ -45,15 +46,12 @@ timeStep = 1. / 600.
 
 p.setPhysicsEngineParameter(fixedTimeStep=timeStep)
 
-# path = pybullet_data.getDataPath() + "/data/motions/humanoid3d_backflip.txt"
-# path	=	pybullet_data.getDataPath()+"/data/motions/humanoid3d_cartwheel.txt"
-path	=	pybullet_data.getDataPath()+"/data/motions/humanoid3d_walk.txt"
+path = str(pathlib.Path(__file__).parent.absolute()) + "/kinematic/humanoid3d_kick.txt"
 
-# p.loadURDF("plane.urdf",[0,0,-1.03])
 print("path	=	", path)
 with open(path, 'r') as f:
     motion_dict = json.load(f)
-# print("motion_dict	=	", motion_dict)
+
 print("len motion=", len(motion_dict))
 print(motion_dict['Loop'])
 numFrames = len(motion_dict['Frames'])
@@ -88,26 +86,31 @@ p.addUserDebugText("Stable PD (Py)",
                    [startLocations[4][0], startLocations[4][1] + 1, startLocations[4][2]],
                    [0, 0, 0])
 flags = p.URDF_MAINTAIN_LINK_ORDER + p.URDF_USE_SELF_COLLISION
+# Stable PD:
 humanoid = p.loadURDF("humanoid/humanoid.urdf",
                       startLocations[0],
                       globalScaling=0.25,
                       useFixedBase=False,
                       flags=flags)
+# Spherical	Drive
 humanoid2 = p.loadURDF("humanoid/humanoid.urdf",
                        startLocations[1],
                        globalScaling=0.25,
                        useFixedBase=False,
                        flags=flags)
+# Explicit PD
 humanoid3 = p.loadURDF("humanoid/humanoid.urdf",
                        startLocations[2],
                        globalScaling=0.25,
                        useFixedBase=False,
                        flags=flags)
+# Kinematic
 humanoid4 = p.loadURDF("humanoid/humanoid.urdf",
                        startLocations[3],
                        globalScaling=0.25,
                        useFixedBase=False,
                        flags=flags)
+# Stable PD (Py)
 humanoid5 = p.loadURDF("humanoid/humanoid.urdf",
                        startLocations[4],
                        globalScaling=0.25,
@@ -398,7 +401,7 @@ while (p.isConnected()):
         leftElbowRotStart[0] + frameFraction * (leftElbowRotEnd[0] - leftElbowRotStart[0])
     ]
 
-    if (0):  # if (once):
+    if once:  # if (once):
         p.resetJointStateMultiDof(humanoid, chest, chestRot)
         p.resetJointStateMultiDof(humanoid, neck, neckRot)
         p.resetJointStateMultiDof(humanoid, rightHip, rightHipRot)
