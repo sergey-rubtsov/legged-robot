@@ -4,19 +4,19 @@
 
     <link name="link_Hips">
       <inertial>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="-0.00015 -0.00076 1.03935" rpy="0 0 0"/>
         <mass value="5.5"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_Hips">
-        <origin xyz="7e-05 -0.00012 0.00035" rpy="0 0 0"/>
+        <origin xyz="-8e-05 -0.00088 1.0397" rpy="0 0 0"/>
         <geometry>
           <mesh filename="Hips.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
       <collision name="collision_Hips">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="-0.00015 -0.00076 1.03935" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_Hips.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -25,25 +25,25 @@
 
     <link name="link_RightUpLeg">
       <inertial>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0.00016 0.00157 -0.2222" rpy="0 0 0"/>
         <mass value="7.0"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
       <visual name="visual_RightUpLeg">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0.00016 0.00157 0.00019" rpy="0 0 0"/>
         <geometry>
           <mesh filename="RightUpLeg.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
       <collision name="collision_RightUpLeg">
-        <origin xyz="-0.00037 0.00081 0.0003" rpy="0 0 0"/>
+        <origin xyz="0.00016 0.00157 0.00019" rpy="0 0 0"/>
         <geometry>
           <sphere radius="0.08656"/>
         </geometry>
       </collision>
       <collision name="collision_RightUpLeg.1">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0.00016 0.00157 0.00019" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_RightUpLeg.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -51,7 +51,7 @@
     </link>
 
     <joint name="link_RightUpLeg" type="spherical">
-      <origin xyz="-0.08209 0.01519 -0.06714" rpy="0 0 0"/>
+      <origin xyz="-0.08224 -0.00557 0.9722" rpy="0 0 0"/>
       <parent link="link_Hips"/>
       <child link="link_RightUpLeg"/>
       <limit effort="1000.0" lower="-.14" upper="1" velocity="10"/>
@@ -60,9 +60,9 @@
 
     <link name="link_RightLeg">
       <inertial>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 -0.22763" rpy="0 0 0"/>
         <mass value="2.0"/>
-        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        <inertia ixx="0.07693" ixy="0.00214" ixz="-0.00019" iyy="0.07631" iyz="0.00541" izz="0.00364"/>
       </inertial>
       <visual name="visual_RightLeg">
         <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -153,25 +153,25 @@
 
     <link name="link_LeftUpLeg">
       <inertial>
-        <origin xyz="0 -0.00269 -0.44503" rpy="0 0 0"/>
+        <origin xyz="0 0 -0.2224" rpy="0 0 0"/>
         <mass value="7.0"/>
-        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        <inertia ixx="0.25071" ixy="0.01597" ixz="0.00065" iyy="0.25324" iyz="-0.01224" izz="0.02808"/>
       </inertial>
       <visual name="visual_LeftUpLeg">
-        <origin xyz="0 -0.00269 -0.44503" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="LeftUpLeg.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
       <collision name="collision_LeftUpLeg">
-        <origin xyz="-0.03987 0.00081 0.00143" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <sphere radius="0.1245"/>
         </geometry>
       </collision>
       <collision name="collision_LeftUpLeg.1">
-        <origin xyz="0 -0.00269 -0.44503" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_LeftUpLeg.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -179,18 +179,18 @@
     </link>
 
     <joint name="link_LeftUpLeg" type="spherical">
-      <origin xyz="0.08245 0.01519 -0.06714" rpy="0 0 0"/>
+      <origin xyz="0.08208 0.016 0.9724" rpy="0 0 0"/>
       <parent link="link_Hips"/>
       <child link="link_LeftUpLeg"/>
-      <limit effort="1000.0" lower="-.14" upper="1" velocity="10"/>
-      <axis xyz = "1.000000 1.000000 1.000000" />
+      <limit effort="1000.0" lower="-4" upper="4" velocity="10"/>
+      <axis xyz = "0 0 105" />
     </joint>
 
     <link name="link_LeftLeg">
       <inertial>
-        <origin xyz="-0.00231 0.00777 -0.1772" rpy="0 0 0"/>
+        <origin xyz="0 0 -0.22718" rpy="0 0 0"/>
         <mass value="2.0"/>
-        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        <inertia ixx="0.09178" ixy="0.00122" ixz="0.00038" iyy="0.0893" iyz="0.01344" izz="0.00564"/>
       </inertial>
       <visual name="visual_LeftLeg">
         <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -214,11 +214,11 @@
     </link>
 
     <joint name="link_LeftLeg" type="spherical">
-      <origin xyz="0 -0.00269 -0.44503" rpy="0 0 0"/>
+      <origin xyz="0.00023 -0.00426 -0.44522" rpy="0 0 0"/>
       <parent link="link_LeftUpLeg"/>
       <child link="link_LeftLeg"/>
       <limit effort="10.0" lower="0" upper="2.5" velocity="10"/>
-	  <axis xyz = "1.000000 0.000000 0.000000" />
+	  <axis xyz = "0 0 1" />
     </joint>
 
     <link name="link_LeftFoot">
@@ -272,7 +272,7 @@
     </link>
 
     <joint name="link_LeftToeBase" type="spherical">
-      <origin xyz="0.00065 -0.10737 -0.06079" rpy="0 0 0"/>
+      <origin xyz="-0.00023 -0.08629 -0.08665" rpy="0 0 0"/>
       <parent link="link_LeftFoot"/>
       <child link="link_LeftToeBase"/>
       <limit effort="10.0" lower="-0.6" upper="0.6" velocity="10"/>
@@ -301,7 +301,7 @@
     </link>
 
     <joint name="link_Spine" type="spherical">
-      <origin xyz="0.00037 -0.00172 0.10244" rpy="0 0 0"/>
+      <origin xyz="0.00022 -0.00248 1.14179" rpy="0 0 0"/>
       <parent link="link_Hips"/>
       <child link="link_Spine"/>
       <axis xyz = "1.000000 1.000000 1.000000" />
@@ -329,7 +329,7 @@
     </link>
 
     <joint name="link_Spine1" type="spherical">
-      <origin xyz="-0.00026 0.01027 0.10076" rpy="0 0 0"/>
+      <origin xyz="-0.00022 0.01148 0.10078" rpy="0 0 0"/>
       <parent link="link_Spine"/>
       <child link="link_Spine1"/>
       <limit effort="10.0" velocity="10.0"/>
@@ -358,7 +358,7 @@
     </link>
 
     <joint name="link_Spine2" type="spherical">
-      <origin xyz="0 0.01405 0.09109" rpy="0 0 0"/>
+      <origin xyz="0 0.013 0.091" rpy="0 0 0"/>
       <parent link="link_Spine1"/>
       <child link="link_Spine2"/>
       <limit effort="10.0" velocity="10.0"/>
@@ -387,7 +387,7 @@
     </link>
 
     <joint name="link_Neck" type="spherical">
-      <origin xyz="0.00024 0.02511 0.16549" rpy="0 0 0"/>
+      <origin xyz="0.00019 0.02495 0.16556" rpy="0 0 0"/>
       <parent link="link_Spine2"/>
       <child link="link_Neck"/>
       <limit effort="200.0" velocity="40.0"/>
@@ -396,9 +396,9 @@
 
     <link name="link_Head">
       <inertial>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 2e-05 0" rpy="0 0 0"/>
         <mass value="3.5"/>
-        <inertia ixx="100000.00475" ixy="0" ixz="0" iyy="100000.00475" iyz="0" izz="100000.00475"/>
+        <inertia ixx="100000.00475" ixy="-4e-05" ixz="-4e-05" iyy="100000.02001" iyz="0" izz="100000.02001"/>
       </inertial>
       <visual name="visual_Head">
         <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
@@ -429,34 +429,21 @@
         <mass value="0.1"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
-      <visual name="visual_RightShoulder">
-        <origin xyz="-0.10623 0.02179 -0.00584" rpy="0 0 0"/>
-        <geometry>
-          <mesh filename="RightShoulder.stl" scale="1.0 1.0 1.0"/>
-        </geometry>
-        <material name="Beta_Joints_MAT"/>
-      </visual>
-      <collision name="collision_RightShoulder">
-        <origin xyz="-0.10623 0.02179 -0.00584" rpy="0 0 0"/>
-        <geometry>
-          <sphere radius="0.04861"/>
-        </geometry>
-      </collision>
     </link>
 
     <joint name="link_RightShoulder" type="spherical">
-      <origin xyz="-0.04536 0.02663 0.10998" rpy="0 0 0"/>
+      <origin xyz="-0.0457 0.02671 0.10946" rpy="0 0 0"/>
       <parent link="link_Spine2"/>
       <child link="link_RightShoulder"/>
       <limit effort="1000.0" lower="0" upper="0.2" velocity="10"/>
-	  <axis xyz = "0.000000 1.000000 0.000000" />
+	  <axis xyz = "-1 0 0" />
     </joint>
 
     <link name="link_RightArm">
       <inertial>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="-0.14837 0 0" rpy="0 0 0"/>
         <mass value="1.3"/>
-        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        <inertia ixx="0.00138" ixy="-0.00059" ixz="0.00031" iyy="0.03138" iyz="2e-05" izz="0.03137"/>
       </inertial>
       <visual name="visual_RightArm">
         <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -465,16 +452,29 @@
         </geometry>
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
+      <visual name="visual_RightArm1">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="RightArm1.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Beta_Joints_MAT"/>
+      </visual>
       <collision name="collision_RightArm">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_RightArm.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
+      <collision name="collision_RightShoulder">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.04861"/>
+        </geometry>
+      </collision>
     </link>
 
     <joint name="link_RightArm" type="spherical">
-      <origin xyz="-0.10656 0.02189 -0.00656" rpy="0 0 0"/>
+      <origin xyz="-0.10593 0.02232 -0.00525" rpy="0 0 0"/>
       <parent link="link_RightShoulder"/>
       <child link="link_RightArm"/>
       <axis xyz = "0.000000 1.000000 0.000000" />
@@ -483,9 +483,9 @@
 
     <link name="link_RightForeArm">
       <inertial>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="-0.11996 0 0" rpy="0 0 0"/>
         <mass value="0.8"/>
-        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        <inertia ixx="0.00068" ixy="0.00048" ixz="-0.00015" iyy="0.01535" iyz="6e-05" izz="0.01545"/>
       </inertial>
       <visual name="visual_RightForeArm">
         <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -495,7 +495,7 @@
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
       <collision name="collision_RightForeArm">
-        <origin xyz="-0.00355 -0.0036 0.00044" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <sphere radius="0.03853"/>
         </geometry>
@@ -509,7 +509,7 @@
     </link>
 
     <joint name="link_RightForeArm" type="spherical">
-      <origin xyz="-0.2773 0 0.00236" rpy="0 0 0"/>
+      <origin xyz="-0.27841 0 0" rpy="0 0 0"/>
       <parent link="link_RightArm"/>
       <child link="link_RightForeArm"/>
       <limit effort="1.0" lower="0" upper="2" velocity="10"/>
@@ -530,8 +530,8 @@
 	  </collision>
     </link>
 
-    <joint name="link_RightHand" type="fixed">
-      <origin xyz="-0.2841 0 -0.00198" rpy="0 0 0"/>
+    <joint name="link_RightHand" type="spherical">
+      <origin xyz="-0.28332 -0.00066 -0.00035" rpy="0 0 0"/>
       <parent link="link_RightForeArm"/>
       <child link="link_RightHand"/>
       <limit effort="1.0" lower="0" upper="2" velocity="10"/>
@@ -540,38 +540,25 @@
 
     <link name="link_LeftShoulder">
       <inertial>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0.0743 0 0" rpy="0 0 0"/>
         <mass value="0.1"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
-      <visual name="visual_LeftShoulder">
-        <origin xyz="0.10542 0.02294 -0.0055" rpy="0 0 0"/>
-        <geometry>
-          <mesh filename="LeftShoulder.stl" scale="1.0 1.0 1.0"/>
-        </geometry>
-        <material name="Beta_Joints_MAT"/>
-      </visual>
-      <collision name="collision_LeftShoulder">
-        <origin xyz="0.10542 0.02293 -0.0055" rpy="0 0 0"/>
-        <geometry>
-          <sphere radius="0.04861"/>
-        </geometry>
-      </collision>
     </link>
 
     <joint name="link_LeftShoulder" type="spherical">
-      <origin xyz="0.04625 0.02549 0.10964" rpy="0 0 0"/>
+      <origin xyz="0.0457 0.02671 0.10946" rpy="0 0 0"/>
       <parent link="link_Spine2"/>
       <child link="link_LeftShoulder"/>
-      <limit effort="1000.0" lower="0" upper="0.2" velocity="10"/>
-	  <axis xyz = "0.000000 1.000000 0.000000" />
+      <limit effort="1000.0" lower="-1" upper="2" velocity="10"/>
+	  <axis xyz = "1 0 0" />
     </joint>
 
     <link name="link_LeftArm">
       <inertial>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0.14837 0 0" rpy="0 0 0"/>
         <mass value="1.3"/>
-        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        <inertia ixx="0.00127" ixy="0.0003" ixz="-0.00042" iyy="0.03445" iyz="-3e-05" izz="0.03454"/>
       </inertial>
       <visual name="visual_LeftArm">
         <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -580,16 +567,29 @@
         </geometry>
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
+      <visual name="visual_LeftArm1">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="LeftArm1.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Beta_Joints_MAT"/>
+      </visual>
       <collision name="collision_LeftArm">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="c_LeftArm.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
+      <collision name="collision_LeftShoulder">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.04861"/>
+        </geometry>
+      </collision>
     </link>
 
     <joint name="link_LeftArm" type="spherical">
-      <origin xyz="0.1055 0.02299 -0.00565" rpy="0 0 0"/>
+      <origin xyz="0.10592 0.02232 -0.00525" rpy="0 0 0"/>
       <parent link="link_LeftShoulder"/>
       <child link="link_LeftArm"/>
       <axis xyz = "0.000000 1.000000 0.000000" />
@@ -598,7 +598,7 @@
 
     <link name="link_LeftForeArm">
       <inertial>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0.11996 0 0" rpy="0 0 0"/>
         <mass value="0.8"/>
         <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
       </inertial>
@@ -610,7 +610,7 @@
         <material name="asdf1:Beta_HighLimbsGeoSG2"/>
       </visual>
       <collision name="collision_LeftForeArm">
-        <origin xyz="6e-05 0.00241 -0.00096" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <sphere radius="0.04142"/>
         </geometry>
@@ -624,7 +624,7 @@
     </link>
 
     <joint name="link_LeftForeArm" type="spherical">
-      <origin xyz="0.27874 1e-05 0" rpy="0 0 0"/>
+      <origin xyz="0.27842 0 0" rpy="0 0 0"/>
       <parent link="link_LeftArm"/>
       <child link="link_LeftForeArm"/>
       <limit effort="1.0" lower="0" upper="2" velocity="10"/>
@@ -645,8 +645,8 @@
 	  </collision>
     </link>
 
-    <joint name="link_LeftHand" type="fixed">
-      <origin xyz="0.28308 -0.0001 0" rpy="0 0 0"/>
+    <joint name="link_LeftHand" type="spherical">
+      <origin xyz="0.28349 -0.00079 -0.00016" rpy="0 0 0"/>
       <parent link="link_LeftForeArm"/>
       <child link="link_LeftHand"/>
       <axis xyz="1 1 0"/>
