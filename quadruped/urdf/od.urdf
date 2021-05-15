@@ -101,6 +101,11 @@
     </link>
 
     <link name="link_l_leg_a">
+      <contact>
+		<stiffness value="10000"/>
+		<damping value="10"/>
+		<lateral_friction value="1"/>
+      </contact>
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.02"/>
@@ -128,6 +133,11 @@
     </link>
 
     <link name="link_l_leg_b">
+      <contact>
+		<stiffness value="10000"/>
+		<damping value="10"/>
+		<lateral_friction value="1"/>
+      </contact>
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.02"/>
@@ -155,6 +165,11 @@
     </link>
 
     <link name="link_l_leg_c">
+      <contact>
+		<stiffness value="10000"/>
+		<damping value="10"/>
+		<lateral_friction value="1"/>
+      </contact>
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.02"/>
@@ -182,6 +197,11 @@
     </link>
 
     <link name="link_l_leg_d">
+      <contact>
+		<stiffness value="10000"/>
+		<damping value="10"/>
+		<lateral_friction value="1"/>
+      </contact>
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.02"/>
