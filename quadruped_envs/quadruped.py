@@ -140,7 +140,7 @@ class OpenDynamicQuadrupedEnv(gym.Env):
         else:
             self._pybullet_client = bc.BulletClient(connection_mode=pybullet.GUI)
             # self._pybullet_client = bc.BulletClient(connection_mode=pybullet.GUI)  # here
-
+        self._pybullet_client.configureDebugVisualizer(pybullet.COV_ENABLE_GUI, 0)
         self.seed()
         self.reset()
         observation_high = (self.robot.get_observation_upper_bound() + OBSERVATION_EPS)

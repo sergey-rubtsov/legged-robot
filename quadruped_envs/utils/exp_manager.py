@@ -27,7 +27,7 @@ from stable_baselines3.common.vec_env.obs_dict_wrapper import ObsDictWrapper
 from torch import nn as nn  # noqa: F401
 
 # Register custom envs
-import utils.import_envs  # noqa: F401 pytype: disable=import-error
+import quadruped_envs.utils.import_envs  # noqa: F401 pytype: disable=import-error
 from .callbacks import SaveVecNormalizeCallback, TrialEvalCallback
 from .hyperparams_opt import HYPERPARAMS_SAMPLER
 from .utils import ALGOS, get_callback_list, get_latest_run_id, get_wrapper_class, linear_schedule

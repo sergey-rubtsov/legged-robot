@@ -59,27 +59,10 @@ qpi = quadrupedPoseInterpolator.QuadrupedPoseInterpolator()
 stablePD = pd_controller_stable.PDControllerStable(p)
 
 jointDirections = [1, 1, -1, 1, -1, 1, 1, 1, -1, -1, 1, -1]
-# jointDirections = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-# jointDirections = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 # mapping of laikago motions to quadruped
 jointIds = [3, 4, 5, 0, 1, 2, 9, 10, 11, 6, 7, 8]
 
 jointOffsets = [0, -0.6, -1.8, 0, 0.6, 1.8]
-
-reversed_l_leg_angle = 2.827
-reversed_u_leg_angle = 1.379
-jointAngles = [0,
-               -reversed_u_leg_angle,
-               -reversed_l_leg_angle,
-               0,
-               reversed_u_leg_angle,
-               reversed_l_leg_angle,
-               0,
-               reversed_u_leg_angle,
-               reversed_l_leg_angle,
-               0,
-               reversed_u_leg_angle,
-               reversed_l_leg_angle]
 
 timeStep = 1. / 50
 cycleTime = mocapData.getCycleTime()

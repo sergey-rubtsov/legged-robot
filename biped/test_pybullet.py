@@ -11,7 +11,7 @@ import numpy as np
 p.connect(p.GUI)
 # p.connect(p.DIRECT) # don't render
 
-# p.configureDebugVisualizer(p.COV_ENABLE_GUI, 1)
+p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
 p.configureDebugVisualizer(p.COV_ENABLE_KEYBOARD_SHORTCUTS, 1)
 p.configureDebugVisualizer(p.COV_ENABLE_MOUSE_PICKING, 1)
 p.configureDebugVisualizer(p.COV_ENABLE_SHADOWS, 1)
