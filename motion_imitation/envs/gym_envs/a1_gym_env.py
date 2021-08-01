@@ -1,5 +1,6 @@
 """Wrapper to make the a1 environment suitable for OpenAI gym."""
 import gym
+import os, inspect, sys
 
 from motion_imitation.envs import env_builder
 from motion_imitation.robots import a1
@@ -14,12 +15,13 @@ class A1GymEnv(gym.Env):
                action_limit=(0.75, 0.75, 0.75),
                render=True,
                on_rack=False):
-    self._env = env_builder.build_regular_env(
-        a1.A1,
-        motor_control_mode=robot_config.MotorControlMode.TORQUE,
-        enable_rendering=render,
-        action_limit=action_limit,
-        on_rack=on_rack)
+    motion_file = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/dog_pace.txt"
+    num_procs = 1
+    enable_env_rand = True
+    self._env = env_builder.build_imitation_env(motion_files=[motion_file],
+                                        num_parallel_envs=num_procs,
+                                        enable_randomizer=enable_env_rand,
+                                        enable_rendering=render)
     self.observation_space = self._env.observation_space
     self.action_space = self._env.action_space
 
@@ -37,3 +39,6 @@ class A1GymEnv(gym.Env):
 
   def __getattr__(self, attr):
     return getattr(self._env, attr)
+
+  def __len__(self):
+      return 1

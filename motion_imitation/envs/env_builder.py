@@ -40,39 +40,7 @@ from motion_imitation.robots import a1
 from motion_imitation.robots import robot_config
 
 
-def build_laikago_env( motor_control_mode, enable_rendering):
-
-  sim_params = locomotion_gym_config.SimulationParameters()
-  sim_params.enable_rendering = enable_rendering
-  sim_params.motor_control_mode = motor_control_mode
-  sim_params.reset_time = 2
-  sim_params.num_action_repeat = 10
-  sim_params.enable_action_interpolation = False
-  sim_params.enable_action_filter = False
-  sim_params.enable_clip_motor_commands = False
-  
-  gym_config = locomotion_gym_config.LocomotionGymConfig(simulation_parameters=sim_params)
-
-  robot_class = laikago.Laikago
-
-  sensors = [
-      robot_sensors.MotorAngleSensor(num_motors=laikago.NUM_MOTORS),
-      robot_sensors.IMUSensor(),
-      environment_sensors.LastActionSensor(num_actions=laikago.NUM_MOTORS)
-  ]
-
-  task = default_task.DefaultTask()
-
-  env = locomotion_gym_env.LocomotionGymEnv(gym_config=gym_config, robot_class=robot_class,
-                                            robot_sensors=sensors, task=task)
-
-  env = observation_dictionary_to_array_wrapper.ObservationDictionaryToArrayWrapper(env)
-  env = trajectory_generator_wrapper_env.TrajectoryGeneratorWrapperEnv(env, trajectory_generator=simple_openloop.LaikagoPoseOffsetGenerator(action_limit=laikago.UPPER_BOUND))
-
-  return env
-
-
-def build_imitation_env(motion_files, num_parallel_envs, mode,
+def build_imitation_env(motion_files, num_parallel_envs,
                         enable_randomizer, enable_rendering,
                         robot_class=laikago.Laikago,
                         trajectory_generator=simple_openloop.LaikagoPoseOffsetGenerator(action_limit=laikago.UPPER_BOUND)):
@@ -112,8 +80,9 @@ def build_imitation_env(motion_files, num_parallel_envs, mode,
   env = trajectory_generator_wrapper_env.TrajectoryGeneratorWrapperEnv(env,
                                                                        trajectory_generator=trajectory_generator)
 
-  if mode == "test":
-      curriculum_episode_length_start = curriculum_episode_length_end
+  # if mode == "test":
+  # if enable_rendering:
+  #     curriculum_episode_length_start = curriculum_episode_length_end
 
   env = imitation_wrapper_env.ImitationWrapperEnv(env,
                                                   episode_length_start=curriculum_episode_length_start,
@@ -121,7 +90,6 @@ def build_imitation_env(motion_files, num_parallel_envs, mode,
                                                   curriculum_steps=30000000,
                                                   num_parallel_envs=num_parallel_envs)
   return env
-
 
 
 def build_regular_env(robot_class,
