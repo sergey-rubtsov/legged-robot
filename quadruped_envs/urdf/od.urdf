@@ -474,7 +474,7 @@
       <parent link="link_u_leg_d"/>
       <child link="link_l_leg_d"/>
       <axis xyz="0 1.0 0"/>
-      <limit lower="-1.31" upper="2.443" effort="2.7" velocity="50.0"/>
+      <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
     </joint>
 
     <joint name="link_u_leg_a" type="revolute">
@@ -508,6 +508,153 @@
       <axis xyz="0 1.0 0"/>
       <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
     </joint>
+
+  <joint name="imu_joint" type="fixed">
+    <parent link="link_root"/>
+    <child link="imu_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+  <link name="imu_link">
+    <inertial>
+      <mass value="0.001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size=".001 .001 .001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <transmission name="FR_hip_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="link_hip_b">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="FR_hip_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="FR_upper_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="link_u_leg_b">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="FR_upper_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="FR_lower_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="link_l_leg_b">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="FR_lower_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+    <transmission name="FL_hip_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="link_hip_a">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="FL_hip_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="FL_upper_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="link_u_leg_a">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="FL_upper_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="FL_lower_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="link_l_leg_a">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="FL_lower_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+    <transmission name="RR_hip_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="link_hip_d">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="RR_hip_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="RR_upper_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="link_u_leg_d">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="RR_upper_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="RR_lower_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="link_l_leg_d">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="RR_lower_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+    <transmission name="RL_hip_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="link_hip_c">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="RL_hip_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="RL_upper_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="link_u_leg_c">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="RL_upper_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="RL_lower_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="link_l_leg_c">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="RL_lower_motor">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
 
     <material name="Material">
       <color rgba="0.64 0.57001 0.34995 1.0"/>

@@ -32,6 +32,7 @@ RENDER_HEIGHT = 720
 RENDER_WIDTH = 960
 LEG_RANGE = [-6.3, 6.3]
 
+
 class OpenDynamicQuadrupedEnv(gym.Env):
     """The gym environment is made on the basis of the existing environment of
   the minitaur, since the Open Dynamics robot is very similar to it.

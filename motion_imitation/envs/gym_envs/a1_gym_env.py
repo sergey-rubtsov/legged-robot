@@ -15,7 +15,7 @@ class A1GymEnv(gym.Env):
                action_limit=(0.75, 0.75, 0.75),
                render=True,
                on_rack=False):
-    motion_file = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/dog_pace.txt"
+    motion_file = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/dog_spin.txt"
     num_procs = 1
     enable_env_rand = True
     self._env = env_builder.build_imitation_env(motion_files=[motion_file],

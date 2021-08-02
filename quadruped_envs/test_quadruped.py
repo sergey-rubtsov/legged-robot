@@ -28,7 +28,7 @@ from quadruped_envs.open_dynamic_quadruped import OpenDynamicQuadruped
 p.connect(p.GUI)
 # p.connect(p.DIRECT) # don't render
 
-# p.configureDebugVisualizer(p.COV_ENABLE_GUI, 1)
+p.configureDebugVisualizer(p.COV_ENABLE_GUI, 1)
 p.configureDebugVisualizer(p.COV_ENABLE_KEYBOARD_SHORTCUTS, 1)
 p.configureDebugVisualizer(p.COV_ENABLE_MOUSE_PICKING, 1)
 p.configureDebugVisualizer(p.COV_ENABLE_SHADOWS, 1)
@@ -44,7 +44,10 @@ cubeStartOrientation = p.getQuaternionFromEuler([0, 0, math.pi / 2])
 # cubeStartOrientation = transformations.quaternion_from_euler(math.pi / 2, 0, 0, 'szyx')
 p.setAdditionalSearchPath(str(pathlib.Path(__file__).parent.absolute()))
 env = OpenDynamicQuadruped(pybullet_client=p)
-
+p.addUserDebugParameter(paramName='111',
+                                                 rangeMin=0,
+                                                 rangeMax=10,
+                                                 startValue=5)
 mocapData = motion_capture_data.MotionCaptureData()
 
 motionPath = pybullet_data.getDataPath() + "/data/motions/laikago_walk.txt"
