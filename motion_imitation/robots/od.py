@@ -55,44 +55,51 @@ MOTOR_NAMES = [
 ]
 INIT_RACK_POSITION = [0, 0, 1]
 INIT_POSITION = [0, 0, 0.26]
-JOINT_DIRECTIONS = [1, -1, -1, 1, -1, 1, 1, -1, 1, -1, -1, 1]
+JOINT_DIRECTIONS = np.ones(12)
 HIP_JOINT_OFFSET = 0.0
-UPPER_LEG_JOINT_OFFSET = 0.0
-KNEE_JOINT_OFFSET = 0.0
+UPPER_LEG_JOINT_OFFSET = 0
+KNEE_JOINT_OFFSET = 0
 DOFS_PER_LEG = 3
 JOINT_OFFSETS = np.array(
-    [HIP_JOINT_OFFSET, UPPER_LEG_JOINT_OFFSET, KNEE_JOINT_OFFSET] * 4)
+    [
+        HIP_JOINT_OFFSET, UPPER_LEG_JOINT_OFFSET, KNEE_JOINT_OFFSET,
+        HIP_JOINT_OFFSET, UPPER_LEG_JOINT_OFFSET, KNEE_JOINT_OFFSET,
+        HIP_JOINT_OFFSET, UPPER_LEG_JOINT_OFFSET, KNEE_JOINT_OFFSET,
+        HIP_JOINT_OFFSET, UPPER_LEG_JOINT_OFFSET, KNEE_JOINT_OFFSET
+    ]
+)
+
 PI = math.pi
 
 MAX_MOTOR_ANGLE_CHANGE_PER_STEP = 0.2
 _DEFAULT_HIP_POSITIONS = (
-    (0.17, -0.135, 0),
-    (0.17, 0.13, 0),
-    (-0.195, -0.135, 0),
-    (-0.195, 0.13, 0),
+    (0, 0, 0),
+    (0, 0, 0),
+    (0, 0, 0),
+    (0, 0, 0),
 )
 
-COM_OFFSET = -np.array([0.012731, 0.002186, 0.000515])
-HIP_OFFSETS = np.array([[0.183, -0.047, 0.], [0.183, 0.047, 0.],
-                        [-0.183, -0.047, 0.], [-0.183, 0.047, 0.]
+COM_OFFSET = -np.array([0., 0., 0.])
+HIP_OFFSETS = np.array([[0, 0, 0.], [0, 0, 0.],
+                        [0, 0, 0.], [0, 0, 0.]
                         ]) + COM_OFFSET
 
-ABDUCTION_P_GAIN = 100.0
+ABDUCTION_P_GAIN = 50.0
 ABDUCTION_D_GAIN = 1.
-HIP_P_GAIN = 100.0
+HIP_P_GAIN = 50.0
 HIP_D_GAIN = 2.0
-KNEE_P_GAIN = 100.0
+KNEE_P_GAIN = 50.0
 KNEE_D_GAIN = 2.0
 
 # Bases on the readings from Laikago's default pose.
-INIT_MOTOR_ANGLES = np.array([0, 0.9, -1.8] * NUM_LEGS)
+INIT_MOTOR_ANGLES = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
 HIP_NAME_PATTERN = re.compile(r"\w+_hip_\w+")
 UPPER_NAME_PATTERN = re.compile(r"\w+_u_leg_\w+")
 LOWER_NAME_PATTERN = re.compile(r"\w+_l_leg_\w+")
 IMU_NAME_PATTERN = re.compile(r"imu\d*")
 
-URDF_FILENAME = "../../quadruped_envs/urdf/od.urdf"
+URDF_FILENAME = "../../quadruped_envs/urdf/od_old.urdf"
 
 _BODY_B_FIELD_NUMBER = 2
 _LINK_A_FIELD_NUMBER = 3
@@ -338,12 +345,30 @@ class OD(minitaur.Minitaur):
           targetVelocity=0,
           force=0)
     for name, i in zip(MOTOR_NAMES, range(len(MOTOR_NAMES))):
-      if "link_hip" in name:
-        angle = INIT_MOTOR_ANGLES[i] + HIP_JOINT_OFFSET
-      elif "link_u_leg" in name:
-        angle = INIT_MOTOR_ANGLES[i] + UPPER_LEG_JOINT_OFFSET
-      elif "link_l_leg" in name:
-        angle = INIT_MOTOR_ANGLES[i] + KNEE_JOINT_OFFSET
+      if "link_hip_a" in name:
+        angle = 0
+      elif "link_u_leg_a" in name:
+        angle = 0.8
+      elif "link_l_leg_a" in name:
+        angle = -1.8
+      elif "link_hip_b" in name:
+        angle = 0
+      elif "link_u_leg_b" in name:
+        angle = 0.6
+      elif "link_l_leg_b" in name:
+        angle = 1.8
+      elif "link_hip_c" in name:
+        angle = 0
+      elif "link_u_leg_c" in name:
+        angle = 0.6
+      elif "link_l_leg_c" in name:
+        angle = -1.8
+      elif "link_hip_d" in name:
+        angle = 0
+      elif "link_u_leg_d" in name:
+        angle = -0.6
+      elif "link_l_leg_d" in name:
+        angle = 1.8
       else:
         raise ValueError("The name %s is not recognized as a motor joint." %
                          name)
