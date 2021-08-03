@@ -113,16 +113,10 @@
         </geometry>
         <material name="Material"/>
       </visual>
-      <collision name="Lower Leg D">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+      <collision name="collision_Lower_Leg">
+        <origin xyz="-0.00085 0.00212 7e-05" rpy="0 0 0"/>
         <geometry>
-          <box size="0.09247 0.0085 0.10287"/>
-        </geometry>
-      </collision>
-      <collision name="collision_Cyl_link_l_leg_a">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <cylinder radius="0.016" length="0.032"/>
+          <mesh filename="collision_LowerLegA.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -140,16 +134,10 @@
         </geometry>
         <material name="Material"/>
       </visual>
-      <collision name="Cylinder">
+      <collision name="collision_Lower_Leg_B">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <cylinder radius="0.016" length="0.032"/>
-        </geometry>
-      </collision>
-      <collision name="Lower Leg D">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <box size="0.09247 0.0085 0.10287"/>
+          <mesh filename="collision_LowerLegB.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -167,16 +155,10 @@
         </geometry>
         <material name="Material"/>
       </visual>
-      <collision name="Lower Leg D">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <box size="0.09367 0.0085 0.10182"/>
-        </geometry>
-      </collision>
-      <collision name="collision_Cylinder">
+      <collision name="collision_Lower_Leg_C">
         <origin xyz="0.00075 -0.00079 -0.00069" rpy="0 0 0"/>
         <geometry>
-          <cylinder radius="0.01594" length="0.03188"/>
+          <mesh filename="collision_LowerLegC.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -194,16 +176,10 @@
         </geometry>
         <material name="Material"/>
       </visual>
-      <collision name="Cylinder.001">
+      <collision name="collision_Lower_Leg_D">
         <origin xyz="0.00156 0 -0.00066" rpy="0 2.8113 0"/>
         <geometry>
-          <cylinder radius="0.016" length="0.032"/>
-        </geometry>
-      </collision>
-      <collision name="Lower Leg D">
-        <origin xyz="0.00156 0 -0.00066" rpy="0 2.8113 0"/>
-        <geometry>
-          <box size="0.09247 0.0085 0.10287"/>
+          <mesh filename="collision_LowerLegD.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -418,7 +394,8 @@
       <parent link="link_root"/>
       <child link="link_hip_a"/>
       <axis xyz="-1.0 0 0"/>
-      <limit lower="-1.31" upper="2.443" effort="2.7" velocity="50.0"/>
+      <dynamics damping="1" friction="1"/>
+      <limit lower="-1.31" upper="2.443" effort="55" velocity="28.6"/>
     </joint>
 
     <joint name="link_hip_b" type="revolute">
@@ -426,7 +403,8 @@
       <parent link="link_root"/>
       <child link="link_hip_b"/>
       <axis xyz="-1.0 0 0"/>
-      <limit lower="-1.31" upper="2.443" effort="2.7" velocity="50.0"/>
+      <dynamics damping="1" friction="1"/>
+      <limit lower="-1.31" upper="2.443" effort="55" velocity="28.6"/>
     </joint>
 
     <joint name="link_hip_c" type="revolute">
@@ -434,7 +412,8 @@
       <parent link="link_root"/>
       <child link="link_hip_c"/>
       <axis xyz="1.0 0 0"/>
-      <limit lower="-1.31" upper="2.443" effort="2.7" velocity="50.0"/>
+      <dynamics damping="1" friction="1"/>
+      <limit lower="-1.31" upper="2.443" effort="55" velocity="28.6"/>
     </joint>
 
     <joint name="link_hip_d" type="revolute">
@@ -442,7 +421,8 @@
       <parent link="link_root"/>
       <child link="link_hip_d"/>
       <axis xyz="1.0 0 0"/>
-      <limit lower="-1.31" upper="2.443" effort="2.7" velocity="50.0"/>
+      <dynamics damping="1" friction="1"/>
+      <limit lower="-1.31" upper="2.443" effort="55" velocity="28.6"/>
     </joint>
 
     <joint name="link_l_leg_a" type="revolute">
@@ -450,7 +430,8 @@
       <parent link="link_u_leg_a"/>
       <child link="link_l_leg_a"/>
       <axis xyz="0 -1.0 0"/>
-      <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
+      <dynamics damping="1" friction="1"/>
+      <limit lower="-6.3" upper="6.3" effort="55" velocity="28.6"/>
     </joint>
 
     <joint name="link_l_leg_b" type="revolute">
@@ -458,7 +439,8 @@
       <parent link="link_u_leg_b"/>
       <child link="link_l_leg_b"/>
       <axis xyz="0 1.0 0"/>
-      <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
+      <dynamics damping="1" friction="1"/>
+      <limit lower="-6.3" upper="6.3" effort="55" velocity="28.6"/>
     </joint>
 
     <joint name="link_l_leg_c" type="revolute">
@@ -466,7 +448,8 @@
       <parent link="link_u_leg_c"/>
       <child link="link_l_leg_c"/>
       <axis xyz="0 -1.0 0"/>
-      <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
+      <dynamics damping="1" friction="1"/>
+      <limit lower="-6.3" upper="6.3" effort="55" velocity="28.6"/>
     </joint>
 
     <joint name="link_l_leg_d" type="revolute">
@@ -474,7 +457,8 @@
       <parent link="link_u_leg_d"/>
       <child link="link_l_leg_d"/>
       <axis xyz="0 1.0 0"/>
-      <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
+      <dynamics damping="1" friction="1"/>
+      <limit lower="-6.3" upper="6.3" effort="55" velocity="28.6"/>
     </joint>
 
     <joint name="link_u_leg_a" type="revolute">
@@ -482,7 +466,8 @@
       <parent link="link_hip_a"/>
       <child link="link_u_leg_a"/>
       <axis xyz="0 -1.0 0"/>
-      <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
+      <dynamics damping="1" friction="1"/>
+      <limit lower="-6.3" upper="6.3" effort="55" velocity="28.6"/>
     </joint>
 
     <joint name="link_u_leg_b" type="revolute">
@@ -490,7 +475,8 @@
       <parent link="link_hip_b"/>
       <child link="link_u_leg_b"/>
       <axis xyz="0 1.0 0"/>
-      <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
+      <dynamics damping="1" friction="1"/>
+      <limit lower="-6.3" upper="6.3" effort="55" velocity="28.6"/>
     </joint>
 
     <joint name="link_u_leg_c" type="revolute">
@@ -498,7 +484,8 @@
       <parent link="link_hip_c"/>
       <child link="link_u_leg_c"/>
       <axis xyz="0 -1.0 0"/>
-      <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
+      <dynamics damping="1" friction="1"/>
+      <limit lower="-6.3" upper="6.3" effort="55" velocity="28.6"/>
     </joint>
 
     <joint name="link_u_leg_d" type="revolute">
@@ -506,7 +493,8 @@
       <parent link="link_hip_d"/>
       <child link="link_u_leg_d"/>
       <axis xyz="0 1.0 0"/>
-      <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
+      <dynamics damping="1" friction="1"/>
+      <limit lower="-6.3" upper="6.3" effort="55" velocity="28.6"/>
     </joint>
 
   <joint name="imu_joint" type="fixed">
