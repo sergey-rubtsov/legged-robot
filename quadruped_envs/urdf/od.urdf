@@ -18,7 +18,7 @@
       <collision name="collision_hip_a">
         <origin xyz="0 0.001 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="collision_HipA.stl" scale="1.0 0.9 1.0"/>
+          <mesh filename="collision_HipA.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -44,9 +44,9 @@
         <material name="Material"/>
       </visual>
       <collision name="Hip Fe Module B">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 -0.001 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="collision_HipB.stl" scale="1.0 0.9 1.0"/>
+          <mesh filename="collision_HipB.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -93,7 +93,7 @@
         <material name="Material"/>
       </visual>
       <collision name="Hip Fe Module A">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0.002 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="collision_HipD.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -107,14 +107,14 @@
         <inertia ixx="4e-05" ixy="0" ixz="0" iyy="6e-05" iyz="0" izz="3e-05"/>
       </inertial>
       <visual name="visual_Lower_Leg_A">
-        <origin xyz="-0.00085 0.00212 7e-05" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="LowerLegA.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="Material"/>
       </visual>
       <collision name="collision_Lower_Leg_A">
-        <origin xyz="-0.00085 0.00212 7e-05" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="collision_LowerLegA.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -144,7 +144,7 @@
 
     <link name="link_l_leg_c">
       <inertial>
-        <origin xyz="-0.05328 -0.00079 -0.05951" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.02"/>
         <inertia ixx="2e-05" ixy="0" ixz="0" iyy="3e-05" iyz="0" izz="1e-05"/>
       </inertial>
@@ -156,7 +156,7 @@
         <material name="Material"/>
       </visual>
       <collision name="collision_Lower_Leg_C">
-        <origin xyz="0.00075 -0.00079 -0.00069" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="collision_LowerLegC.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -165,19 +165,19 @@
 
     <link name="link_l_leg_d">
       <inertial>
-        <origin xyz="0.00156 0 -0.00066" rpy="0 0 0"/>
+        <origin xyz="0.00038 0 0.00077" rpy="0 0 0"/>
         <mass value="0.02"/>
-        <inertia ixx="3e-05" ixy="0" ixz="0" iyy="3e-05" iyz="0" izz="1e-05"/>
+        <inertia ixx="4e-05" ixy="0" ixz="0" iyy="6e-05" iyz="0" izz="3e-05"/>
       </inertial>
       <visual name="visual_Lower_Leg_D">
-        <origin xyz="0.00156 0 -0.00066" rpy="0 2.8113 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="LowerLegD.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="Material"/>
       </visual>
       <collision name="collision_Lower_Leg_D">
-        <origin xyz="0.00156 0 -0.00066" rpy="0 2.8113 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="collision_LowerLegD.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -249,7 +249,7 @@
       <collision name="collision_Upper_Leg_A">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="collision_UpperLegA.stl" scale="0.9 0.9 0.9"/>
+          <mesh filename="collision_UpperLegA.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -277,19 +277,19 @@
 
     <link name="link_u_leg_c">
       <inertial>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="8e-05 0 -0.0001" rpy="0 0 0"/>
         <mass value="0.15"/>
-        <inertia ixx="0.00023" ixy="0" ixz="-5e-05" iyy="0.00025" iyz="0" izz="3e-05"/>
+        <inertia ixx="0.00015" ixy="0" ixz="-0.00011" iyy="0.00025" iyz="0" izz="0.00011"/>
       </inertial>
       <visual name="visual_Upper_Leg_Module_C">
-        <origin xyz="0 0 0" rpy="0 -1.34948 0"/>
+        <origin xyz="8e-05 0 -0.0001" rpy="0 0 0"/>
         <geometry>
           <mesh filename="UpperLegModuleC.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="Material"/>
       </visual>
       <collision name="collision_Upper_Leg_C">
-        <origin xyz="0 0 -0.0001" rpy="0 -1.34948 0"/>
+        <origin xyz="8e-05 0 -0.0001" rpy="0 0 0"/>
         <geometry>
           <mesh filename="collision_UpperLegC.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -300,17 +300,17 @@
       <inertial>
         <origin xyz="0.0571 0.03543 -0.07324" rpy="0 0 0"/>
         <mass value="0.15"/>
-        <inertia ixx="0.00023" ixy="0" ixz="-5e-05" iyy="0.00025" iyz="0" izz="3e-05"/>
+        <inertia ixx="0.00015" ixy="0" ixz="-0.00011" iyy="0.00025" iyz="0" izz="0.00011"/>
       </inertial>
       <visual name="visual_Upper_Leg_Module_D">
-        <origin xyz="0.00079 0.02459 0.00036" rpy="0 -1.34948 0"/>
+        <origin xyz="-8e-05 -0.00011 -7e-05" rpy="0 0 0"/>
         <geometry>
           <mesh filename="UpperLegModuleD.stl" scale="1.0 1.0 1.0"/>
         </geometry>
         <material name="Material"/>
       </visual>
       <collision name="Upper Leg Module">
-        <origin xyz="-0.0002 0.03302 -0.00122" rpy="0 -1.34948 0"/>
+        <origin xyz="-8e-05 -0.00011 -7e-05" rpy="0 0 0"/>
         <geometry>
           <mesh filename="collision_UpperLegD.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -354,7 +354,7 @@
     </joint>
 
     <joint name="link_l_leg_a" type="revolute">
-      <origin xyz="0.10112 -0.05695 -0.12354" rpy="0 0 0"/>
+      <origin xyz="0.1004 -0.05695 -0.124" rpy="0 0 0"/>
       <parent link="link_u_leg_a"/>
       <child link="link_l_leg_a"/>
       <axis xyz="0 -1.0 0"/>
@@ -363,7 +363,7 @@
     </joint>
 
     <joint name="link_l_leg_b" type="revolute">
-      <origin xyz="0.10112 0.05695 -0.12354" rpy="0 0 0"/>
+      <origin xyz="0.1004 0.05695 -0.124" rpy="0 0 0"/>
       <parent link="link_u_leg_b"/>
       <child link="link_l_leg_b"/>
       <axis xyz="0 1.0 0"/>
@@ -372,7 +372,7 @@
     </joint>
 
     <joint name="link_l_leg_c" type="revolute">
-      <origin xyz="0.09841 -0.05695 -0.12588" rpy="0 0 0"/>
+      <origin xyz="0.09902 -0.05695 -0.12527" rpy="0 0 0"/>
       <parent link="link_u_leg_c"/>
       <child link="link_l_leg_c"/>
       <axis xyz="0 -1.0 0"/>
@@ -381,7 +381,7 @@
     </joint>
 
     <joint name="link_l_leg_d" type="revolute">
-      <origin xyz="0.09841 0.05695 -0.12588" rpy="0 -1.34948 0"/>
+      <origin xyz="0.09902 0.05695 -0.12527" rpy="0 0 0"/>
       <parent link="link_u_leg_d"/>
       <child link="link_l_leg_d"/>
       <axis xyz="0 1.0 0"/>

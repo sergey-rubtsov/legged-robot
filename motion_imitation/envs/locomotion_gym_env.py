@@ -328,7 +328,7 @@ class LocomotionGymEnv(gym.Env):
         for l in range (self._pybullet_client.getNumJoints(self._task._ref_model)):
             self._pybullet_client.changeVisualShape(self._task._ref_model, l, rgbaColor=ref_col)
     
-      delay = self._pybullet_client.readUserDebugParameter(self._delay_id)
+      delay = 0.01
       if (delay>0):
         time.sleep(delay)
 
@@ -433,7 +433,7 @@ class LocomotionGymEnv(gym.Env):
     observations = collections.OrderedDict(sorted(list(sensors_dict.items())))
     return observations
 
-  def set_time_step(self, num_action_repeat, sim_step=0.001):
+  def set_time_step(self, num_action_repeat, sim_step=0.0001):
     """Sets the time step of the environment.
 
     Args:

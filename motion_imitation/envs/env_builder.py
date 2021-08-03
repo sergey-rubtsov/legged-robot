@@ -35,14 +35,14 @@ from motion_imitation.envs.sensors import environment_sensors
 from motion_imitation.envs.sensors import sensor_wrappers
 from motion_imitation.envs.sensors import robot_sensors
 from motion_imitation.envs.utilities import controllable_env_randomizer_from_config
-from motion_imitation.robots import laikago
+from motion_imitation.robots import laikago, od
 from motion_imitation.robots import a1
 from motion_imitation.robots import robot_config
 
 
 def build_imitation_env(motion_files, num_parallel_envs,
                         enable_randomizer, enable_rendering,
-                        robot_class=laikago.Laikago,
+                        robot_class=od.OD,
                         trajectory_generator=simple_openloop.LaikagoPoseOffsetGenerator(action_limit=laikago.UPPER_BOUND)):
   assert len(motion_files) > 0
 
@@ -135,6 +135,11 @@ def build_regular_env(robot_class,
           trajectory_generator=simple_openloop.LaikagoPoseOffsetGenerator(
               action_limit=action_limit))
     elif robot_class == a1.A1:
+      env = trajectory_generator_wrapper_env.TrajectoryGeneratorWrapperEnv(
+          env,
+          trajectory_generator=simple_openloop.LaikagoPoseOffsetGenerator(
+              action_limit=action_limit))
+    elif robot_class == od.OD:
       env = trajectory_generator_wrapper_env.TrajectoryGeneratorWrapperEnv(
           env,
           trajectory_generator=simple_openloop.LaikagoPoseOffsetGenerator(

@@ -108,6 +108,8 @@ while 1:
     baseOrn = [float(jointsStr[4]), float(jointsStr[5]), float(jointsStr[6]), float(jointsStr[3])]
     p.resetBasePositionAndOrientation(env.quadruped, basePos, cubeStartOrientation)
 
+    # jointOffsets = [0, -0.6, -1.8, 0, 0.6, 1.8]
+    # jointDirections = [1, 1, -1, 1, -1, 1, 1, 1, -1, -1, 1, -1]
     # left front, for laikago 3, 4, 5 joints
     state_a_h = jointDirections[0] * float(jointsStr[3 + 7]) + jointOffsets[0]
     state_a_u = jointDirections[1] * float(jointsStr[4 + 7]) + jointOffsets[1]
@@ -140,6 +142,9 @@ while 1:
 
     t += timeStep
     time.sleep(timeStep)
+    joint_states = p.getJointStates(
+        env.quadruped, env._motor_id_list)
+    print(joint_states)
 
 
 print("run simulation")

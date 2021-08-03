@@ -56,6 +56,7 @@ MOTOR_NAMES = [
 INIT_RACK_POSITION = [0, 0, 1]
 INIT_POSITION = [0, 0, 0.26]
 JOINT_DIRECTIONS = np.ones(12)
+#JOINT_DIRECTIONS = [-1, -1, 1, -1, -1, 1, -1, -1, 1, -1, -1, 1]
 HIP_JOINT_OFFSET = 0.0
 UPPER_LEG_JOINT_OFFSET = 0
 KNEE_JOINT_OFFSET = 0
@@ -83,7 +84,6 @@ COM_OFFSET = -np.array([0., 0., 0.])
 HIP_OFFSETS = np.array([[0, 0, 0.], [0, 0, 0.],
                         [0, 0, 0.], [0, 0, 0.]
                         ]) + COM_OFFSET
-
 ABDUCTION_P_GAIN = 50.0
 ABDUCTION_D_GAIN = 1.
 HIP_P_GAIN = 50.0
@@ -99,7 +99,7 @@ UPPER_NAME_PATTERN = re.compile(r"\w+_u_leg_\w+")
 LOWER_NAME_PATTERN = re.compile(r"\w+_l_leg_\w+")
 IMU_NAME_PATTERN = re.compile(r"imu\d*")
 
-URDF_FILENAME = "../../quadruped_envs/urdf/od_old.urdf"
+URDF_FILENAME = "../../quadruped_envs/urdf/od.urdf"
 
 _BODY_B_FIELD_NUMBER = 2
 _LINK_A_FIELD_NUMBER = 3
@@ -249,9 +249,14 @@ class OD(minitaur.Minitaur):
       reset_time=1,
       allow_knee_contact=False,
   ):
+
     self._urdf_filename = urdf_filename
     self._allow_knee_contact = allow_knee_contact
     self._enable_clip_motor_commands = enable_clip_motor_commands
+    pybullet_client.setPhysicsEngineParameter(numSolverIterations=200)
+    pybullet_client.setPhysicsEngineParameter(solverResidualThreshold=1e-30)
+    # pybullet_client.setTimeStep(1. / 1000)
+    # pybullet_client.configureDebugVisualizer(pybullet_client.COV_ENABLE_WIREFRAME, 1)
 
     motor_kp = [
         ABDUCTION_P_GAIN, HIP_P_GAIN, KNEE_P_GAIN, ABDUCTION_P_GAIN,
@@ -294,7 +299,8 @@ class OD(minitaur.Minitaur):
           flags=self._pybullet_client.URDF_USE_SELF_COLLISION)
     else:
       self.quadruped = self._pybullet_client.loadURDF(
-          urdf_path, self._GetDefaultInitPosition(),
+          urdf_path,
+          self._GetDefaultInitPosition(),
           self._GetDefaultInitOrientation())
 
   def _SettleDownForReset(self, default_motor_angles, reset_time):
@@ -343,32 +349,32 @@ class OD(minitaur.Minitaur):
           jointIndex=(joint_id),
           controlMode=self._pybullet_client.VELOCITY_CONTROL,
           targetVelocity=0,
-          force=0)
+          force=100)
     for name, i in zip(MOTOR_NAMES, range(len(MOTOR_NAMES))):
       if "link_hip_a" in name:
         angle = 0
       elif "link_u_leg_a" in name:
-        angle = 0.8
+        angle = 0
       elif "link_l_leg_a" in name:
-        angle = -1.8
+        angle = 0
       elif "link_hip_b" in name:
         angle = 0
       elif "link_u_leg_b" in name:
-        angle = 0.6
+        angle = 0
       elif "link_l_leg_b" in name:
-        angle = 1.8
+        angle = 0
       elif "link_hip_c" in name:
         angle = 0
       elif "link_u_leg_c" in name:
-        angle = 0.6
+        angle = 0
       elif "link_l_leg_c" in name:
-        angle = -1.8
+        angle = 0
       elif "link_hip_d" in name:
         angle = 0
       elif "link_u_leg_d" in name:
-        angle = -0.6
+        angle = 0
       elif "link_l_leg_d" in name:
-        angle = 1.8
+        angle = 0
       else:
         raise ValueError("The name %s is not recognized as a motor joint." %
                          name)
