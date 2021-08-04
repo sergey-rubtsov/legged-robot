@@ -1,6 +1,6 @@
 """Pybullet simulation of an Open Dynamics robot
 
-Mapping for OD and Laikago joints:
+Joints configuration:
 
 a - front left
 b - front right
@@ -12,13 +12,7 @@ hips    0   3   6   9
 uleg    1   4   7   10
 lleg    2   5   8   11
 
-laikago:
-hips    3   0   9   6
-uleg    4   1  10   7
-lleg    5   2  11   8
-
 """
-
 
 import os
 import math
@@ -98,7 +92,7 @@ UPPER_NAME_PATTERN = re.compile(r"\w+_u_leg_\w+")
 LOWER_NAME_PATTERN = re.compile(r"\w+_l_leg_\w+")
 IMU_NAME_PATTERN = re.compile(r"imu\d*")
 
-URDF_FILENAME = "../../quadruped_envs/urdf/od.urdf"
+URDF_FILENAME = "urdf/od.urdf"
 
 _BODY_B_FIELD_NUMBER = 2
 _LINK_A_FIELD_NUMBER = 3
@@ -195,8 +189,8 @@ class OD(minitaur.Minitaur):
   MPC_VELOCITY_MULTIPLIER = 0.5
   ACTION_CONFIG = [
       locomotion_gym_config.ScalarField(name="FR_hip_motor",
-                                        upper_bound=2.443,
-                                        lower_bound=-1.31),
+                                        upper_bound=1.31,
+                                        lower_bound=-2.443),
       locomotion_gym_config.ScalarField(name="FR_upper_joint",
                                         upper_bound=6.3,
                                         lower_bound=-6.3),
@@ -213,8 +207,8 @@ class OD(minitaur.Minitaur):
                                         upper_bound=6.3,
                                         lower_bound=-6.3),
       locomotion_gym_config.ScalarField(name="RR_hip_motor",
-                                        upper_bound=2.443,
-                                        lower_bound=-1.31),
+                                        upper_bound=1.31,
+                                        lower_bound=-2.443),
       locomotion_gym_config.ScalarField(name="RR_upper_joint",
                                         upper_bound=6.3,
                                         lower_bound=-6.3),
@@ -434,11 +428,6 @@ class OD(minitaur.Minitaur):
       return INIT_POSITION
 
   def _GetDefaultInitOrientation(self):
-    # The Laikago URDF assumes the initial pose of heading towards z axis,
-    # and belly towards y axis. The following transformation is to transform
-    # the Laikago initial orientation to our commonly used orientation: heading
-    # towards -x direction, and z axis is the up direction.
-    # [0, 0, math.pi / 2]
     init_orientation = pyb.getQuaternionFromEuler([0, 0, 0])
     return init_orientation
 

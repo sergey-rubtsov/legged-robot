@@ -13,7 +13,7 @@ from tqdm import tqdm
 import pybullet as p  # pytype: disable=import-error
 
 from motion_imitation.envs import env_builder
-from motion_imitation.robots import a1, od
+from motion_imitation.robots import a1
 from motion_imitation.robots import laikago
 from motion_imitation.robots import robot_config
 
@@ -25,7 +25,7 @@ flags.DEFINE_bool('on_rack', False, 'Whether to put the robot on rack.')
 flags.DEFINE_string('video_dir', None,
                     'Where to save video (or None for not saving).')
 
-ROBOT_CLASS_MAP = {'A1': a1.A1, 'Laikago': laikago.Laikago, 'OD': od.OD}
+ROBOT_CLASS_MAP = {'A1': a1.A1, 'Laikago': laikago.Laikago}
 
 MOTOR_CONTROL_MODE_MAP = {
     'Torque': robot_config.MotorControlMode.TORQUE,
@@ -47,19 +47,28 @@ def main(_):
   action_median = (action_low + action_high) / 2.
   dim_action = action_low.shape[0]
   action_selector_ids = []
+  for dim in range(dim_action):
+    action_selector_id = p.addUserDebugParameter(paramName='dim{}'.format(dim),
+                                                 rangeMin=action_low[dim],
+                                                 rangeMax=action_high[dim],
+                                                 startValue=action_median[dim])
+    action_selector_ids.append(action_selector_id)
 
   if FLAGS.video_dir:
-    if not os.path.exists("video/"):
-      os.makedirs("video")
-    log_id = p.startStateLogging(p.STATE_LOGGING_VIDEO_MP4, "video/" + FLAGS.video_dir + ".mp4")
+      if not os.path.exists("video/"):
+          os.makedirs("video")
+      log_id = p.startStateLogging(p.STATE_LOGGING_VIDEO_MP4, "video/" + FLAGS.video_dir + ".mp4")
 
-  for _ in tqdm(range(8000)):
-    action = np.zeros(dim_action)
-    env.step(action)
+  for _ in tqdm(range(800)):
+      action = np.zeros(dim_action)
+      for dim in range(dim_action):
+        action[dim] = env.pybullet_client.readUserDebugParameter(
+            action_selector_ids[dim])
+      env.step(action)
 
   if FLAGS.video_dir:
-    p.stopStateLogging(log_id)
+      p.stopStateLogging(log_id)
 
 
 if __name__ == "__main__":
-  app.run(main)
+    app.run(main)

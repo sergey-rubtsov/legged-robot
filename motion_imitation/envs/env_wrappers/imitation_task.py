@@ -756,8 +756,6 @@ class ImitationTask(object):
 
     root_pos = motion.get_frame_root_pos(pose)
     root_rot = motion.get_frame_root_rot(pose)
-    # root_rot = [0, 0, 0, 1]
-    # root_pos[2] = 0.33
     root_vel = motion.get_frame_root_vel(vel)
     root_ang_vel = motion.get_frame_root_ang_vel(vel)
 
