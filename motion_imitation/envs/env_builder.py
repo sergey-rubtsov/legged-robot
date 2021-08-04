@@ -42,7 +42,8 @@ from motion_imitation.robots import robot_config
 
 def build_imitation_env(motion_files, num_parallel_envs,
                         enable_randomizer, enable_rendering,
-                        robot_class=od.OD,
+                        # robot_class=od.OD,
+                        robot_class=a1.A1,
                         trajectory_generator=simple_openloop.LaikagoPoseOffsetGenerator(action_limit=laikago.UPPER_BOUND)):
   assert len(motion_files) > 0
 
@@ -77,8 +78,7 @@ def build_imitation_env(motion_files, num_parallel_envs,
                                             env_randomizers=randomizers, robot_sensors=sensors, task=task)
 
   env = observation_dictionary_to_array_wrapper.ObservationDictionaryToArrayWrapper(env)
-  env = trajectory_generator_wrapper_env.TrajectoryGeneratorWrapperEnv(env,
-                                                                       trajectory_generator=trajectory_generator)
+  env = trajectory_generator_wrapper_env.TrajectoryGeneratorWrapperEnv(env, trajectory_generator=trajectory_generator)
 
   # if mode == "test":
   # if enable_rendering:

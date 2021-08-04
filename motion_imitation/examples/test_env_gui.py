@@ -47,24 +47,14 @@ def main(_):
   action_median = (action_low + action_high) / 2.
   dim_action = action_low.shape[0]
   action_selector_ids = []
-  # for dim in range(dim_action):
-  #   action_selector_id = p.addUserDebugParameter(paramName='dim{}'.format(dim),
-  #                                                rangeMin=action_low[dim],
-  #                                                rangeMax=action_high[dim],
-  #                                                startValue=action_median[dim])
-  #   action_selector_ids.append(action_selector_id)
-
 
   if FLAGS.video_dir:
     if not os.path.exists("video/"):
       os.makedirs("video")
     log_id = p.startStateLogging(p.STATE_LOGGING_VIDEO_MP4, "video/" + FLAGS.video_dir + ".mp4")
 
-  for _ in tqdm(range(800)):
+  for _ in tqdm(range(8000)):
     action = np.zeros(dim_action)
-    # for dim in range(dim_action):
-    #   action[dim] = env.pybullet_client.readUserDebugParameter(
-    #       action_selector_ids[dim])
     env.step(action)
 
   if FLAGS.video_dir:

@@ -671,8 +671,7 @@ class ImitationTask(object):
     ref_heading = motion_util.calc_heading(ref_root_rot)
     sim_heading = motion_util.calc_heading(sim_root_rot)
     delta_heading = sim_heading - ref_heading
-    self._origin_offset_rot = transformations.quaternion_about_axis(
-        delta_heading, [0, 0, 1])
+    self._origin_offset_rot = transformations.quaternion_about_axis(delta_heading, [0, 0, 1])
 
     self._ref_pose = self._calc_ref_pose(time)
     self._ref_vel = self._calc_ref_vel(time)
@@ -757,6 +756,8 @@ class ImitationTask(object):
 
     root_pos = motion.get_frame_root_pos(pose)
     root_rot = motion.get_frame_root_rot(pose)
+    # root_rot = [0, 0, 0, 1]
+    # root_pos[2] = 0.33
     root_vel = motion.get_frame_root_vel(vel)
     root_ang_vel = motion.get_frame_root_ang_vel(vel)
 

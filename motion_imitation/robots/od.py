@@ -40,23 +40,22 @@ NUM_MOTORS = 12
 NUM_LEGS = 4
 
 MOTOR_NAMES = [
-    "link_hip_a",
     "link_hip_b",
-    "link_hip_c",
-    "link_hip_d",
-    "link_u_leg_a",
     "link_u_leg_b",
-    "link_u_leg_c",
-    "link_u_leg_d",
-    "link_l_leg_a",
     "link_l_leg_b",
-    "link_l_leg_c",
-    "link_l_leg_d"
+    "link_hip_a",
+    "link_u_leg_a",
+    "link_l_leg_a",
+    "link_hip_d",
+    "link_u_leg_d",
+    "link_l_leg_d",
+    "link_hip_c",
+    "link_u_leg_c",
+    "link_l_leg_c"
 ]
 INIT_RACK_POSITION = [0, 0, 1]
 INIT_POSITION = [0, 0, 0.26]
 JOINT_DIRECTIONS = np.ones(12)
-#JOINT_DIRECTIONS = [-1, -1, 1, -1, -1, 1, -1, -1, 1, -1, -1, 1]
 HIP_JOINT_OFFSET = 0.0
 UPPER_LEG_JOINT_OFFSET = 0
 KNEE_JOINT_OFFSET = 0
@@ -80,9 +79,9 @@ _DEFAULT_HIP_POSITIONS = (
     (0, 0, 0),
 )
 
-COM_OFFSET = -np.array([0., 0., 0.])
-HIP_OFFSETS = np.array([[0, 0, 0.], [0, 0, 0.],
-                        [0, 0, 0.], [0, 0, 0.]
+COM_OFFSET = -np.array([0.012731, 0.002186, 0.000515])
+HIP_OFFSETS = np.array([[0.183, -0.047, 0.], [0.183, 0.047, 0.],
+                        [-0.183, -0.047, 0.], [-0.183, 0.047, 0.]
                         ]) + COM_OFFSET
 ABDUCTION_P_GAIN = 50.0
 ABDUCTION_D_GAIN = 1.
@@ -190,9 +189,9 @@ class OD(minitaur.Minitaur):
   # At high replanning frequency, inaccurate values of BODY_MASS/INERTIA
   # doesn't seem to matter much. However, these values should be better tuned
   # when the replan frequency is low (e.g. using a less beefy CPU).
-  MPC_BODY_MASS = 108 / 9.8
+  MPC_BODY_MASS = 20 / 9.8
   MPC_BODY_INERTIA = np.array((0.017, 0, 0, 0, 0.057, 0, 0, 0, 0.064)) * 4.
-  MPC_BODY_HEIGHT = 0.24
+  MPC_BODY_HEIGHT = 0.26
   MPC_VELOCITY_MULTIPLIER = 0.5
   ACTION_CONFIG = [
       locomotion_gym_config.ScalarField(name="FR_hip_motor",
@@ -253,9 +252,9 @@ class OD(minitaur.Minitaur):
     self._urdf_filename = urdf_filename
     self._allow_knee_contact = allow_knee_contact
     self._enable_clip_motor_commands = enable_clip_motor_commands
-    pybullet_client.setPhysicsEngineParameter(numSolverIterations=200)
-    pybullet_client.setPhysicsEngineParameter(solverResidualThreshold=1e-30)
-    # pybullet_client.setTimeStep(1. / 1000)
+    # pybullet_client.setPhysicsEngineParameter(numSolverIterations=200)
+    # pybullet_client.setPhysicsEngineParameter(solverResidualThreshold=1e-30)
+    pybullet_client.setTimeStep(1. / 600000)
     # pybullet_client.configureDebugVisualizer(pybullet_client.COV_ENABLE_WIREFRAME, 1)
 
     motor_kp = [
@@ -349,7 +348,7 @@ class OD(minitaur.Minitaur):
           jointIndex=(joint_id),
           controlMode=self._pybullet_client.VELOCITY_CONTROL,
           targetVelocity=0,
-          force=100)
+          force=0)
     for name, i in zip(MOTOR_NAMES, range(len(MOTOR_NAMES))):
       if "link_hip_a" in name:
         angle = 0
@@ -439,7 +438,8 @@ class OD(minitaur.Minitaur):
     # and belly towards y axis. The following transformation is to transform
     # the Laikago initial orientation to our commonly used orientation: heading
     # towards -x direction, and z axis is the up direction.
-    init_orientation = pyb.getQuaternionFromEuler([0., 0., 0.])
+    # [0, 0, math.pi / 2]
+    init_orientation = pyb.getQuaternionFromEuler([0, 0, 0])
     return init_orientation
 
   def GetDefaultInitPosition(self):

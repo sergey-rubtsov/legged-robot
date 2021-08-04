@@ -40,7 +40,8 @@ p.setAdditionalSearchPath(pybullet_data.getDataPath())
 p.setGravity(0, 0, -10)
 planeId = p.loadURDF("plane.urdf")
 cubeStartPos = [0, 0, 0.3]
-cubeStartOrientation = p.getQuaternionFromEuler([0, 0, math.pi / 2])
+# cubeStartOrientation = p.getQuaternionFromEuler([0, 0, math.pi / 2])
+cubeStartOrientation = p.getQuaternionFromEuler([0, 0, 0])
 # cubeStartOrientation = transformations.quaternion_from_euler(math.pi / 2, 0, 0, 'szyx')
 p.setAdditionalSearchPath(str(pathlib.Path(__file__).parent.absolute()))
 env = OpenDynamicQuadruped(pybullet_client=p)
@@ -50,7 +51,7 @@ p.addUserDebugParameter(paramName='111',
                                                  startValue=5)
 mocapData = motion_capture_data.MotionCaptureData()
 
-motionPath = pybullet_data.getDataPath() + "/data/motions/laikago_walk.txt"
+motionPath = "data/motions/laikago_walk.txt"
 
 mocapData.Load(motionPath)
 print("mocapData.NumFrames=", mocapData.NumFrames())
@@ -63,13 +64,16 @@ stablePD = pd_controller_stable.PDControllerStable(p)
 
 jointDirections = [1, 1, -1, 1, -1, 1, 1, 1, -1, -1, 1, -1]
 # mapping of laikago motions to quadruped
-jointIds = [3, 4, 5, 0, 1, 2, 9, 10, 11, 6, 7, 8]
+jointIds = [3, 4, 5,
+            0, 1, 2,
+            9, 10, 11,
+            6, 7, 8]
 
 jointOffsets = [0, -0.6, -1.8, 0, 0.6, 1.8]
 
 timeStep = 1. / 50
 cycleTime = mocapData.getCycleTime()
-t = 0
+t = 0.1
 
 for j in range(p.getNumJoints(env.quadruped)):
     info = p.getJointInfo(env.quadruped, j)
