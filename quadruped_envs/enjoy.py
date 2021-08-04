@@ -168,8 +168,6 @@ def main():  # noqa: C901
     try:
         for _ in range(args.n_timesteps):
             action, state = model.predict(obs, state=state, deterministic=deterministic)
-            action = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            #state = None
             obs, reward, done, infos = env.step(action)
             if not args.no_render:
                 env.render("human")
