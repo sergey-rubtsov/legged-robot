@@ -79,9 +79,9 @@ _DEFAULT_HIP_POSITIONS = (
     (0, 0, 0),
 )
 
-COM_OFFSET = -np.array([0.012731, 0.002186, 0.000515])
-HIP_OFFSETS = np.array([[0.183, -0.047, 0.], [0.183, 0.047, 0.],
-                        [-0.183, -0.047, 0.], [-0.183, 0.047, 0.]
+COM_OFFSET = -np.array([0, 0, 0])
+HIP_OFFSETS = np.array([[0, 0, 0.], [0, 0, 0.],
+                        [0, 0, 0.], [0, 0, 0.]
                         ]) + COM_OFFSET
 ABDUCTION_P_GAIN = 50.0
 ABDUCTION_D_GAIN = 1.
@@ -254,7 +254,7 @@ class OD(minitaur.Minitaur):
     self._enable_clip_motor_commands = enable_clip_motor_commands
     # pybullet_client.setPhysicsEngineParameter(numSolverIterations=200)
     # pybullet_client.setPhysicsEngineParameter(solverResidualThreshold=1e-30)
-    pybullet_client.setTimeStep(1. / 600000)
+    # pybullet_client.setTimeStep(1. / 6000)
     # pybullet_client.configureDebugVisualizer(pybullet_client.COV_ENABLE_WIREFRAME, 1)
 
     motor_kp = [
