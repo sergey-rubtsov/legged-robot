@@ -8,15 +8,16 @@ from motion_imitation.envs.env_wrappers import simple_openloop, observation_dict
     trajectory_generator_wrapper_env, imitation_wrapper_env, imitation_task
 from motion_imitation.envs.sensors import sensor_wrappers, robot_sensors, environment_sensors
 from motion_imitation.envs.utilities import controllable_env_randomizer_from_config
-from motion_imitation.robots import robot_config, laikago
+from motion_imitation.robots import robot_config
 from quadruped_envs import od
 
 
-def build_imitation_env(motion_files, num_parallel_envs,
-                        enable_randomizer, enable_rendering,
+def build_imitation_env(motion_files,
+                        num_parallel_envs,
+                        enable_randomizer,
+                        enable_rendering,
                         robot_class=od.OD,
-                        trajectory_generator=simple_openloop.LaikagoPoseOffsetGenerator(
-                            action_limit=laikago.UPPER_BOUND)):
+                        trajectory_generator=simple_openloop.LaikagoPoseOffsetGenerator(action_limit=od.UPPER_BOUND)):
     assert len(motion_files) > 0
 
     curriculum_episode_length_start = 20
@@ -31,10 +32,10 @@ def build_imitation_env(motion_files, num_parallel_envs,
 
     sensors = [
         sensor_wrappers.HistoricSensorWrapper(
-            wrapped_sensor=robot_sensors.MotorAngleSensor(num_motors=laikago.NUM_MOTORS), num_history=3),
+            wrapped_sensor=robot_sensors.MotorAngleSensor(num_motors=od.NUM_MOTORS), num_history=3),
         sensor_wrappers.HistoricSensorWrapper(wrapped_sensor=robot_sensors.IMUSensor(), num_history=3),
         sensor_wrappers.HistoricSensorWrapper(
-            wrapped_sensor=environment_sensors.LastActionSensor(num_actions=laikago.NUM_MOTORS), num_history=3)
+            wrapped_sensor=environment_sensors.LastActionSensor(num_actions=od.NUM_MOTORS), num_history=3)
     ]
 
     task = imitation_task.ImitationTask(ref_motion_filenames=motion_files,
@@ -81,6 +82,7 @@ class OpenDynamicImitationEnv(gym.Env):
         enable_env_rand = True
         self._env = build_imitation_env(motion_files=[motion_file],
                                         num_parallel_envs=num_procs,
+                                        robot_class=od.OD,
                                         enable_randomizer=enable_env_rand,
                                         enable_rendering=render)
         self.observation_space = self._env.observation_space

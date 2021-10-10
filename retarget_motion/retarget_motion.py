@@ -44,12 +44,12 @@ REF_HIP_JOINT_IDS = [6, 16, 11, 20]
 REF_TOE_JOINT_IDS = [10, 19, 15, 23]
 
 mocap_motions = [
-  ["pace", "data/dog_walk00_joint_pos.txt",162,201],
-  ["trot", "data/dog_walk03_joint_pos.txt",448,481 ],
-  ["trot2", "data/dog_run04_joint_pos.txt",630,663 ],
-  ["canter", "data/dog_run00_joint_pos.txt", 430, 459],
-  ["left_turn0", "data/dog_walk09_joint_pos.txt",1085,1124 ],
-  ["right_turn0", "data/dog_walk09_joint_pos.txt", 2404,2450],
+  # ["pace", "data/dog_walk00_joint_pos.txt",162,201],
+   ["trot", "data/dog_walk03_joint_pos.txt",448,481 ],
+  # ["trot2", "data/dog_run04_joint_pos.txt",630,663 ],
+  # ["canter", "data/dog_run00_joint_pos.txt", 430, 459],
+  # ["left_turn0", "data/dog_walk09_joint_pos.txt",1085,1124 ],
+  # ["right_turn0", "data/dog_walk09_joint_pos.txt", 2404,2450],
 ]
 
   

@@ -16,15 +16,15 @@ register(
 )
 
 register(
-    id='A1GymEnv-v0',
-    entry_point='motion_imitation.envs.gym_envs.a1_gym_env:A1GymEnv',
+    id='A1GymEnv-v1',
+    entry_point='motion_imitation.envs.gym_envs.a1_gym_env_v1:A1GymEnv',
     max_episode_steps=1000,
     reward_threshold=15.0,
 )
 
 register(
-    id='LocomotionGymEnv-v0',
-    entry_point='motion_imitation.envs.locomotion_gym_env:LocomotionGymEnv',
+    id='A1GymEnv-v0',
+    entry_point='motion_imitation.envs.gym_envs.a1_gym_env_v1:A1GymEnv',
     max_episode_steps=1000,
     reward_threshold=15.0,
 )

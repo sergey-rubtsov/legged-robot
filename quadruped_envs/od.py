@@ -77,11 +77,11 @@ COM_OFFSET = -np.array([0, 0, 0])
 HIP_OFFSETS = np.array([[0, 0, 0.], [0, 0, 0.],
                         [0, 0, 0.], [0, 0, 0.]
                         ]) + COM_OFFSET
-ABDUCTION_P_GAIN = 50.0
-ABDUCTION_D_GAIN = 1.
-HIP_P_GAIN = 50.0
+ABDUCTION_P_GAIN = 220.0
+ABDUCTION_D_GAIN = 0.3
+HIP_P_GAIN = 220.0
 HIP_D_GAIN = 2.0
-KNEE_P_GAIN = 50.0
+KNEE_P_GAIN = 220.0
 KNEE_D_GAIN = 2.0
 
 # Bases on the readings from Laikago's default pose.
@@ -96,6 +96,9 @@ URDF_FILENAME = "urdf/od.urdf"
 
 _BODY_B_FIELD_NUMBER = 2
 _LINK_A_FIELD_NUMBER = 3
+
+UPPER_BOUND = 6.3
+LOWER_BOUND = -6.3
 
 
 def foot_position_in_hip_frame_to_joint_angle(foot_position, l_hip_sign=1):
@@ -192,38 +195,38 @@ class OD(minitaur.Minitaur):
                                         upper_bound=1.31,
                                         lower_bound=-2.443),
       locomotion_gym_config.ScalarField(name="FR_upper_joint",
-                                        upper_bound=6.3,
-                                        lower_bound=-6.3),
+                                        upper_bound=UPPER_BOUND,
+                                        lower_bound=LOWER_BOUND),
       locomotion_gym_config.ScalarField(name="FR_lower_joint",
-                                        upper_bound=6.3,
-                                        lower_bound=-6.3),
+                                        upper_bound=UPPER_BOUND,
+                                        lower_bound=LOWER_BOUND),
       locomotion_gym_config.ScalarField(name="FL_hip_motor",
                                         upper_bound=2.443,
                                         lower_bound=-1.31),
       locomotion_gym_config.ScalarField(name="FL_upper_joint",
-                                        upper_bound=6.3,
-                                        lower_bound=-6.3),
+                                        upper_bound=UPPER_BOUND,
+                                        lower_bound=LOWER_BOUND),
       locomotion_gym_config.ScalarField(name="FL_lower_joint",
-                                        upper_bound=6.3,
-                                        lower_bound=-6.3),
+                                        upper_bound=UPPER_BOUND,
+                                        lower_bound=LOWER_BOUND),
       locomotion_gym_config.ScalarField(name="RR_hip_motor",
                                         upper_bound=1.31,
                                         lower_bound=-2.443),
       locomotion_gym_config.ScalarField(name="RR_upper_joint",
-                                        upper_bound=6.3,
-                                        lower_bound=-6.3),
+                                        upper_bound=UPPER_BOUND,
+                                        lower_bound=LOWER_BOUND),
       locomotion_gym_config.ScalarField(name="RR_lower_joint",
-                                        upper_bound=6.3,
-                                        lower_bound=-6.3),
+                                        upper_bound=UPPER_BOUND,
+                                        lower_bound=LOWER_BOUND),
       locomotion_gym_config.ScalarField(name="RL_hip_motor",
                                         upper_bound=2.443,
                                         lower_bound=-1.31),
       locomotion_gym_config.ScalarField(name="RL_upper_joint",
-                                        upper_bound=6.3,
-                                        lower_bound=-6.3),
+                                        upper_bound=UPPER_BOUND,
+                                        lower_bound=LOWER_BOUND),
       locomotion_gym_config.ScalarField(name="RL_lower_joint",
-                                        upper_bound=6.3,
-                                        lower_bound=-6.3),
+                                        upper_bound=UPPER_BOUND,
+                                        lower_bound=LOWER_BOUND),
   ]
 
   def __init__(
