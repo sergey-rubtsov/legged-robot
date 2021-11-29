@@ -54,9 +54,9 @@ class OpenDynamicQuadruped(object):
     def __init__(self,
                  pybullet_client,
                  urdf_root=os.path.join(os.path.dirname(__file__), "../data"),
-                 time_step=0.01,
+                 time_step=0.1,  # ?
                  self_collision_enabled=False,
-                 motor_velocity_limit=50.0,
+                 motor_velocity_limit=0.05,
                  pd_control_enabled=False):
         """Constructs a robot and resets it to the initial states.
 

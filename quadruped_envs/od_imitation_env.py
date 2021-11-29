@@ -3,12 +3,12 @@
 import gym
 import os, inspect, sys
 
-from motion_imitation.envs import locomotion_gym_config, locomotion_gym_env
-from motion_imitation.envs.env_wrappers import simple_openloop, observation_dictionary_to_array_wrapper, \
+from quadruped_envs.imitation_wrapper_env import locomotion_gym_config, locomotion_gym_env, \
+    simple_openloop, observation_dictionary_to_array_wrapper, \
     trajectory_generator_wrapper_env, imitation_wrapper_env, imitation_task
 from motion_imitation.envs.sensors import sensor_wrappers, robot_sensors, environment_sensors
-from motion_imitation.envs.utilities import controllable_env_randomizer_from_config
 from motion_imitation.robots import robot_config
+# from motion_imitation.envs.utilities import controllable_env_randomizer_from_config
 from quadruped_envs import od
 
 
@@ -26,7 +26,6 @@ def build_imitation_env(motion_files,
     sim_params = locomotion_gym_config.SimulationParameters()
     sim_params.enable_rendering = enable_rendering
     sim_params.allow_knee_contact = True
-    sim_params.motor_control_mode = robot_config.MotorControlMode.POSITION
 
     gym_config = locomotion_gym_config.LocomotionGymConfig(simulation_parameters=sim_params)
 
@@ -45,9 +44,9 @@ def build_imitation_env(motion_files,
                                         warmup_time=0.25)
 
     randomizers = []
-    if enable_randomizer:
-        randomizer = controllable_env_randomizer_from_config.ControllableEnvRandomizerFromConfig(verbose=False)
-        randomizers.append(randomizer)
+    # if enable_randomizer:
+    #     randomizer = controllable_env_randomizer_from_config.ControllableEnvRandomizerFromConfig(verbose=False)
+    #     randomizers.append(randomizer)
 
     env = locomotion_gym_env.LocomotionGymEnv(gym_config=gym_config, robot_class=robot_class,
                                               env_randomizers=randomizers, robot_sensors=sensors, task=task)
@@ -58,7 +57,7 @@ def build_imitation_env(motion_files,
     env = imitation_wrapper_env.ImitationWrapperEnv(env,
                                                     episode_length_start=curriculum_episode_length_start,
                                                     episode_length_end=curriculum_episode_length_end,
-                                                    curriculum_steps=30000000,
+                                                    curriculum_steps=30,
                                                     num_parallel_envs=num_parallel_envs)
     return env
 
@@ -78,7 +77,7 @@ class OpenDynamicImitationEnv(gym.Env):
     def __init__(self,
                  render=True):
         motion_file = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/pace.txt"
-        num_procs = 1
+        num_procs = 10  # 1 by default
         enable_env_rand = True
         self._env = build_imitation_env(motion_files=[motion_file],
                                         num_parallel_envs=num_procs,

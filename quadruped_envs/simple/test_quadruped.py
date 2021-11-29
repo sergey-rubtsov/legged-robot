@@ -51,7 +51,7 @@ p.addUserDebugParameter(paramName='111',
                                                  startValue=5)
 mocapData = motion_capture_data.MotionCaptureData()
 
-motionPath = "data/motions/od/canter.txt"
+motionPath = "../data/motions/od/canter.txt"
 
 mocapData.Load(motionPath)
 print("mocapData.NumFrames=", mocapData.NumFrames())

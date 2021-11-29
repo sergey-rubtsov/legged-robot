@@ -29,7 +29,7 @@ import logging
 import os
 import numpy as np
 
-from motion_imitation.envs.env_wrappers import imitation_terminal_conditions
+from quadruped_envs.imitation_wrapper_env.imitation_terminal_conditions import imitation_terminal_condition
 from motion_imitation.utilities import pose3d
 from motion_imitation.utilities import motion_data
 from motion_imitation.utilities import motion_util
@@ -41,7 +41,7 @@ class ImitationTask(object):
 
   def __init__(self,
                weight=1.0,
-               terminal_condition=imitation_terminal_conditions.imitation_terminal_condition,
+               terminal_condition=imitation_terminal_condition,
                ref_motion_filenames=None,
                enable_cycle_sync=True,
                clip_velocity=None,

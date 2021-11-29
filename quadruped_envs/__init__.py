@@ -1,4 +1,4 @@
-from quadruped_envs.quadruped import OpenDynamicQuadrupedEnv
+from quadruped_envs.simple.quadruped_env import OpenDynamicQuadrupedEnv
 from gym.envs.registration import register
 
 register(

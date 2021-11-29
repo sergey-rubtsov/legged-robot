@@ -16,7 +16,7 @@ from gym.utils import seeding
 import numpy as np
 import pybullet
 from pybullet_utils import bullet_client as bc
-from . import open_dynamic_quadruped
+from .. import open_dynamic_quadruped
 import pybullet_data
 from pkg_resources import parse_version
 
@@ -99,9 +99,9 @@ class OpenDynamicQuadrupedEnv(gym.Env):
       render: Whether to render the simulation.
       kd_for_pd_controllers: kd value for the pd controllers of the motors.
     """
-        self._time_step = 0.01
+        self._time_step = 0.1
         self._action_repeat = action_repeat
-        self._num_bullet_solver_iterations = 300
+        self._num_bullet_solver_iterations = 100
         self._urdf_root = urdf_root
         self._self_collision_enabled = self_collision_enabled
         self._motor_velocity_limit = motor_velocity_limit

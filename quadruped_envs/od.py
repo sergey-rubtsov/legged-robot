@@ -234,8 +234,8 @@ class OD(minitaur.Minitaur):
       pybullet_client,
       urdf_filename=URDF_FILENAME,
       enable_clip_motor_commands=False,
-      time_step=0.001,
-      action_repeat=10,
+      time_step=0.01,  # for reference move, it was 0.001
+      action_repeat=1,  # was 10
       sensors=None,
       control_latency=0.002,
       on_rack=False,
@@ -528,3 +528,7 @@ class OD(minitaur.Minitaur):
     # Does not work for Minitaur which has the four bar mechanism for now.
     motor_angles = self.GetMotorAngles()[leg_id * 3:(leg_id + 1) * 3]
     return analytical_leg_jacobian(motor_angles, leg_id)
+
+  def GetFootLinkIDs(self):
+    """Get list of IDs for all foot links."""
+    return self._lower_link_ids
