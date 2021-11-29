@@ -404,13 +404,11 @@ class LocomotionGymEnv(gym.Env):
         self._world_dict = new_dict.copy()
 
     def _termination(self):
+        if self._task and hasattr(self._task, 'done'):
+            return self._task.done(self)
+
         if not self._robot.is_safe:
             return True
-
-        if self._task and hasattr(self._task, 'done'):
-            if self._task.done(self):
-                print("done")
-            return self._task.done(self)
 
         for s in self.all_sensors():
             s.on_terminate(self)

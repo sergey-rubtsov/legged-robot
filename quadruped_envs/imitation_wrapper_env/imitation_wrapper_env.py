@@ -61,8 +61,6 @@ class ImitationWrapperEnv(object):
 
     if not done:
       self._total_step_count += 1
-    else:
-      print("done")
 
     info = {"terminated": terminated}
 

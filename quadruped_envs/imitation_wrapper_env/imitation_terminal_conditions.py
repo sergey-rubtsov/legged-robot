@@ -30,24 +30,22 @@ def imitation_terminal_condition(env,
     pyb = env._pybullet_client
     task = env._task
 
-    motion_over = task.is_motion_over()
-    if motion_over:
-        print("motion_over")
-        return True
-    foot_links = env.robot.GetFootLinkIDs()
-    ground = env.get_ground()
-
-    contact_fall = False
     # sometimes the robot can be initialized with some ground penetration
     # so do not check for contacts until after the first env step.
+    foot_links = env.robot.GetFootLinkIDs()
+    ground = env.get_ground()
     if env.env_step_counter > 0:
         robot_ground_contacts = env.pybullet_client.getContactPoints(
             bodyA=env.robot.quadruped, bodyB=ground)
 
         for contact in robot_ground_contacts:
             if contact[3] not in foot_links:
-                print("contact_fall")
                 return True
+
+    motion_over = task.is_motion_over()
+    if motion_over:
+        print("motion_over")
+        return True
 
     root_pos_ref, root_rot_ref = pyb.getBasePositionAndOrientation(
         task.get_ref_model())
