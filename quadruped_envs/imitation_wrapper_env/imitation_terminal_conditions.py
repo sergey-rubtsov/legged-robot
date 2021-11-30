@@ -12,7 +12,7 @@ from pybullet_utils import transformations
 
 
 def imitation_terminal_condition(env,
-                                 dist_fail_threshold=1.0,
+                                 dist_fail_threshold=0.01,
                                  rot_fail_threshold=0.5 * np.pi):
     """A terminal condition for motion imitation task.
 
@@ -42,22 +42,19 @@ def imitation_terminal_condition(env,
             if contact[3] not in foot_links:
                 return True
 
-    motion_over = task.is_motion_over()
-    if motion_over:
-        print("motion_over")
-        return True
-
     root_pos_ref, root_rot_ref = pyb.getBasePositionAndOrientation(
         task.get_ref_model())
     root_pos_sim, root_rot_sim = pyb.getBasePositionAndOrientation(
         env.robot.quadruped)
 
     root_pos_diff = np.array(root_pos_ref) - np.array(root_pos_sim)
-    root_pos_fail = (
-            root_pos_diff.dot(root_pos_diff) >
-            dist_fail_threshold * dist_fail_threshold)
+    root_pos_fail = root_pos_diff.dot(root_pos_diff) > dist_fail_threshold
     if root_pos_fail:
-        print("root_pos_fail")
+        return True
+
+    motion_over = task.is_motion_over()
+    if motion_over:
+        print("motion_over")
         return True
 
     root_rot_diff = transformations.quaternion_multiply(
