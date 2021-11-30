@@ -37,6 +37,18 @@ from motion_imitation.utilities import motion_util
 from pybullet_utils import transformations
 
 
+def _calculate_vel_error(j_state_ref, j_state_sim):
+    j_vel_ref = np.array(j_state_ref[1])
+    j_vel_sim = np.array(j_state_sim[1])
+    j_size_ref = len(j_vel_ref)
+    if j_size_ref > 0:
+        j_vel_diff = j_vel_ref - j_vel_sim
+        j_vel_err = j_vel_diff.dot(j_vel_diff)
+        return j_vel_err
+    return 0
+
+FOOT_ERROR_WEIGHT = 5
+
 class ImitationTask(object):
     """Imitation reference motion task."""
 
@@ -52,17 +64,20 @@ class ImitationTask(object):
                  ref_state_init_prob=1.0,
                  enable_rand_init_time=True,
                  warmup_time=0.0,
-                 pose_weight=0.35,
-                 velocity_weight=0.35,
+
+                 pose_weight=0.5,
+                 velocity_weight=0.1,
                  end_effector_weight=0.2,
-                 root_pose_weight=0.05,
+                 root_pose_weight=0.15,
                  root_velocity_weight=0.05,
+
                  pose_err_scale=5.0,
                  velocity_err_scale=0.1,
                  end_effector_err_scale=40,
                  end_effector_height_err_scale=3.0,
                  root_pose_err_scale=20,
                  root_velocity_err_scale=2,
+
                  perturb_init_state_prob=0.0,
                  tar_obs_noise=None,
                  draw_ref_model_alpha=0.5):
@@ -401,57 +416,21 @@ class ImitationTask(object):
         sim_model = robot.quadruped
         ref_model = self._ref_model
         pyb = self._get_pybullet_client()
-
         vel_err = 0.0
-        num_joints = self._get_num_joints()
+        legs = env.robot.GetLegLinkIDs()
+        feet = env.robot.GetFootLinkIDs()
 
-        for j in range(num_joints):
+        for j in feet:
             j_state_ref = pyb.getJointStateMultiDof(ref_model, j)
             j_state_sim = pyb.getJointStateMultiDof(sim_model, j)
-            j_vel_ref = np.array(j_state_ref[1])
-            j_vel_sim = np.array(j_state_sim[1])
-
-            j_size_ref = len(j_vel_ref)
-            j_size_sim = len(j_vel_sim)
-
-            if (j_size_ref > 0):
-                assert (j_size_sim == j_size_ref)
-                j_vel_diff = j_vel_ref - j_vel_sim
-                j_vel_err = j_vel_diff.dot(j_vel_diff)
-                vel_err += j_vel_err
-
-        vel_reward = np.exp(-self._velocity_err_scale * vel_err)
-
-        return vel_reward
-
-    def _calc_reward_velocity_joints(self):
-        """Get the velocity reward."""
-        env = self._env
-        robot = env.robot
-        sim_model = robot.quadruped
-        ref_model = self._ref_model
-        pyb = self._get_pybullet_client()
-
-        vel_err = 0.0
-        num_joints = self._get_num_joints()
-
-        for j in range(num_joints):
+            vel_err += _calculate_vel_error(j_state_ref, j_state_sim)
+        vel_err = vel_err * FOOT_ERROR_WEIGHT
+        for j in legs:
             j_state_ref = pyb.getJointStateMultiDof(ref_model, j)
             j_state_sim = pyb.getJointStateMultiDof(sim_model, j)
-            j_vel_ref = np.array(j_state_ref[1])
-            j_vel_sim = np.array(j_state_sim[1])
-
-            j_size_ref = len(j_vel_ref)
-            j_size_sim = len(j_vel_sim)
-
-            if (j_size_ref > 0):
-                assert (j_size_sim == j_size_ref)
-                j_vel_diff = j_vel_ref - j_vel_sim
-                j_vel_err = j_vel_diff.dot(j_vel_diff)
-                vel_err += j_vel_err
+            vel_err += _calculate_vel_error(j_state_ref, j_state_sim)
 
         vel_reward = np.exp(-self._velocity_err_scale * vel_err)
-
         return vel_reward
 
     def _calc_reward_end_effector(self):
@@ -476,8 +455,10 @@ class ImitationTask(object):
         num_joints = self._get_num_joints()
         height_err_scale = self._end_effector_height_err_scale
 
+        feet = env.robot.GetFootLinkIDs()
+
         for j in range(num_joints):
-            is_end_eff = (j in robot._foot_link_ids)
+            is_end_eff = (j in feet)
             if (is_end_eff):
                 end_state_ref = pyb.getLinkState(ref_model, j)
                 end_state_sim = pyb.getLinkState(sim_model, j)
@@ -947,8 +928,7 @@ class ImitationTask(object):
       An array containing the reference velocity at the given point in time.
     """
         motion = self.get_active_motion()
-        enable_warmup_pose = self._curr_episode_warmup \
-                             and time >= -self._warmup_time and time < 0.0
+        enable_warmup_pose = self._curr_episode_warmup and -self._warmup_time <= time < 0.0
         if enable_warmup_pose:
             vel = self._calc_ref_vel_warmup()
         else:
