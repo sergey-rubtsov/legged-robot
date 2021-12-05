@@ -240,7 +240,7 @@ class OD(minitaur.Minitaur):
             sensors=None,
             control_latency=0.002,
             on_rack=False,
-            enable_action_interpolation=True,
+            enable_action_interpolation=False,
             enable_action_filter=False,
             motor_control_mode=None,
             reset_time=1,
@@ -282,7 +282,7 @@ class OD(minitaur.Minitaur):
             motor_kd=motor_kd,
             control_latency=control_latency,
             on_rack=on_rack,
-            enable_action_interpolation=enable_action_interpolation,
+            enable_action_interpolation=False,
             enable_action_filter=enable_action_filter,
             reset_time=reset_time)
 
@@ -457,8 +457,8 @@ class OD(minitaur.Minitaur):
         or motor pwms (for Minitaur only).N
       motor_control_mode: A MotorControlMode enum.
     """
-        if self._enable_clip_motor_commands:
-            motor_commands = self._ClipMotorCommands(motor_commands)
+        # if self._enable_clip_motor_commands:
+        #    motor_commands = self._ClipMotorCommands(motor_commands)
         super(OD, self).ApplyAction(motor_commands, motor_control_mode)
 
     def _ClipMotorCommands(self, motor_commands):
@@ -537,3 +537,6 @@ class OD(minitaur.Minitaur):
 
     def GetLegLinkIDs(self):
         return self._motor_link_ids
+
+    def GetHipLinkIDs(self):
+        return self._hip_link_ids

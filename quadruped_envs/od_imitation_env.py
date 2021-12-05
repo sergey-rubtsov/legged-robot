@@ -17,7 +17,7 @@ def build_imitation_env(motion_files,
                         enable_randomizer,
                         enable_rendering,
                         robot_class=od.OD,
-                        trajectory_generator=simple_openloop.LaikagoPoseOffsetGenerator(action_limit=od.UPPER_BOUND)):
+                        trajectory_generator=simple_openloop.SimpleOpenLoopGenerator()):
     assert len(motion_files) > 0
 
     curriculum_episode_length_start = 20
@@ -30,16 +30,19 @@ def build_imitation_env(motion_files,
     gym_config = locomotion_gym_config.LocomotionGymConfig(simulation_parameters=sim_params)
 
     sensors = [
-        sensor_wrappers.HistoricSensorWrapper(
-            wrapped_sensor=robot_sensors.MotorAngleSensor(num_motors=od.NUM_MOTORS), num_history=3),
-        sensor_wrappers.HistoricSensorWrapper(wrapped_sensor=robot_sensors.IMUSensor(), num_history=3),
-        sensor_wrappers.HistoricSensorWrapper(
-            wrapped_sensor=environment_sensors.LastActionSensor(num_actions=od.NUM_MOTORS), num_history=3)
+        sensor_wrappers.HistoricSensorWrapper(wrapped_sensor=robot_sensors.MotorAngleSensor(
+            num_motors=od.NUM_MOTORS,
+            noisy_reading=False),
+            num_history=3),
+        sensor_wrappers.HistoricSensorWrapper(wrapped_sensor=robot_sensors.IMUSensor(
+            noisy_reading=False), num_history=3),
+        sensor_wrappers.HistoricSensorWrapper(wrapped_sensor=environment_sensors.LastActionSensor(
+            num_actions=od.NUM_MOTORS), num_history=3)
     ]
 
     task = imitation_task.ImitationTask(ref_motion_filenames=motion_files,
                                         enable_cycle_sync=True,
-                                        tar_frame_steps=[1, 2, 10, 30],
+                                        tar_frame_steps=[1, 2, 6, 16],
                                         ref_state_init_prob=0.9,
                                         warmup_time=0.25)
 
@@ -77,7 +80,7 @@ class OpenDynamicImitationEnv(gym.Env):
     def __init__(self,
                  render=True):
         motion_file = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/pace.txt"
-        num_procs = 10  # 1 by default
+        num_procs = 8  # 1 by default
         enable_env_rand = True
         self._env = build_imitation_env(motion_files=[motion_file],
                                         num_parallel_envs=num_procs,

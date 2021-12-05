@@ -22,6 +22,8 @@ from __future__ import print_function
 import os
 import inspect
 
+from typing import Tuple
+
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(os.path.dirname(currentdir))
 os.sys.path.insert(0, parentdir)
@@ -37,17 +39,19 @@ from motion_imitation.utilities import motion_util
 from pybullet_utils import transformations
 
 
-def _calculate_vel_error(j_state_ref, j_state_sim):
-    j_vel_ref = np.array(j_state_ref[1])
-    j_vel_sim = np.array(j_state_sim[1])
-    j_size_ref = len(j_vel_ref)
-    if j_size_ref > 0:
-        j_vel_diff = j_vel_ref - j_vel_sim
-        j_vel_err = j_vel_diff.dot(j_vel_diff)
-        return j_vel_err
+def _calculate_error(state_ref, state_sim, state_index: int) -> int:
+    ref = np.array(state_ref[state_index])
+    sim = np.array(state_sim[state_index])
+    size_ref = len(ref)
+    if size_ref > 0:
+        diff = ref - sim
+        err = diff.dot(diff)
+        return err
     return 0
 
+
 FOOT_ERROR_WEIGHT = 5
+
 
 class ImitationTask(object):
     """Imitation reference motion task."""
@@ -62,7 +66,7 @@ class ImitationTask(object):
                  clip_time_min=np.inf,
                  clip_time_max=np.inf,
                  ref_state_init_prob=1.0,
-                 enable_rand_init_time=True,
+                 enable_rand_init_time=False,
                  warmup_time=0.0,
 
                  pose_weight=0.5,
@@ -192,11 +196,11 @@ class ImitationTask(object):
         self._last_base_position = self._get_sim_base_position()
         self._episode_start_time_offset = 0.0
 
-        if (self._ref_motions is None or self._env.hard_reset):
+        if self._ref_motions is None or self._env.hard_reset:
             self._ref_motions = self._load_ref_motions(self._ref_motion_filenames)
             self._active_motion_id = self._sample_ref_motion()
 
-        if (self._ref_model is None or self._env.hard_reset):
+        if self._ref_model is None or self._env.hard_reset:
             self._ref_model = self._build_ref_model()
             self._build_joint_data()
 
@@ -279,7 +283,7 @@ class ImitationTask(object):
     def build_target_obs(self):
         """Constructs the target observations, consisting of a sequence of
 
-    target frames for future timesteps. The tartet poses to include is
+    target frames for future timesteps. The target poses to include is
     specified by self._tar_frame_steps.
 
     Returns:
@@ -365,8 +369,7 @@ class ImitationTask(object):
         """Get the reward without side effects."""
         del env
 
-        pose_reward = self._calc_reward_pose()
-        velocity_reward = self._calc_reward_velocity()
+        pose_reward, velocity_reward = self._calc_reward_position_and_velocity()
         end_effector_reward = self._calc_reward_end_effector()
         root_pose_reward = self._calc_reward_root_pose()
         root_velocity_reward = self._calc_reward_root_velocity()
@@ -379,59 +382,40 @@ class ImitationTask(object):
 
         return reward * self._weight
 
-    def _calc_reward_pose(self):
-        """Get the pose reward."""
-        env = self._env
-        robot = env.robot
-        sim_model = robot.quadruped
-        ref_model = self._ref_model
-        pyb = self._get_pybullet_client()
-
-        pose_err = 0.0
-        num_joints = self._get_num_joints()
-
-        for j in range(num_joints):
-            j_state_ref = pyb.getJointStateMultiDof(ref_model, j)
-            j_state_sim = pyb.getJointStateMultiDof(sim_model, j)
-            j_pose_ref = np.array(j_state_ref[0])
-            j_pose_sim = np.array(j_state_sim[0])
-
-            j_size_ref = len(j_pose_ref)
-            j_size_sim = len(j_pose_sim)
-
-            if (j_size_ref > 0):
-                assert (j_size_ref == j_size_sim)
-                j_pose_diff = j_pose_ref - j_pose_sim
-                j_pose_err = j_pose_diff.dot(j_pose_diff)
-                pose_err += j_pose_err
-
-        pose_reward = np.exp(-self._pose_err_scale * pose_err)
-
-        return pose_reward
-
-    def _calc_reward_velocity(self):
-        """Get the velocity reward."""
+    def _calc_reward_position_and_velocity(self) -> Tuple[int, int]:
+        """Get the position and velocity reward."""
         env = self._env
         robot = env.robot
         sim_model = robot.quadruped
         ref_model = self._ref_model
         pyb = self._get_pybullet_client()
         vel_err = 0.0
+        pose_err = 0.0
         legs = env.robot.GetLegLinkIDs()
+        hips = env.robot.GetHipLinkIDs()
         feet = env.robot.GetFootLinkIDs()
 
         for j in feet:
             j_state_ref = pyb.getJointStateMultiDof(ref_model, j)
             j_state_sim = pyb.getJointStateMultiDof(sim_model, j)
-            vel_err += _calculate_vel_error(j_state_ref, j_state_sim)
+            pose_err += _calculate_error(j_state_ref, j_state_sim, 0)
+            vel_err += _calculate_error(j_state_ref, j_state_sim, 1)
+        pose_err = pose_err * FOOT_ERROR_WEIGHT
         vel_err = vel_err * FOOT_ERROR_WEIGHT
         for j in legs:
             j_state_ref = pyb.getJointStateMultiDof(ref_model, j)
             j_state_sim = pyb.getJointStateMultiDof(sim_model, j)
-            vel_err += _calculate_vel_error(j_state_ref, j_state_sim)
+            pose_err += _calculate_error(j_state_ref, j_state_sim, 0)
+            vel_err += _calculate_error(j_state_ref, j_state_sim, 1)
+        for j in hips:
+            j_state_ref = pyb.getJointStateMultiDof(ref_model, j)
+            j_state_sim = pyb.getJointStateMultiDof(sim_model, j)
+            pose_err += _calculate_error(j_state_ref, j_state_sim, 0)
+            vel_err += _calculate_error(j_state_ref, j_state_sim, 1)
 
         vel_reward = np.exp(-self._velocity_err_scale * vel_err)
-        return vel_reward
+        pose_reward = np.exp(-self._pose_err_scale * pose_err)
+        return pose_reward, vel_reward
 
     def _calc_reward_end_effector(self):
         """Get the end effector reward."""
@@ -459,7 +443,7 @@ class ImitationTask(object):
 
         for j in range(num_joints):
             is_end_eff = (j in feet)
-            if (is_end_eff):
+            if is_end_eff:
                 end_state_ref = pyb.getLinkState(ref_model, j)
                 end_state_sim = pyb.getLinkState(sim_model, j)
                 end_pos_ref = np.array(end_state_ref[0])

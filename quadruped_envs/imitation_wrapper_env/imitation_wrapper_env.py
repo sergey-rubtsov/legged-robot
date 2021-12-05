@@ -16,7 +16,7 @@ class ImitationWrapperEnv(object):
       episode_length_start=1000,
       episode_length_end=1000,
       curriculum_steps=0,
-      num_parallel_envs=1):
+      num_parallel_envs=8):
     """Initialzes the wrapped env.
 
     Args:
