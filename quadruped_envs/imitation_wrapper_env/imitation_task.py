@@ -49,10 +49,6 @@ def _calculate_error(state_ref, state_sim, state_index: int) -> int:
         return err
     return 0
 
-
-FOOT_ERROR_WEIGHT = 5
-
-
 class ImitationTask(object):
     """Imitation reference motion task."""
 
@@ -69,10 +65,10 @@ class ImitationTask(object):
                  enable_rand_init_time=False,
                  warmup_time=0.0,
 
-                 pose_weight=0.5,
-                 velocity_weight=0.1,
+                 pose_weight=0.45,
+                 velocity_weight=0.05,
                  end_effector_weight=0.2,
-                 root_pose_weight=0.15,
+                 root_pose_weight=0.2,
                  root_velocity_weight=0.05,
 
                  pose_err_scale=5.0,
@@ -394,20 +390,9 @@ class ImitationTask(object):
         legs = env.robot.GetLegLinkIDs()
         hips = env.robot.GetHipLinkIDs()
         feet = env.robot.GetFootLinkIDs()
+        num_joints = self._get_num_joints()
 
-        for j in feet:
-            j_state_ref = pyb.getJointStateMultiDof(ref_model, j)
-            j_state_sim = pyb.getJointStateMultiDof(sim_model, j)
-            pose_err += _calculate_error(j_state_ref, j_state_sim, 0)
-            vel_err += _calculate_error(j_state_ref, j_state_sim, 1)
-        pose_err = pose_err * FOOT_ERROR_WEIGHT
-        vel_err = vel_err * FOOT_ERROR_WEIGHT
-        for j in legs:
-            j_state_ref = pyb.getJointStateMultiDof(ref_model, j)
-            j_state_sim = pyb.getJointStateMultiDof(sim_model, j)
-            pose_err += _calculate_error(j_state_ref, j_state_sim, 0)
-            vel_err += _calculate_error(j_state_ref, j_state_sim, 1)
-        for j in hips:
+        for j in range(num_joints):
             j_state_ref = pyb.getJointStateMultiDof(ref_model, j)
             j_state_sim = pyb.getJointStateMultiDof(sim_model, j)
             pose_err += _calculate_error(j_state_ref, j_state_sim, 0)

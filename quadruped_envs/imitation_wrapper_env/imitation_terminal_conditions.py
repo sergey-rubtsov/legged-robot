@@ -12,7 +12,7 @@ from pybullet_utils import transformations
 
 
 def imitation_terminal_condition(env,
-                                 dist_fail_threshold=0.01,
+                                 dist_fail_threshold=0.02,
                                  rot_fail_threshold=0.5 * np.pi):
     """A terminal condition for motion imitation task.
 
