@@ -12,12 +12,12 @@ from pybullet_utils import transformations
 
 
 def imitation_terminal_condition(env,
-                                 dist_fail_threshold=0.02,
+                                 dist_fail_threshold=0.05,
                                  rot_fail_threshold=0.5 * np.pi):
     """A terminal condition for motion imitation task.
 
   Args:
-    env: An instance of MinitaurGymEnv
+    env: environment
     dist_fail_threshold: Max distance the simulated character's root is allowed
       to drift from the reference motion before the episode terminates.
     rot_fail_threshold: Max rotational difference between simulated character's
@@ -47,14 +47,13 @@ def imitation_terminal_condition(env,
     root_pos_sim, root_rot_sim = pyb.getBasePositionAndOrientation(
         env.robot.quadruped)
 
-    root_pos_diff = np.array(root_pos_ref) - np.array(root_pos_sim)
+    root_pos_diff = np.array(root_pos_ref[1:3]) - np.array(root_pos_sim[1:3])
     root_pos_fail = root_pos_diff.dot(root_pos_diff) > dist_fail_threshold
     if root_pos_fail:
         return True
 
     motion_over = task.is_motion_over()
     if motion_over:
-        print("motion_over")
         return True
 
     root_rot_diff = transformations.quaternion_multiply(
@@ -66,7 +65,6 @@ def imitation_terminal_condition(env,
         root_rot_diff_angle)
     root_rot_fail = (np.abs(root_rot_diff_angle) > rot_fail_threshold)
     if root_rot_fail:
-        print("root_rot_fail")
         return True
 
     return False

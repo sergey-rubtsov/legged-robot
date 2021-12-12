@@ -26,7 +26,7 @@ parentdir = os.path.dirname(os.path.dirname(currentdir))
 os.sys.path.insert(0, parentdir)
 
 from motion_imitation.robots import laikago_constants
-from motion_imitation.robots import laikago_motor
+from imitation_wrapper_env import od_motor
 from motion_imitation.robots import minitaur
 from motion_imitation.robots import robot_config
 from motion_imitation.envs import locomotion_gym_config
@@ -66,7 +66,7 @@ JOINT_OFFSETS = np.array(
 
 PI = math.pi
 
-MAX_MOTOR_ANGLE_CHANGE_PER_STEP = 0.2
+MAX_MOTOR_ANGLE_CHANGE_PER_STEP = 0.5
 _DEFAULT_HIP_POSITIONS = (
     (0, 0, 0),
     (0, 0, 0),
@@ -78,14 +78,19 @@ COM_OFFSET = -np.array([0, 0, 0])
 HIP_OFFSETS = np.array([[0, 0, 0.], [0, 0, 0.],
                         [0, 0, 0.], [0, 0, 0.]
                         ]) + COM_OFFSET
-ABDUCTION_P_GAIN = 220.0
-ABDUCTION_D_GAIN = 0.3
-HIP_P_GAIN = 220.0
-HIP_D_GAIN = 2.0
-KNEE_P_GAIN = 220.0
-KNEE_D_GAIN = 2.0
+K_P = 1.0
+K_D = 0.1
+ABDUCTION_P_GAIN = K_P
+ABDUCTION_D_GAIN = K_D
+HIP_P_GAIN = K_P
+HIP_D_GAIN = K_D
+KNEE_P_GAIN = K_P
+KNEE_D_GAIN = K_D
 
-# Bases on the readings from Laikago's default pose.
+MAX_TORQUE = 300
+TORQUE_LIMITS = np.full(NUM_MOTORS, MAX_TORQUE)
+
+# Bases on the readings from robot's default pose.
 INIT_MOTOR_ANGLES = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
 HIP_NAME_PATTERN = re.compile(r"\w+_hip_\w+")
@@ -283,10 +288,11 @@ class OD(minitaur.Minitaur):
             motor_offset=JOINT_OFFSETS,
             motor_overheat_protection=False,
             motor_control_mode=motor_control_mode,
-            motor_model_class=laikago_motor.LaikagoMotorModel,
+            motor_model_class=od_motor.ODMotorModel,
             sensors=sensors,
             motor_kp=motor_kp,
             motor_kd=motor_kd,
+            motor_torque_limits=TORQUE_LIMITS,
             control_latency=control_latency,
             on_rack=on_rack,
             enable_action_interpolation=False,
@@ -464,8 +470,8 @@ class OD(minitaur.Minitaur):
         or motor pwms (for Minitaur only).N
       motor_control_mode: A MotorControlMode enum.
     """
-        # if self._enable_clip_motor_commands:
-        #    motor_commands = self._ClipMotorCommands(motor_commands)
+        if self._enable_clip_motor_commands:
+            motor_commands = self._ClipMotorCommands(motor_commands)
         super(OD, self).ApplyAction(motor_commands, motor_control_mode)
 
     def _ClipMotorCommands(self, motor_commands):

@@ -36,13 +36,12 @@ class SimulationParameters(object):
   render_width = attr.ib(type=int, default=480)
   render_height = attr.ib(type=int, default=360)
   egl_rendering = attr.ib(type=bool, default=False)
-  motor_control_mode = attr.ib(type=int,
-                               default=robot_config.MotorControlMode.TORQUE)  #
+  motor_control_mode = attr.ib(type=int, default=robot_config.MotorControlMode.POSITION)
   reset_time = attr.ib(type=float, default=-1)
   enable_action_filter = attr.ib(type=bool, default=False)
   enable_action_interpolation = attr.ib(type=bool, default=True)
   allow_knee_contact = attr.ib(type=bool, default=False)
-  enable_clip_motor_commands = attr.ib(type=bool, default=True)
+  enable_clip_motor_commands = attr.ib(type=bool, default=False)
 
 
 @attr.s

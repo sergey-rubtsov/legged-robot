@@ -26,7 +26,8 @@ import pybullet_data as pd
 from motion_imitation.robots import robot_config
 from motion_imitation.envs.sensors import sensor
 from motion_imitation.envs.sensors import space_utils
-from quadruped_envs.open_dynamic_quadruped import MAX_TORQUE
+from quadruped_envs.od import MAX_TORQUE
+
 
 _ACTION_EPS = 0.01
 _NUM_SIMULATION_ITERATION_STEPS = 300
@@ -163,8 +164,8 @@ class LocomotionGymEnv(gym.Env):
             action_lower_bound = []
             action_config = self._robot_class.ACTION_CONFIG
             for action in action_config:
-                action_upper_bound.append(action.upper_bound)
-                action_lower_bound.append(action.lower_bound)
+                action_upper_bound.append(5)
+                action_lower_bound.append(-5)
 
             self.action_space = spaces.Box(np.array(action_lower_bound),
                                            np.array(action_upper_bound),

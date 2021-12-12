@@ -62,7 +62,7 @@ class ImitationTask(object):
                  clip_time_min=np.inf,
                  clip_time_max=np.inf,
                  ref_state_init_prob=1.0,
-                 enable_rand_init_time=False,
+                 enable_rand_init_time=True,
                  warmup_time=0.0,
 
                  pose_weight=0.45,
@@ -322,6 +322,9 @@ class ImitationTask(object):
         tar_obs = np.concatenate(tar_poses, axis=-1)
 
         return tar_obs
+
+    def get_observation_shape(self) -> int:
+        return self.get_num_tar_frames() * self.get_pose_size()
 
     def get_target_obs_bounds(self):
         """Get bounds for target observations.

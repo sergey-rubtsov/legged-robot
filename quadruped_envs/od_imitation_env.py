@@ -3,19 +3,18 @@
 import gym
 import os, inspect, sys
 
-from quadruped_envs.imitation_wrapper_env import locomotion_gym_config, locomotion_gym_env, \
+from quadruped_envs.imitation_wrapper_env import od_gym_config, od_gym_env, \
     simple_openloop, observation_dictionary_to_array_wrapper, \
     trajectory_generator_wrapper_env, imitation_wrapper_env, imitation_task
 from motion_imitation.envs.sensors import sensor_wrappers, robot_sensors, environment_sensors
-from motion_imitation.robots import robot_config
-# from motion_imitation.envs.utilities import controllable_env_randomizer_from_config
+from motion_imitation.envs.utilities import controllable_env_randomizer_from_config
 from quadruped_envs import od
 
 
 def build_imitation_env(motion_files,
                         num_parallel_envs,
-                        enable_randomizer,
                         enable_rendering,
+                        enable_randomizer=False,
                         robot_class=od.OD,
                         trajectory_generator=simple_openloop.SimpleOpenLoopGenerator()):
     assert len(motion_files) > 0
@@ -23,36 +22,41 @@ def build_imitation_env(motion_files,
     curriculum_episode_length_start = 20
     curriculum_episode_length_end = 600
 
-    sim_params = locomotion_gym_config.SimulationParameters()
+    sim_params = od_gym_config.SimulationParameters()
     sim_params.enable_rendering = enable_rendering
     sim_params.allow_knee_contact = True
 
-    gym_config = locomotion_gym_config.LocomotionGymConfig(simulation_parameters=sim_params)
+    gym_config = od_gym_config.LocomotionGymConfig(simulation_parameters=sim_params)
 
     sensors = [
         sensor_wrappers.HistoricSensorWrapper(wrapped_sensor=robot_sensors.MotorAngleSensor(
+            upper_bound=od.UPPER_BOUND,
+            lower_bound=od.LOWER_BOUND,
             num_motors=od.NUM_MOTORS,
             noisy_reading=False),
             num_history=3),
         sensor_wrappers.HistoricSensorWrapper(wrapped_sensor=robot_sensors.IMUSensor(
             noisy_reading=False), num_history=3),
         sensor_wrappers.HistoricSensorWrapper(wrapped_sensor=environment_sensors.LastActionSensor(
+            upper_bound=od.UPPER_BOUND,
+            lower_bound=od.LOWER_BOUND,
             num_actions=od.NUM_MOTORS), num_history=3)
     ]
 
     task = imitation_task.ImitationTask(ref_motion_filenames=motion_files,
                                         enable_cycle_sync=True,
-                                        tar_frame_steps=[1, 2, 6, 16],
-                                        ref_state_init_prob=0.9,
+                                        tar_frame_steps=[1, 2, 10, 20],
+                                        enable_rand_init_time=True,
+                                        ref_state_init_prob=1,
                                         warmup_time=0.25)
 
     randomizers = []
-    # if enable_randomizer:
-    #     randomizer = controllable_env_randomizer_from_config.ControllableEnvRandomizerFromConfig(verbose=False)
-    #     randomizers.append(randomizer)
+    if enable_randomizer:
+        randomizer = controllable_env_randomizer_from_config.ControllableEnvRandomizerFromConfig(verbose=False)
+        randomizers.append(randomizer)
 
-    env = locomotion_gym_env.LocomotionGymEnv(gym_config=gym_config, robot_class=robot_class,
-                                              env_randomizers=randomizers, robot_sensors=sensors, task=task)
+    env = od_gym_env.LocomotionGymEnv(gym_config=gym_config, robot_class=robot_class,
+                                      env_randomizers=randomizers, robot_sensors=sensors, task=task)
 
     env = observation_dictionary_to_array_wrapper.ObservationDictionaryToArrayWrapper(env)
     env = trajectory_generator_wrapper_env.TrajectoryGeneratorWrapperEnv(env, trajectory_generator=trajectory_generator)
@@ -79,10 +83,13 @@ class OpenDynamicImitationEnv(gym.Env):
 
     def __init__(self,
                  render=True):
-        motion_file = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/pace.txt"
+        pace = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/pace.txt"
+        # left_turn = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/left_turn0.txt"
+        # right_turn = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/right_turn0.txt"
+        motion_files = [pace]
         num_procs = 8  # 1 by default
         enable_env_rand = True
-        self._env = build_imitation_env(motion_files=[motion_file],
+        self._env = build_imitation_env(motion_files=motion_files,
                                         num_parallel_envs=num_procs,
                                         robot_class=od.OD,
                                         enable_randomizer=enable_env_rand,

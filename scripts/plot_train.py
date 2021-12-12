@@ -47,6 +47,8 @@ plt.figure(y_label, figsize=args.figsize)
 plt.title(y_label, fontsize=args.fontsize)
 plt.xlabel(f"{x_label}", fontsize=args.fontsize)
 plt.ylabel(y_label, fontsize=args.fontsize)
+x_plot = np.array([])
+y_mean_plot = np.array([])
 for folder in dirs:
     try:
         data_frame = load_results(folder)
