@@ -37,21 +37,22 @@ GROUND_URDF_FILENAME = "plane_implicit.urdf"
 # reference motion
 FRAME_DURATION = 0.01667
 REF_COORD_ROT = transformations.quaternion_from_euler(0.5 * np.pi, 0, 0)
-REF_POS_OFFSET = np.array([0, 0, 0.025])
+REF_POS_OFFSET = np.array([0, 0, 0])
 REF_ROOT_ROT = transformations.quaternion_from_euler(0, 0, 0.47 * np.pi)
 
 REF_PELVIS_JOINT_ID = 0
 REF_ROOT_JOINT_ID = 1
 REF_NECK_JOINT_ID = 3
-REF_HIP_JOINT_IDS = [6, 16, 11, 20]
-REF_LEG_JOINT_IDS = [7, 17, 12, 21]
+# REF_HIP_JOINT_IDS = [16, 6, 20, 11]
+REF_HIP_JOINT_IDS = [16, 7, 20, 12]
+REF_LEG_JOINT_IDS = [17, 8, 21, 13]
 REF_CENTER_BODY = 4
 REF_A_JOINT_ID = 9
 REF_B_JOINT_ID = 14
 REF_C_JOINT_ID = 18
 REF_D_JOINT_ID = 22
-REF_FOOT_JOINT_IDS = [REF_A_JOINT_ID, REF_C_JOINT_ID, REF_B_JOINT_ID, REF_D_JOINT_ID]
-REF_TOE_JOINT_IDS = [10, 19, 15, 23]
+REF_FOOT_JOINT_IDS = [REF_C_JOINT_ID, REF_A_JOINT_ID, REF_D_JOINT_ID, REF_B_JOINT_ID]
+REF_TOE_JOINT_IDS = [19, 10, 23, 15]
 
 REF_BONES = [(3, 4),    (4, 5),     (5, 6),     (6, 7),
              (5, 8),    (8, 9),     (9, 10),    (10, 11),   (11, 12),  # neck -> left arm
@@ -111,13 +112,13 @@ def build_markers(num_markers):
         elif (i == REF_PELVIS_JOINT_ID or i == REF_ROOT_JOINT_ID):
             col = [1, 1, 0, 1]
         elif (i in REF_HIP_JOINT_IDS):
-            col = [0, 0, 1, 1]
+            col = [1, 0, 1, 1]
         elif (i in REF_TOE_JOINT_IDS):
-            col = [1, 0, 0, 1]
+            col = [1, 0, 0.2, 1]
         elif (i in REF_LEG_JOINT_IDS):
             col = [1, 1, 1, 1]
         elif (i == REF_A_JOINT_ID or i == REF_B_JOINT_ID or i == REF_C_JOINT_ID or i == REF_D_JOINT_ID):
-            col = [0, 0, 0, 1]
+            col = [1, 0.2, 0, 0.9]
         else:
             col = [0, 1, 0, 1]
 
@@ -229,15 +230,17 @@ def process_ref_joint_pos_data(joint_pos):
 def retarget_root_pose(ref_joint_pos):
     pelvis_pos = ref_joint_pos[REF_PELVIS_JOINT_ID]
     neck_pos = ref_joint_pos[REF_NECK_JOINT_ID]
+    root_pos = ref_joint_pos[REF_CENTER_BODY]
 
-    # left_shoulder_pos = ref_joint_pos[REF_HIP_JOINT_IDS[0]]
-    # right_shoulder_pos = ref_joint_pos[REF_HIP_JOINT_IDS[2]]
-    # left_hip_pos = ref_joint_pos[REF_HIP_JOINT_IDS[1]]
-    # right_hip_pos = ref_joint_pos[REF_HIP_JOINT_IDS[3]]
-    left_shoulder_pos = ref_joint_pos[REF_HIP_JOINT_IDS[2]]
-    right_shoulder_pos = ref_joint_pos[REF_HIP_JOINT_IDS[0]]
-    left_hip_pos = ref_joint_pos[REF_HIP_JOINT_IDS[3]]
-    right_hip_pos = ref_joint_pos[REF_HIP_JOINT_IDS[1]]
+    # left_shoulder_pos = ref_joint_pos[REF_HIP_JOINT_IDS[2]]
+    # right_shoulder_pos = ref_joint_pos[REF_HIP_JOINT_IDS[0]]
+    # left_hip_pos = ref_joint_pos[REF_HIP_JOINT_IDS[3]]
+    # right_hip_pos = ref_joint_pos[REF_HIP_JOINT_IDS[1]]
+
+    left_shoulder_pos = ref_joint_pos[REF_HIP_JOINT_IDS[3]]
+    right_shoulder_pos = ref_joint_pos[REF_HIP_JOINT_IDS[1]]
+    left_hip_pos = ref_joint_pos[REF_HIP_JOINT_IDS[2]]
+    right_hip_pos = ref_joint_pos[REF_HIP_JOINT_IDS[0]]
 
     forward_dir = neck_pos - pelvis_pos
     forward_dir += config.FORWARD_DIR_OFFSET
@@ -248,7 +251,7 @@ def retarget_root_pose(ref_joint_pos):
     dir_shoulder = delta_shoulder / np.linalg.norm(delta_shoulder)
     dir_hip = delta_hip / np.linalg.norm(delta_hip)
 
-    left_dir = 0.5 * (dir_shoulder + dir_hip)
+    left_dir = (dir_shoulder + dir_hip)
 
     up_dir = np.cross(forward_dir, left_dir)
     up_dir = up_dir / np.linalg.norm(up_dir)
@@ -263,7 +266,7 @@ def retarget_root_pose(ref_joint_pos):
                         [0, 0, 0, 1]])
 
     # root_pos = 0.5 * (pelvis_pos + neck_pos)
-    root_pos = 0.25 * (left_shoulder_pos + right_shoulder_pos + left_hip_pos + right_hip_pos)
+    # root_pos = 0.25 * (left_shoulder_pos + right_shoulder_pos + left_hip_pos + right_hip_pos)
     root_rot = transformations.quaternion_from_matrix(rot_mat)
     root_rot = transformations.quaternion_multiply(root_rot, config.INIT_ROT)
     root_rot = root_rot / np.linalg.norm(root_rot)
@@ -278,36 +281,31 @@ def retarget_pose(robot, default_pose, ref_joint_pos):
     inv_init_rot = transformations.quaternion_inverse(config.INIT_ROT)
     heading_rot = motion_util.calc_heading_rot(transformations.quaternion_multiply(root_rot, inv_init_rot))
 
-    tar_toe_pos, root_pos = calculate_toe_pos(heading_rot, ref_joint_pos, robot)
+    tar_toe_pos = calculate_toe_pos(heading_rot, ref_joint_pos, robot)
+    tar_toe_pos[0] += config.SIM_FOOT_OFFSET[0]
+    tar_toe_pos[1] += config.SIM_FOOT_OFFSET[1]
+    tar_toe_pos[2] += config.SIM_FOOT_OFFSET[2]
+    tar_toe_pos[3] += config.SIM_FOOT_OFFSET[3]
     joint_lim_low, joint_lim_high = get_joint_limits(robot)
     leg_ids = config.SIM_LOW_LEG_JOINT_IDS
-    # leg_ids.extend(config.SIM_UP_LEG_JOINT_IDS)
-    # leg_pos = tar_toe_pos
-    # d = 0.5
-    # leg_pos[0][2] = leg_pos[0][2] + d
-    # leg_pos[1][2] = leg_pos[1][2] + d
-    # leg_pos[2][2] = leg_pos[2][2] + d
-    # leg_pos[3][2] = leg_pos[3][2] + d
-    # tar_toe_pos.extend(leg_pos)
     joint_pose = pybullet.calculateInverseKinematics2(robot,
-                                                      leg_ids,
-                                                      tar_toe_pos,
-                                                      jointDamping=config.JOINT_DAMPING,
-                                                      lowerLimits=joint_lim_low,
-                                                      upperLimits=joint_lim_high,
-                                                      restPoses=default_pose)
+                                                     leg_ids,
+                                                     tar_toe_pos,
+                                                     jointDamping=config.JOINT_DAMPING,
+                                                     lowerLimits=joint_lim_low,
+                                                     upperLimits=joint_lim_high,
+                                                     restPoses=default_pose)
     joint_pose = np.array(joint_pose)
     pose = np.concatenate([root_pos, root_rot, joint_pose])
-    return pose
+    return pose, tar_toe_pos
 
 
 def calculate_toe_pos(heading_rot, ref_joint_pos, robot):
     tar_toe_pos = []
-    root_link_state = pybullet.getLinkState(robot, 1, computeForwardKinematics=True)
-    root_pos = np.array(root_link_state[4])
     for i in range(len(REF_TOE_JOINT_IDS)):
         ref_toe_id = REF_TOE_JOINT_IDS[i]
-        ref_hip_id = REF_HIP_JOINT_IDS[i]
+        # ref_hip_id = REF_HIP_JOINT_IDS[i]
+        ref_hip_id = 4
         sim_hip_id = config.SIM_HIP_JOINT_IDS[i]
         toe_offset_local = config.SIM_LOW_LEG_OFFSET_LOCAL[i]
 
@@ -321,13 +319,12 @@ def calculate_toe_pos(heading_rot, ref_joint_pos, robot):
 
         ref_hip_toe_delta = ref_toe_pos - ref_hip_pos
         sim_tar_toe_pos = sim_hip_pos + ref_hip_toe_delta
-        sim_tar_toe_pos[0] = ref_toe_pos[0]
-        # sim_tar_toe_pos[1] = ref_toe_pos[1]
+        sim_tar_toe_pos[1] = ref_toe_pos[1]
         sim_tar_toe_pos[2] = ref_toe_pos[2]
         sim_tar_toe_pos += toe_offset_world
 
         tar_toe_pos.append(sim_tar_toe_pos)
-    return tar_toe_pos, root_pos
+    return tar_toe_pos
 
 
 def update_camera(robot):
@@ -355,8 +352,33 @@ def retarget_motion(robot, joint_pos_data):
         ref_joint_pos = np.reshape(ref_joint_pos, [-1, POS_SIZE])
         ref_joint_pos = process_ref_joint_pos_data(ref_joint_pos)
 
-        curr_pose = retarget_pose(robot, config.DEFAULT_JOINT_POSE, ref_joint_pos)
+        curr_pose, toe_pos = retarget_pose(robot, config.DEFAULT_JOINT_POSE, ref_joint_pos)
+        pybullet.resetSimulation()
+        pybullet.setGravity(0, 0, 0)
+
+        ground = pybullet.loadURDF(GROUND_URDF_FILENAME)
+        robot = pybullet.loadURDF(config.URDF_FILENAME, config.INIT_POS, config.INIT_ROT)
+        num_markers = joint_pos_data.shape[-1] // POS_SIZE
+        marker_ids = build_markers(num_markers)
         set_pose(robot, curr_pose)
+        set_maker_pos(ref_joint_pos, marker_ids)
+
+        for pos in toe_pos:
+            virtual_shape_id = pybullet.createVisualShape(shapeType=pybullet.GEOM_SPHERE,
+                                                          radius=0.03,
+                                                          rgbaColor=(0, 0, 1, 1))
+            body_id = pybullet.createMultiBody(baseMass=0,
+                                               baseCollisionShapeIndex=-1,
+                                               baseVisualShapeIndex=virtual_shape_id,
+                                               basePosition=[0, 0, 0],
+                                               useMaximalCoordinates=True)
+            pybullet.resetBasePositionAndOrientation(body_id, pos, DEFAULT_ROT)
+
+        update_camera(robot)
+        pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_SINGLE_STEP_RENDERING, 1)
+        pybullet.removeAllUserDebugItems()
+
+        time.sleep(0.1)
 
         if f == 0:
             pose_size = curr_pose.shape[-1]
@@ -402,7 +424,7 @@ def output_motion(frames, out_filename):
     return
 
 
-def process_motion(p):
+def process_motion(pybullet):
     for mocap_motion in mocap_motions:
         pybullet.resetSimulation()
         pybullet.setGravity(0, 0, 0)
@@ -417,7 +439,7 @@ def process_motion(p):
         # Set robot to default pose to bias knees in the right direction.
         set_pose(robot, np.concatenate([config.INIT_POS, config.INIT_ROT, config.DEFAULT_JOINT_POSE]))
 
-        p.removeAllUserDebugItems()
+        pybullet.removeAllUserDebugItems()
         print("mocap_name=", mocap_motion[0])
         joint_pos_data = load_ref_data(mocap_motion[1], mocap_motion[2], mocap_motion[3])
 
@@ -447,7 +469,7 @@ def process_motion(p):
             build_bones(ref_joint_pos, marker_ids)
 
             update_camera(robot)
-            p.configureDebugVisualizer(p.COV_ENABLE_SINGLE_STEP_RENDERING, 1)
+            pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_SINGLE_STEP_RENDERING, 1)
             f += 1
 
             time_end = time.time()
@@ -457,19 +479,18 @@ def process_motion(p):
             time.sleep(sleep_dur)
             # time.sleep(0.5) # jp hack
         for m in marker_ids:
-            p.removeBody(m)
+            pybullet.removeBody(m)
         marker_ids = []
 
 
 def main(argv):
-    p = pybullet
-    # p.connect(p.GUI, options="--width=1920 --height=1080 --mp4=\"test.mp4\" --mp4fps=60")
-    p.connect(p.GUI, options="--width=1920 --height=1080")
-    p.configureDebugVisualizer(p.COV_ENABLE_SINGLE_STEP_RENDERING, 1)
+    # pybullet.connect(pybullet.GUI, options="--width=1920 --height=1080 --mp4=\"test.mp4\" --mp4fps=60")
+    pybullet.connect(pybullet.GUI, options="--width=1920 --height=1080")
+    pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_SINGLE_STEP_RENDERING, 1)
     pybullet.setAdditionalSearchPath(pd.getDataPath())
-    pybullet.resetDebugVisualizerCamera(cameraDistance=2, cameraPitch=-35, cameraYaw=50, cameraTargetPosition=[0, 0, 0])
+    pybullet.resetDebugVisualizerCamera(cameraDistance=1.2, cameraPitch=-35, cameraYaw=50, cameraTargetPosition=[0, 0, 0])
 
-    process_motion(p)
+    process_motion(pybullet)
 
     pybullet.disconnect()
 
