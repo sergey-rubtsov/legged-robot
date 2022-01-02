@@ -194,7 +194,8 @@ def set_pose(robot, pose):
         if (j_pose_size > 0):
             j_pose = pose[j_pose_idx:(j_pose_idx + j_pose_size)]
             j_vel = np.zeros(j_vel_size)
-            pybullet.resetJointStateMultiDof(robot, j, j_pose, j_vel)
+            pybullet.resetJointState(robot, j, j_pose[0], 0)
+            # pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_SINGLE_STEP_RENDERING, 1)
 
     return
 
@@ -467,7 +468,7 @@ def main(argv):
     p.connect(p.GUI, options="--width=1920 --height=1080")
     p.configureDebugVisualizer(p.COV_ENABLE_SINGLE_STEP_RENDERING, 1)
     pybullet.setAdditionalSearchPath(pd.getDataPath())
-    pybullet.resetDebugVisualizerCamera(cameraDistance=2, cameraPitch=-35, cameraYaw=50, cameraTargetPosition=[0, 0, 0])
+    pybullet.resetDebugVisualizerCamera(cameraDistance=1, cameraPitch=0, cameraYaw=0, cameraTargetPosition=[0, 0, 0])
 
     process_motion(p)
 

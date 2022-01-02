@@ -43,7 +43,7 @@ class ODMotorModel(object):
       else:
         self._torque_limits = np.full(NUM_MOTORS, DEFAULT_TORQUE_LIMIT)
     self._motor_control_mode = motor_control_mode
-    self._strength_ratios = np.full(NUM_MOTORS, 1)
+    self._strength_ratios = np.full(NUM_MOTORS, 10)
 
   def set_strength_ratios(self, ratios):
     """Set the strength of each motors relative to the default value.

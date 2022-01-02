@@ -34,23 +34,65 @@ from motion_imitation.envs import locomotion_gym_config
 NUM_MOTORS = 12
 NUM_LEGS = 4
 
+UPPER_BOUND = 6.3
+LOWER_BOUND = -6.3
+
+ACTION_CONFIG = [
+    locomotion_gym_config.ScalarField(name="FL_hip_motor",
+                                      upper_bound=2.443,
+                                      lower_bound=-1.31),
+    locomotion_gym_config.ScalarField(name="FL_upper_motor",
+                                      upper_bound=UPPER_BOUND,
+                                      lower_bound=LOWER_BOUND),
+    locomotion_gym_config.ScalarField(name="FL_lower_motor",
+                                      upper_bound=UPPER_BOUND,
+                                      lower_bound=LOWER_BOUND),
+    locomotion_gym_config.ScalarField(name="FR_hip_motor",
+                                      upper_bound=1.31,
+                                      lower_bound=-2.443),
+    locomotion_gym_config.ScalarField(name="FR_upper_motor",
+                                      upper_bound=UPPER_BOUND,
+                                      lower_bound=LOWER_BOUND),
+    locomotion_gym_config.ScalarField(name="FR_lower_motor",
+                                      upper_bound=UPPER_BOUND,
+                                      lower_bound=LOWER_BOUND),
+    locomotion_gym_config.ScalarField(name="RL_hip_motor",
+                                      upper_bound=2.443,
+                                      lower_bound=-1.31),
+    locomotion_gym_config.ScalarField(name="RL_upper_motor",
+                                      upper_bound=UPPER_BOUND,
+                                      lower_bound=LOWER_BOUND),
+    locomotion_gym_config.ScalarField(name="RL_lower_motor",
+                                      upper_bound=UPPER_BOUND,
+                                      lower_bound=LOWER_BOUND),
+    locomotion_gym_config.ScalarField(name="RR_hip_motor",
+                                      upper_bound=1.31,
+                                      lower_bound=-2.443),
+    locomotion_gym_config.ScalarField(name="RR_upper_motor",
+                                      upper_bound=UPPER_BOUND,
+                                      lower_bound=LOWER_BOUND),
+    locomotion_gym_config.ScalarField(name="RR_lower_motor",
+                                      upper_bound=UPPER_BOUND,
+                                      lower_bound=LOWER_BOUND)
+]
+
 MOTOR_NAMES = [
-    "link_hip_b",
-    "link_u_leg_b",
-    "link_l_leg_b",
     "link_hip_a",
     "link_u_leg_a",
     "link_l_leg_a",
-    "link_hip_d",
-    "link_u_leg_d",
-    "link_l_leg_d",
+    "link_hip_b",
+    "link_u_leg_b",
+    "link_l_leg_b",
     "link_hip_c",
     "link_u_leg_c",
-    "link_l_leg_c"
+    "link_l_leg_c",
+    "link_hip_d",
+    "link_u_leg_d",
+    "link_l_leg_d"
 ]
 INIT_RACK_POSITION = [0, 0, 1]
-INIT_POSITION = [0, 0, 0.26]
-JOINT_DIRECTIONS = np.ones(12)
+INIT_POSITION = [0, 0, 0.28]
+JOINT_DIRECTIONS = np.array([-1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1])
 HIP_JOINT_OFFSET = 0.0
 UPPER_LEG_JOINT_OFFSET = 0
 KNEE_JOINT_OFFSET = 0
@@ -79,7 +121,7 @@ HIP_OFFSETS = np.array([[0, 0, 0.], [0, 0, 0.],
                         [0, 0, 0.], [0, 0, 0.]
                         ]) + COM_OFFSET
 K_P = 1.0
-K_D = 0.1
+K_D = 0.01
 ABDUCTION_P_GAIN = K_P
 ABDUCTION_D_GAIN = K_D
 HIP_P_GAIN = K_P
@@ -103,9 +145,6 @@ URDF_FILENAME = currentdir + "/urdf/od.urdf"
 
 _BODY_B_FIELD_NUMBER = 2
 _LINK_A_FIELD_NUMBER = 3
-
-UPPER_BOUND = 6.3
-LOWER_BOUND = -6.3
 
 
 def foot_position_in_hip_frame_to_joint_angle(foot_position, l_hip_sign=1):
@@ -203,44 +242,6 @@ class OD(minitaur.Minitaur):
     MPC_BODY_INERTIA = np.array((0.017, 0, 0, 0, 0.057, 0, 0, 0, 0.064)) * 4.
     MPC_BODY_HEIGHT = 0.26
     MPC_VELOCITY_MULTIPLIER = 0.5
-    ACTION_CONFIG = [
-        locomotion_gym_config.ScalarField(name="FR_hip_motor",
-                                          upper_bound=1.31,
-                                          lower_bound=-2.443),
-        locomotion_gym_config.ScalarField(name="FR_upper_joint",
-                                          upper_bound=UPPER_BOUND,
-                                          lower_bound=LOWER_BOUND),
-        locomotion_gym_config.ScalarField(name="FR_lower_joint",
-                                          upper_bound=UPPER_BOUND,
-                                          lower_bound=LOWER_BOUND),
-        locomotion_gym_config.ScalarField(name="FL_hip_motor",
-                                          upper_bound=2.443,
-                                          lower_bound=-1.31),
-        locomotion_gym_config.ScalarField(name="FL_upper_joint",
-                                          upper_bound=UPPER_BOUND,
-                                          lower_bound=LOWER_BOUND),
-        locomotion_gym_config.ScalarField(name="FL_lower_joint",
-                                          upper_bound=UPPER_BOUND,
-                                          lower_bound=LOWER_BOUND),
-        locomotion_gym_config.ScalarField(name="RR_hip_motor",
-                                          upper_bound=1.31,
-                                          lower_bound=-2.443),
-        locomotion_gym_config.ScalarField(name="RR_upper_joint",
-                                          upper_bound=UPPER_BOUND,
-                                          lower_bound=LOWER_BOUND),
-        locomotion_gym_config.ScalarField(name="RR_lower_joint",
-                                          upper_bound=UPPER_BOUND,
-                                          lower_bound=LOWER_BOUND),
-        locomotion_gym_config.ScalarField(name="RL_hip_motor",
-                                          upper_bound=2.443,
-                                          lower_bound=-1.31),
-        locomotion_gym_config.ScalarField(name="RL_upper_joint",
-                                          upper_bound=UPPER_BOUND,
-                                          lower_bound=LOWER_BOUND),
-        locomotion_gym_config.ScalarField(name="RL_lower_joint",
-                                          upper_bound=UPPER_BOUND,
-                                          lower_bound=LOWER_BOUND),
-    ]
 
     def __init__(
             self,
@@ -292,6 +293,7 @@ class OD(minitaur.Minitaur):
             sensors=sensors,
             motor_kp=motor_kp,
             motor_kd=motor_kd,
+            max_force=10,
             motor_torque_limits=TORQUE_LIMITS,
             control_latency=control_latency,
             on_rack=on_rack,

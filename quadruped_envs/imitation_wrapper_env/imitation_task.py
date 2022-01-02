@@ -65,8 +65,8 @@ class ImitationTask(object):
                  enable_rand_init_time=True,
                  warmup_time=0.0,
 
-                 pose_weight=0.45,
-                 velocity_weight=0.05,
+                 pose_weight=0.35,
+                 velocity_weight=0.15,
                  end_effector_weight=0.2,
                  root_pose_weight=0.2,
                  root_velocity_weight=0.05,
@@ -390,9 +390,6 @@ class ImitationTask(object):
         pyb = self._get_pybullet_client()
         vel_err = 0.0
         pose_err = 0.0
-        legs = env.robot.GetLegLinkIDs()
-        hips = env.robot.GetHipLinkIDs()
-        feet = env.robot.GetFootLinkIDs()
         num_joints = self._get_num_joints()
 
         for j in range(num_joints):
@@ -856,7 +853,7 @@ class ImitationTask(object):
         rotation = np.array(rotation)
         return rotation
 
-    def _calc_ref_pose(self, time, apply_origin_offset=True):
+    def _calc_ref_pose(self, time, apply_origin_offset=False):
         """Calculates the reference pose for a given point in time.
 
     Args:

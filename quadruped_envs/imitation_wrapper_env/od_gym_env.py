@@ -26,12 +26,12 @@ import pybullet_data as pd
 from motion_imitation.robots import robot_config
 from motion_imitation.envs.sensors import sensor
 from motion_imitation.envs.sensors import space_utils
-from quadruped_envs.od import MAX_TORQUE
-
+from quadruped_envs.od import MAX_TORQUE, ACTION_CONFIG
 
 _ACTION_EPS = 0.01
 _NUM_SIMULATION_ITERATION_STEPS = 300
 _LOG_BUFFER_LENGTH = 5000
+OPTIMAL_ACTION_SPACE_LIMIT = 1
 
 
 class LocomotionGymEnv(gym.Env):
@@ -155,17 +155,17 @@ class LocomotionGymEnv(gym.Env):
                                            np.array(action_upper_bound),
                                            dtype=np.float32)
         elif motor_mode == robot_config.MotorControlMode.TORQUE:
-            # TODO (yuxiangy): figure out the torque limits of robots.
-            torque_limits = np.array([MAX_TORQUE] * len(self._robot_class.ACTION_CONFIG))
+            # It is better to set +1 and -1 as limits
+            torque_limits = np.array([MAX_TORQUE] * len(ACTION_CONFIG))
             self.action_space = spaces.Box(-torque_limits, torque_limits, dtype=np.float32)
         else:
             # Position mode
             action_upper_bound = []
             action_lower_bound = []
-            action_config = self._robot_class.ACTION_CONFIG
+            action_config = ACTION_CONFIG
             for action in action_config:
-                action_upper_bound.append(5)
-                action_lower_bound.append(-5)
+                action_upper_bound.append(OPTIMAL_ACTION_SPACE_LIMIT)
+                action_lower_bound.append(-OPTIMAL_ACTION_SPACE_LIMIT)
 
             self.action_space = spaces.Box(np.array(action_lower_bound),
                                            np.array(action_upper_bound),

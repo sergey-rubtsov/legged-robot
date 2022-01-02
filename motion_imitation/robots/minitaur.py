@@ -20,6 +20,9 @@ from __future__ import print_function
 
 import os
 import inspect
+
+from motion_imitation.robots.robot_config import MotorControlMode
+
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(os.path.dirname(currentdir))
 os.sys.path.insert(0, parentdir)
@@ -96,6 +99,7 @@ class Minitaur(object):
                motor_model_class=minitaur_motor.MotorModel,
                motor_kp=1.0,
                motor_kd=0.02,
+               max_force=3.5,
                motor_torque_limits=None,
                pd_latency=0.0,
                control_latency=0.0,
@@ -168,7 +172,7 @@ class Minitaur(object):
     self._motor_offset = motor_offset
     self._observed_motor_torques = np.zeros(self.num_motors)
     self._applied_motor_torques = np.zeros(self.num_motors)
-    self._max_force = 3.5
+    self._max_force = max_force
     self._pd_latency = pd_latency
     self._control_latency = control_latency
     self._observation_noise_stdev = observation_noise_stdev
@@ -504,6 +508,15 @@ class Minitaur(object):
         jointIndices=motor_ids,
         controlMode=self._pybullet_client.TORQUE_CONTROL,
         forces=torques)
+
+  def _SetDesiredMotorAngleById(self, motor_id, desired_angle):
+    self._pybullet_client.setJointMotorControl2(bodyIndex=self.quadruped,
+                                                jointIndex=motor_id,
+                                                controlMode=self._pybullet_client.POSITION_CONTROL,
+                                                targetPosition=desired_angle,
+                                                positionGain=self._motor_kps[motor_id],
+                                                velocityGain=self._motor_kds[motor_id],
+                                                force=self._max_force)
 
   def _SetDesiredMotorAngleByName(self, motor_name, desired_angle):
     self._SetDesiredMotorAngleById(self._joint_name_to_id[motor_name],

@@ -16,7 +16,7 @@ def build_imitation_env(motion_files,
                         enable_rendering,
                         enable_randomizer=False,
                         robot_class=od.OD,
-                        trajectory_generator=simple_openloop.SimpleOpenLoopGenerator()):
+                        trajectory_generator=simple_openloop.SimpleNormalizer()):
     assert len(motion_files) > 0
 
     curriculum_episode_length_start = 20
@@ -88,7 +88,7 @@ class OpenDynamicImitationEnv(gym.Env):
         # right_turn = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/right_turn0.txt"
         motion_files = [pace]
         num_procs = 8  # 1 by default
-        enable_env_rand = True
+        enable_env_rand = False
         self._env = build_imitation_env(motion_files=motion_files,
                                         num_parallel_envs=num_procs,
                                         robot_class=od.OD,
