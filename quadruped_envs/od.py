@@ -26,7 +26,7 @@ parentdir = os.path.dirname(os.path.dirname(currentdir))
 os.sys.path.insert(0, parentdir)
 
 from motion_imitation.robots import laikago_constants
-from imitation_wrapper_env import od_motor
+from .imitation_wrapper_env import od_motor
 from motion_imitation.robots import minitaur
 from motion_imitation.robots import robot_config
 from motion_imitation.envs import locomotion_gym_config
@@ -129,7 +129,7 @@ HIP_D_GAIN = K_D
 KNEE_P_GAIN = K_P
 KNEE_D_GAIN = K_D
 
-MAX_TORQUE = 300
+MAX_TORQUE = 1  # MAX_TORQUE = 300 for position
 TORQUE_LIMITS = np.full(NUM_MOTORS, MAX_TORQUE)
 
 # Bases on the readings from robot's default pose.
@@ -142,6 +142,8 @@ IMU_NAME_PATTERN = re.compile(r"imu\d*")
 
 URDF_FILENAME = currentdir + "/urdf/od.urdf"
 
+TIME_MULTIPLIER = 1
+TIME_STEP = 0.01 * TIME_MULTIPLIER
 
 _BODY_B_FIELD_NUMBER = 2
 _LINK_A_FIELD_NUMBER = 3
@@ -248,7 +250,7 @@ class OD(minitaur.Minitaur):
             pybullet_client,
             urdf_filename=URDF_FILENAME,
             enable_clip_motor_commands=False,
-            time_step=0.01,  # for reference move, it was 0.001
+            time_step=TIME_STEP,  # for reference move, it was 0.001
             action_repeat=1,  # was 10
             sensors=None,
             control_latency=0.002,

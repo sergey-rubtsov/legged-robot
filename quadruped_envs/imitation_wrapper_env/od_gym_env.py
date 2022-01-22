@@ -59,7 +59,7 @@ class LocomotionGymEnv(gym.Env):
           task: A callable function/class to calculate the reward and termination
             condition. Takes the gym env as the argument when calling.
           env_randomizers: A list of EnvRandomizer(s). An EnvRandomizer may
-            randomize the physical property of minitaur, change the terrrain during
+            randomize the physical property of robot, change the terrain during
             reset(), or add perturbation forces during step().
 
         Raises:

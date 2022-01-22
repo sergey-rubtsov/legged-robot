@@ -19,7 +19,11 @@ def build_imitation_env(motion_files,
                         trajectory_generator=simple_openloop.SimpleNormalizer()):
     assert len(motion_files) > 0
 
-    curriculum_episode_length_start = 20
+    curriculum_steps = 30
+    if enable_rendering:
+        curriculum_episode_length_start = 300
+    else:
+        curriculum_episode_length_start = 20
     curriculum_episode_length_end = 600
 
     sim_params = od_gym_config.SimulationParameters()
@@ -64,7 +68,7 @@ def build_imitation_env(motion_files,
     env = imitation_wrapper_env.ImitationWrapperEnv(env,
                                                     episode_length_start=curriculum_episode_length_start,
                                                     episode_length_end=curriculum_episode_length_end,
-                                                    curriculum_steps=30,
+                                                    curriculum_steps=curriculum_steps,
                                                     num_parallel_envs=num_parallel_envs)
     return env
 
@@ -83,9 +87,12 @@ class OpenDynamicImitationEnv(gym.Env):
 
     def __init__(self,
                  render=True):
+        # gallop = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/gallop.txt"
+        # idle = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/idle.txt"
+        # left_turn = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/left.txt"
         pace = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/pace.txt"
-        # left_turn = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/left_turn0.txt"
-        # right_turn = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/right_turn0.txt"
+        # right_turn = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/right.txt"
+        # trot = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/trot.txt"
         motion_files = [pace]
         num_procs = 8  # 1 by default
         enable_env_rand = False

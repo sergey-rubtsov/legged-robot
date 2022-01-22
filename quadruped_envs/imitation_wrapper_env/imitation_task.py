@@ -21,6 +21,7 @@ from __future__ import print_function
 
 import os
 import inspect
+import matplotlib.pyplot as plt
 
 from typing import Tuple
 
@@ -29,14 +30,53 @@ parentdir = os.path.dirname(os.path.dirname(currentdir))
 os.sys.path.insert(0, parentdir)
 
 import logging
-import os
 import numpy as np
 
 from quadruped_envs.imitation_wrapper_env.imitation_terminal_conditions import imitation_terminal_condition
+from quadruped_envs.imitation_wrapper_env import od_gym_env
+from quadruped_envs.od import _BODY_B_FIELD_NUMBER, _LINK_A_FIELD_NUMBER
+from quadruped_envs.open_dynamic_quadruped import INIT_POSITION
 from motion_imitation.utilities import pose3d
 from motion_imitation.utilities import motion_data
 from motion_imitation.utilities import motion_util
 from pybullet_utils import transformations
+
+list_s_lf = []
+list_s_rf = []
+list_s_lh = []
+list_s_rh = []
+list_r_lf = []
+list_r_rf = []
+list_r_lh = []
+list_r_rh = []
+
+
+def process_intervals(list):
+    intervals = []
+    for i in list:
+        intervals.append((i[0], i[1] - i[0]))
+    return intervals
+
+
+def interval_extract(list):
+    list = sorted(set(list))
+    range_start = previous_number = list[0]
+
+    for number in list[1:]:
+        if number == previous_number + 1:
+            previous_number = number
+        else:
+            yield [range_start, previous_number]
+            range_start = previous_number = number
+    yield [range_start, previous_number]
+
+
+def get_index(list):
+    index = []
+    for i in range(len(list)):
+        if list[i]:
+            index.append(i)
+    return index
 
 
 def _calculate_error(state_ref, state_sim, state_index: int) -> int:
@@ -48,6 +88,7 @@ def _calculate_error(state_ref, state_sim, state_index: int) -> int:
         err = diff.dot(diff)
         return err
     return 0
+
 
 class ImitationTask(object):
     """Imitation reference motion task."""
@@ -62,7 +103,7 @@ class ImitationTask(object):
                  clip_time_min=np.inf,
                  clip_time_max=np.inf,
                  ref_state_init_prob=1.0,
-                 enable_rand_init_time=True,
+                 enable_rand_init_time=False,
                  warmup_time=0.0,
 
                  pose_weight=0.35,
@@ -80,7 +121,8 @@ class ImitationTask(object):
 
                  perturb_init_state_prob=0.0,
                  tar_obs_noise=None,
-                 draw_ref_model_alpha=0.5):
+                 draw_ref_model_alpha=0.5,
+                 build_gait_pattern=False):
         """Initializes the task.
 
     Args:
@@ -180,6 +222,7 @@ class ImitationTask(object):
         self._end_effector_height_err_scale = end_effector_height_err_scale
         self._root_pose_err_scale = root_pose_err_scale
         self._root_velocity_err_scale = root_velocity_err_scale
+        self._build_gait_pattern = build_gait_pattern
 
         return
 
@@ -221,12 +264,89 @@ class ImitationTask(object):
 
         return
 
+    def get_foot_contacts_for_body(self, body):
+        all_contacts = self._get_pybullet_client().getContactPoints(bodyA=body)
+
+        contacts = [False, False, False, False]
+        for contact in all_contacts:
+            # Ignore self contacts
+            if contact[_BODY_B_FIELD_NUMBER] == body:
+                continue
+            try:
+                toe_link_index = self._env.robot.GetFootLinkIDs().index(
+                    contact[_LINK_A_FIELD_NUMBER])
+                contacts[toe_link_index] = True
+            except ValueError:
+                continue
+
+        return contacts
+
+    def add_foot_contact_state(self):
+        """
+        Joints configuration:
+
+        a - front left
+        b - front right
+        c - back left
+        d - back right
+
+                a   b   c   d
+        hips    0   3   6   9
+        uleg    1   4   7   10
+        lleg    2   5   8   11
+        """
+        env = self._env
+        robot = env.robot
+        sim_model = robot.quadruped
+        ref_model = self._ref_model
+        s_lf = self._get_pybullet_client().getClosestPoints(bodyA=sim_model, bodyB=0, distance=0.01, linkIndexA=2) != ()
+        r_lf = self._get_pybullet_client().getClosestPoints(bodyA=ref_model, bodyB=0, distance=0.01, linkIndexA=2) != ()
+        s_rf = self._get_pybullet_client().getClosestPoints(bodyA=sim_model, bodyB=0, distance=0.01, linkIndexA=5) != ()
+        r_rf = self._get_pybullet_client().getClosestPoints(bodyA=ref_model, bodyB=0, distance=0.01, linkIndexA=5) != ()
+        s_lh = self._get_pybullet_client().getClosestPoints(bodyA=sim_model, bodyB=0, distance=0.01, linkIndexA=8) != ()
+        r_lh = self._get_pybullet_client().getClosestPoints(bodyA=ref_model, bodyB=0, distance=0.01, linkIndexA=8) != ()
+        s_rh = self._get_pybullet_client().getClosestPoints(bodyA=sim_model, bodyB=0, distance=0.01, linkIndexA=11) != ()
+        r_rh = self._get_pybullet_client().getClosestPoints(bodyA=ref_model, bodyB=0, distance=0.01, linkIndexA=11) != ()
+        list_s_lf.append(s_lf)
+        list_s_rf.append(s_rf)
+        list_s_lh.append(s_lh)
+        list_s_rh.append(s_rh)
+        list_r_lf.append(r_lf)
+        list_r_rf.append(r_rf)
+        list_r_lh.append(r_lh)
+        list_r_rh.append(r_rh)
+
+    def plot_gate(self):
+        fig, ax = plt.subplots()
+        index_s_lf = process_intervals(interval_extract(get_index(list_s_lf)))
+        index_s_rf = process_intervals(interval_extract(get_index(list_s_rf)))
+        index_s_lh = process_intervals(interval_extract(get_index(list_s_lh)))
+        index_s_rh = process_intervals(interval_extract(get_index(list_s_rh)))
+        # index_r_lf = process_intervals(interval_extract(get_index(list_r_lf)))
+        # index_r_rf = process_intervals(interval_extract(get_index(list_r_rf)))
+        # index_r_lh = process_intervals(interval_extract(get_index(list_r_lh)))
+        # index_r_rh = process_intervals(interval_extract(get_index(list_r_rh)))
+
+        ax.broken_barh(index_s_lh, (10, 8), facecolors='black')
+        ax.broken_barh(index_s_rh, (20, 8), facecolors='black')
+        ax.broken_barh(index_s_lf, (30, 8), facecolors='black')
+        ax.broken_barh(index_s_rf, (40, 8), facecolors='black')
+        ax.set_ylim(5, 50)
+        ax.set_xlim(0, 300)
+        ax.set_xlabel('steps since start')
+        ax.set_yticks([15, 25, 35, 45])
+        ax.set_yticklabels(['LH', 'RH', 'LF', 'RF'])
+        ax.grid(True)
+        plt.show()
+
     def update(self, env):
         """Updates the internal state of the task."""
         del env
 
         self._update_ref_motion()
         self._last_base_position = self._get_sim_base_position()
+        if self._build_gait_pattern:
+            self.add_foot_contact_state()
 
         return
 
@@ -234,6 +354,8 @@ class ImitationTask(object):
         """Checks if the episode is over."""
         del env
         done = self._terminal_condition(self._env)
+        if done and self._build_gait_pattern:
+            self.plot_gate()
 
         return done
 

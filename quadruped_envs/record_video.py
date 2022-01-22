@@ -8,9 +8,9 @@ from quadruped_envs.utils.utils import ALGOS, create_test_env, get_latest_run_id
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--env", help="environment ID", type=str, default="CartPole-v1")
-    parser.add_argument("-f", "--folder", help="Log folder", type=str, default="rl-trained-agents")
-    parser.add_argument("-o", "--output-folder", help="Output folder", type=str, default="logs/videos/")
+    parser.add_argument("--env", help="environment ID", type=str, default="OpenDynamicImitationEnv-v0")
+    parser.add_argument("-f", "--folder", help="Log folder", type=str, default="quadruped_envs/logs")
+    parser.add_argument("-o", "--output-folder", help="Output folder", type=str, default="quadruped_envs/logs/videos/")
     parser.add_argument("--algo", help="RL Algorithm", default="ppo", type=str, required=False, choices=list(ALGOS.keys()))
     parser.add_argument("-n", "--n-timesteps", help="number of timesteps", default=1000, type=int)
     parser.add_argument("--n-envs", help="number of environments", default=1, type=int)
@@ -41,6 +41,8 @@ if __name__ == "__main__":
     load_best = args.load_best
     load_checkpoint = args.load_checkpoint
 
+    abs_path = os.path.abspath(os.getcwd())
+    folder = os.path.join(abs_path, folder)
     if args.exp_id == 0:
         args.exp_id = get_latest_run_id(os.path.join(folder, algo), env_id)
         print(f"Loading latest experiment, id={args.exp_id}")
