@@ -295,7 +295,6 @@ class OD(minitaur.Minitaur):
             sensors=sensors,
             motor_kp=motor_kp,
             motor_kd=motor_kd,
-            max_force=10,
             motor_torque_limits=TORQUE_LIMITS,
             control_latency=control_latency,
             on_rack=on_rack,
