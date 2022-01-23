@@ -129,7 +129,8 @@ HIP_D_GAIN = K_D
 KNEE_P_GAIN = K_P
 KNEE_D_GAIN = K_D
 
-MAX_TORQUE = 1  # MAX_TORQUE = 300 for position
+MAX_TORQUE = 1  # for torque
+# MAX_TORQUE = 300  # for position
 TORQUE_LIMITS = np.full(NUM_MOTORS, MAX_TORQUE)
 
 # Bases on the readings from robot's default pose.

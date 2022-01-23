@@ -87,11 +87,7 @@ class OpenDynamicImitationEnv(gym.Env):
 
     def __init__(self,
                  render=True):
-        # gallop = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/gallop.txt"
-        # idle = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/idle.txt"
-        # left_turn = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/left.txt"
         pace = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/pace.txt"
-        # right_turn = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/right.txt"
         # trot = os.path.dirname(sys.modules['__main__'].__file__) + "/data/motions/od/trot.txt"
         motion_files = [pace]
         num_procs = 8  # 1 by default
