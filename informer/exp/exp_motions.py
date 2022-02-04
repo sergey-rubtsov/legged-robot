@@ -50,6 +50,8 @@ class Exp_Motions(Exp_Basic):
                 self.args.d_ff,
                 self.args.dropout,
                 self.args.attn,
+                self.args.embed,
+                self.args.freq,
                 self.args.activation,
                 self.args.output_attention,
                 self.args.distil,
@@ -77,7 +79,7 @@ class Exp_Motions(Exp_Basic):
         }
         Data = data_dict[self.args.data]
         timeenc = 0 if args.embed != 'timeF' else 1
-
+        freq = args.freq
         if flag == 'test':
             shuffle_flag = False
             drop_last = True
@@ -87,7 +89,8 @@ class Exp_Motions(Exp_Basic):
             shuffle_flag = False
             drop_last = False
             batch_size = 1
-
+            freq = args.detail_freq
+            print("__________PREDICT___________")
             Data = Dataset_Pred
         else:
             shuffle_flag = True
@@ -96,11 +99,15 @@ class Exp_Motions(Exp_Basic):
 
         data_set = Data(
             root_path=args.root_path,
+            data_path=args.data_path,
             flag=flag,
             size=[args.seq_len, args.label_len, args.pred_len],
             features=args.features,
             target=args.target,
-            inverse=args.inverse
+            inverse=args.inverse,
+            timeenc=timeenc,
+            freq=freq,
+            cols=args.cols
         )
         print(flag, len(data_set))
         data_loader = DataLoader(
@@ -164,6 +171,7 @@ class Exp_Motions(Exp_Basic):
                 model_optim.zero_grad()
                 pred, true = self._process_one_batch(
                     train_data, batch_x, batch_y, batch_x_mark, batch_y_mark)
+                print("size ", pred.size())
                 loss = criterion(pred, true)
                 train_loss.append(loss.item())
 

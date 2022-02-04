@@ -92,18 +92,29 @@ def get_motions(root_path):
                           's_root_qz',
                           's_root_qw'
                           ], axis=1)
-    print(len(vector.columns))
-    print(len(vector))
+    vector = vector.drop(['u_leg_c', 'l_leg_c', 'hip_d', 'u_leg_d', 'l_leg_d'], axis=1)
+    # print(len(vector.columns))
+    # print(len(vector))
     return vector
 
 
 class DatasetMotions(Dataset):
-    def __init__(self, root_path='motion', flag='train', size=None,
-                 features='M', target='OT', scale=False, inverse=False):
+    def __init__(self, root_path='motion',
+                 flag='train',
+                 size=None,
+                 features='M',
+                 data_path='',
+                 target='OT',
+                 scale=False,
+                 inverse=False,
+                 timeenc=0,
+                 freq='h',
+                 cols=None
+                 ):
         if size == None:
-            self.seq_len = 120
-            self.label_len = 60
-            self.pred_len = 30
+            self.seq_len = 24 * 4 * 4
+            self.label_len = 24 * 4
+            self.pred_len = 24 * 4
         else:
             self.seq_len = size[0]
             self.label_len = size[1]
@@ -115,6 +126,9 @@ class DatasetMotions(Dataset):
         self.target = target
         self.scale = scale
         self.inverse = inverse
+        self.timeenc = timeenc
+        self.freq = freq
+
         self.root_path = root_path
         self.__read_data__()
 
@@ -123,13 +137,20 @@ class DatasetMotions(Dataset):
         df_raw = get_motions(self.root_path)
         # 8880 - 120 - 60 - 30
         # train 86%, test 9%, val 5%
-        border1s = [0, 7800 - self.seq_len, 8520 - self.seq_len]
-        border2s = [7800, 8520, 8880]
+        # border1s = [0, 7800 - self.seq_len, 8520 - self.seq_len]
+        # border2s = [7800, 8520, 8880]
+
+        # train 0 : 12,      test 12 : 16,           val 16 : 20
+        # train 0 : 8640,    test 8640-384 : 11520,  val 11520-384 : 14400
+        border1s = [0, 12 * 30 * 24 - self.seq_len, 12 * 30 * 24 + 4 * 30 * 24 - self.seq_len]
+        border2s = [12 * 30 * 24, 12 * 30 * 24 + 4 * 30 * 24, 12 * 30 * 24 + 8 * 30 * 24]
         border1 = border1s[self.set_type]
         border2 = border2s[self.set_type]
 
         if self.features == 'M' or self.features == 'MS':
-            df_data = df_raw[bone_list]
+            bones = ['hip_a', 'u_leg_a', 'l_leg_a', 'hip_b', 'u_leg_b', 'l_leg_b', 'hip_c']
+            df_data = df_raw[bones]
+            # df_data = df_raw[bone_list]
         elif self.features == 'S':
             df_data = df_raw[[self.target]]
 
@@ -176,7 +197,7 @@ class DatasetMotions(Dataset):
 class Dataset_ETT_hour(Dataset):
     def __init__(self, root_path, flag='train', size=None,
                  features='S', data_path='ETTh1.csv',
-                 target='OT', scale=True, inverse=False, timeenc=0, freq='h', cols=None):
+                 target='OT', scale=False, inverse=False, timeenc=0, freq='h', cols=None):
         # size [seq_len, label_len, pred_len]
         # info
         if size == None:
