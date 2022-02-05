@@ -92,7 +92,7 @@ def get_motions(root_path):
                           's_root_qz',
                           's_root_qw'
                           ], axis=1)
-    vector = vector.drop(['u_leg_c', 'l_leg_c', 'hip_d', 'u_leg_d', 'l_leg_d'], axis=1)
+    # vector = vector.drop(['u_leg_c', 'l_leg_c', 'hip_d', 'u_leg_d', 'l_leg_d'], axis=1)
     # print(len(vector.columns))
     # print(len(vector))
     return vector
@@ -112,9 +112,9 @@ class DatasetMotions(Dataset):
                  cols=None
                  ):
         if size == None:
-            self.seq_len = 24 * 4 * 4
-            self.label_len = 24 * 4
-            self.pred_len = 24 * 4
+            self.seq_len = 24 * 4
+            self.label_len = 24
+            self.pred_len = 24
         else:
             self.seq_len = size[0]
             self.label_len = size[1]
@@ -148,9 +148,7 @@ class DatasetMotions(Dataset):
         border2 = border2s[self.set_type]
 
         if self.features == 'M' or self.features == 'MS':
-            bones = ['hip_a', 'u_leg_a', 'l_leg_a', 'hip_b', 'u_leg_b', 'l_leg_b', 'hip_c']
-            df_data = df_raw[bones]
-            # df_data = df_raw[bone_list]
+            df_data = df_raw[bone_list]
         elif self.features == 'S':
             df_data = df_raw[[self.target]]
 
