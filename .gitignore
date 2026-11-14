@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.idea/
+.artifact_scratch/
+quadruped_envs/logs/
+logs/
+quadruped_envs/supermimic/.validation_runs/
+quadruped_envs/supermimic/logs/
+*.egg-info/
+.DS_Store

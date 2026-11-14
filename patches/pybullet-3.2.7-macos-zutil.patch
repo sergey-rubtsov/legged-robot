@@ -1,0 +1,11 @@
+--- a/examples/ThirdPartyLibs/zlib/zutil.h	2026-10-27 17:32:55
++++ b/examples/ThirdPartyLibs/zlib/zutil.h	2026-10-27 17:32:55
+@@ -118,7 +118,7 @@
+ #endif
+ #endif
+ 
+-#if defined(MACOS) || defined(TARGET_OS_MAC)
++#if defined(MACOS) || (defined(TARGET_OS_MAC) && !defined(__APPLE__))
+ #define OS_CODE 0x07
+ #ifndef Z_SOLO
+ #if defined(__MWERKS__) && __dest_os != __be_os && __dest_os != __win32_os

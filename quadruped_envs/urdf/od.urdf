@@ -16,9 +16,9 @@
         <material name="Material"/>
       </visual>
       <collision name="collision_hip_a">
-        <origin xyz="0 -0.001 0" rpy="0 0 0"/>
+        <origin xyz="-0.06550 -0.00479 0.00000" rpy="-1.57080 1.57080 -1.57080"/>
         <geometry>
-          <mesh filename="collision_HipA.stl" scale="1.0 1.0 1.0"/>
+          <capsule radius="0.0213" length="0.1134"/>
         </geometry>
       </collision>
     </link>
@@ -44,9 +44,9 @@
         <material name="Material"/>
       </visual>
       <collision name="Hip Fe Module B">
-        <origin xyz="0 -0.001 0" rpy="0 0 0"/>
+        <origin xyz="-0.07129 0.00479 0.00000" rpy="-2.28163 1.57080 -2.28163"/>
         <geometry>
-          <mesh filename="collision_HipB.stl" scale="1.0 1.0 1.0"/>
+          <capsule radius="0.0213" length="0.1285"/>
         </geometry>
       </collision>
     </link>
@@ -72,9 +72,9 @@
         <material name="Material"/>
       </visual>
       <collision name="Hip Fe Module B">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0.07223 -0.00553 0.00000" rpy="-1.57080 1.57080 -1.57080"/>
         <geometry>
-          <mesh filename="collision_HipC.stl" scale="1.0 1.0 1.0"/>
+          <capsule radius="0.0225" length="0.1261"/>
         </geometry>
       </collision>
     </link>
@@ -93,9 +93,9 @@
         <material name="Material"/>
       </visual>
       <collision name="Hip Fe Module A">
-        <origin xyz="-0.002 0 0" rpy="0 0 0"/>
+        <origin xyz="0.06549 0.00613 0.00000" rpy="0.00000 1.57080 0.00000"/>
         <geometry>
-          <mesh filename="collision_HipD.stl" scale="1.0 1.0 1.0"/>
+          <capsule radius="0.0235" length="0.1089"/>
         </geometry>
       </collision>
     </link>
@@ -114,9 +114,9 @@
         <material name="Material"/>
       </visual>
       <collision name="collision_Lower_Leg_A">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0.05403 -0.00174 -0.06093" rpy="0.02414 -0.72093 -0.00910"/>
         <geometry>
-          <mesh filename="collision_LowerLegA.stl" scale="1.0 1.0 1.0"/>
+          <capsule radius="0.0119" length="0.1657"/>
         </geometry>
       </collision>
     </link>
@@ -135,9 +135,9 @@
         <material name="Material"/>
       </visual>
       <collision name="collision_Lower_Leg_B">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0.05516 0.00180 -0.06072" rpy="-0.02526 -0.72843 0.00963"/>
         <geometry>
-          <mesh filename="collision_LowerLegB.stl" scale="1.0 1.0 1.0"/>
+          <capsule radius="0.0125" length="0.1639"/>
         </geometry>
       </collision>
     </link>
@@ -156,9 +156,9 @@
         <material name="Material"/>
       </visual>
       <collision name="collision_Lower_Leg_C">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0.05035 -0.00181 -0.05974" rpy="0.02536 -0.72053 -0.00955"/>
         <geometry>
-          <mesh filename="collision_LowerLegC.stl" scale="1.0 1.0 1.0"/>
+          <capsule radius="0.0118" length="0.1658"/>
         </geometry>
       </collision>
     </link>
@@ -177,9 +177,9 @@
         <material name="Material"/>
       </visual>
       <collision name="collision_Lower_Leg_D">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0.05532 0.00167 -0.05981" rpy="-0.02640 -0.74704 0.01035"/>
         <geometry>
-          <mesh filename="collision_LowerLegD.stl" scale="1.0 1.0 1.0"/>
+          <capsule radius="0.0127" length="0.1614"/>
         </geometry>
       </collision>
     </link>
@@ -226,9 +226,9 @@
         <material name="Material"/>
       </visual>
       <collision name="collision_root_3">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="-0.00000 -0.00000 0.00000" rpy="-1.57080 1.57080 -1.57080"/>
         <geometry>
-          <mesh filename="collision_root.stl" scale="1.0 1.0 1.0"/>
+          <capsule radius="0.0896" length="0.2707"/>
         </geometry>
       </collision>
     </link>
@@ -247,9 +247,9 @@
         <material name="Material"/>
       </visual>
       <collision name="collision_Upper_Leg_A">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="-0.05135 0.03000 -0.06389" rpy="0.10913 0.68681 0.03905"/>
         <geometry>
-          <mesh filename="collision_UpperLegA.stl" scale="1.0 1.0 1.0"/>
+          <capsule radius="0.0206" length="0.1511"/>
         </geometry>
       </collision>
     </link>
@@ -268,9 +268,9 @@
         <material name="Material"/>
       </visual>
       <collision name="Upper Leg Module">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="-0.05142 -0.03467 -0.06397" rpy="-0.03134 0.68949 -0.01126"/>
         <geometry>
-          <mesh filename="collision_UpperLegB.stl" scale="1.0 1.0 1.0"/>
+          <capsule radius="0.0178" length="0.1552"/>
         </geometry>
       </collision>
     </link>
@@ -289,9 +289,9 @@
         <material name="Material"/>
       </visual>
       <collision name="collision_Upper_Leg_C">
-        <origin xyz="-8e-05 0 -0.0001" rpy="0 0 0"/>
+        <origin xyz="-0.05070 0.03347 -0.06356" rpy="0.04967 0.65841 0.01697"/>
         <geometry>
-          <mesh filename="collision_UpperLegC.stl" scale="1.0 1.0 1.0"/>
+          <capsule radius="0.0188" length="0.1550"/>
         </geometry>
       </collision>
     </link>
@@ -310,9 +310,9 @@
         <material name="Material"/>
       </visual>
       <collision name="Upper Leg Module">
-        <origin xyz="8e-05 0.00011 -7e-05" rpy="0 0 0"/>
+        <origin xyz="-0.05088 -0.03499 -0.06362" rpy="-0.02650 0.65884 -0.00906"/>
         <geometry>
-          <mesh filename="collision_UpperLegD.stl" scale="1.0 1.0 1.0"/>
+          <capsule radius="0.0181" length="0.1560"/>
         </geometry>
       </collision>
     </link>
@@ -322,7 +322,7 @@
       <parent link="link_root"/>
       <child link="link_hip_a"/>
       <axis xyz="1.0 0 0"/>
-      <limit lower="-1.31" upper="2.443" effort="2.7" velocity="50.0"/>
+      <limit lower="-1.31" upper="2.443" effort="25" velocity="20"/>
     </joint>
 
     <joint name="link_hip_b" type="revolute">
@@ -330,7 +330,7 @@
       <parent link="link_root"/>
       <child link="link_hip_b"/>
       <axis xyz="1.0 0 0"/>
-      <limit lower="-1.31" upper="2.443" effort="2.7" velocity="50.0"/>
+      <limit lower="-1.31" upper="2.443" effort="25" velocity="20"/>
     </joint>
 
     <joint name="link_hip_c" type="revolute">
@@ -338,7 +338,7 @@
       <parent link="link_root"/>
       <child link="link_hip_c"/>
       <axis xyz="1.0 0 0"/>
-      <limit lower="-1.31" upper="2.443" effort="2.7" velocity="50.0"/>
+      <limit lower="-1.31" upper="2.443" effort="25" velocity="20"/>
     </joint>
 
     <joint name="link_hip_d" type="revolute">
@@ -346,71 +346,71 @@
       <parent link="link_root"/>
       <child link="link_hip_d"/>
       <axis xyz="1.0 0 0"/>
-      <limit lower="-1.31" upper="2.443" effort="2.7" velocity="50.0"/>
+      <limit lower="-1.31" upper="2.443" effort="25" velocity="20"/>
     </joint>
 
-    <joint name="link_l_leg_a" type="revolute">
+    <joint name="link_l_leg_a" type="continuous">
       <origin xyz="-0.1004 0.05695 -0.124" rpy="0 0 0"/>
       <parent link="link_u_leg_a"/>
       <child link="link_l_leg_a"/>
       <axis xyz="0 1.0 0"/>
-      <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
+      <limit effort="25" velocity="20"/>
     </joint>
 
-    <joint name="link_l_leg_b" type="revolute">
+    <joint name="link_l_leg_b" type="continuous">
       <origin xyz="-0.1004 -0.05695 -0.124" rpy="0 0 0"/>
       <parent link="link_u_leg_b"/>
       <child link="link_l_leg_b"/>
       <axis xyz="0 1.0 0"/>
-      <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
+      <limit effort="25" velocity="20"/>
     </joint>
 
-    <joint name="link_l_leg_c" type="revolute">
+    <joint name="link_l_leg_c" type="continuous">
       <origin xyz="-0.09902 0.05695 -0.12527" rpy="0 0 0"/>
       <parent link="link_u_leg_c"/>
       <child link="link_l_leg_c"/>
       <axis xyz="0 1.0 0"/>
-      <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
+      <limit effort="25" velocity="20"/>
     </joint>
 
-    <joint name="link_l_leg_d" type="revolute">
+    <joint name="link_l_leg_d" type="continuous">
       <origin xyz="-0.09902 -0.05695 -0.12527" rpy="0 0 0"/>
       <parent link="link_u_leg_d"/>
       <child link="link_l_leg_d"/>
       <axis xyz="0 1.0 0"/>
-      <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
+      <limit effort="25" velocity="20"/>
     </joint>
 
-    <joint name="link_u_leg_a" type="revolute">
+    <joint name="link_u_leg_a" type="continuous">
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="link_hip_a"/>
       <child link="link_u_leg_a"/>
       <axis xyz="0 1.0 0"/>
-      <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
+      <limit effort="25" velocity="20"/>
     </joint>
 
-    <joint name="link_u_leg_b" type="revolute">
+    <joint name="link_u_leg_b" type="continuous">
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="link_hip_b"/>
       <child link="link_u_leg_b"/>
       <axis xyz="0 1.0 0"/>
-      <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
+      <limit effort="25" velocity="20"/>
     </joint>
 
-    <joint name="link_u_leg_c" type="revolute">
+    <joint name="link_u_leg_c" type="continuous">
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="link_hip_c"/>
       <child link="link_u_leg_c"/>
       <axis xyz="0 1.0 0"/>
-      <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
+      <limit effort="25" velocity="20"/>
     </joint>
 
-    <joint name="link_u_leg_d" type="revolute">
+    <joint name="link_u_leg_d" type="continuous">
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="link_hip_d"/>
       <child link="link_u_leg_d"/>
       <axis xyz="0 1.0 0"/>
-      <limit lower="-6.3" upper="6.3" effort="2.7" velocity="50.0"/>
+      <limit effort="25" velocity="20"/>
     </joint>
 
   <joint name="imu_joint" type="fixed">

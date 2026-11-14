@@ -1,12 +1,26 @@
 import collections
+import collections.abc
 import numpy as np
 
 from motion_imitation.robots import robot_config
 
 NUM_MOTORS = 12
-DEFAULT_TORQUE_LIMIT = 100
-TORQUE_MULTIPLIER = 50
-# TORQUE_MULTIPLIER = 10 # For position
+DEFAULT_TORQUE_LIMIT = 25
+# 25 N*m (was 50, and the URDF's own effort="2.7" before that -- both placeholders, see
+# od.urdf's module history). Derived from this robot's own mass/geometry: static standing
+# needs ~4.5-6.8 N*m per joint in a 4-leg stance, ~9-13.6 N*m worst-case in a 2-leg stance
+# (od.py's analytical_leg_jacobian + summed URDF link masses, 14.01 kg total -- see project
+# memory). ~2x that worst-case static figure gives headroom for dynamic loads (push-off,
+# impact, recovery) without being unboundedly large. Cross-checked against real actuators in
+# this robot's mass class (Unitree Go1, ~12 kg, ~23.7 N*m continuous / ~35 N*m peak per joint)
+# -- 25 N*m sits in the same plausible range. TORQUE_MULTIPLIER (below) must stay equal to this
+# value: action in [-1, 1] * TORQUE_MULTIPLIER is the actual applied torque in TORQUE control
+# mode, and PyBullet does NOT separately clamp it to the URDF's declared `effort` (that only
+# constrains the built-in PD controller in POSITION/HYBRID mode) -- so if these two numbers
+# ever diverge again, the simulated robot is silently stronger or weaker than its own stated
+# spec. Any policy trained with the old TORQUE_MULTIPLIER=50 is NOT valid under this value --
+# retrain from scratch, don't resume an old checkpoint against this change.
+TORQUE_MULTIPLIER = DEFAULT_TORQUE_LIMIT
 
 MOTOR_COMMAND_DIMENSION = 5
 
@@ -41,7 +55,7 @@ class ODMotorModel(object):
         self._kd = kd
         self._torque_limits = torque_limits
         if torque_limits is not None:
-            if isinstance(torque_limits, (collections.Sequence, np.ndarray)):
+            if isinstance(torque_limits, (collections.abc.Sequence, np.ndarray)):
                 self._torque_limits = np.asarray(torque_limits)
             else:
                 self._torque_limits = np.full(NUM_MOTORS, DEFAULT_TORQUE_LIMIT)

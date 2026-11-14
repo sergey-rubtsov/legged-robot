@@ -19,6 +19,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import math
 import os
 import inspect
 import matplotlib.pyplot as plt
@@ -90,6 +91,58 @@ def _calculate_error(state_ref, state_sim, state_index: int) -> int:
     return 0
 
 
+def build_bin_layout(motion_durations, bin_duration):
+    """Return-based reset-bin sampling (SuperMimic paper Appendix D.1; see the original
+    reference implementation's supermimic/env.py's sample_frames/motion.py's BIN_FRAMES, which
+    this ports the spirit of). Splits every reference motion's duration into fixed-size
+    `bin_duration`-second bins and concatenates them into one flat, global bin index space
+    (motion A's bins, then motion B's, ...) -- a global bin index therefore determines BOTH
+    which motion AND which time range, matching the original's single flat bin space across
+    all its clips. A pure function of (durations, bin_duration) only, so both the real-env side
+    (ImitationTask, which needs it to know which (motion, time-range) a sampled bin means) and
+    the training-loop side (TrackingSim, which needs it to recompute which bin a returned
+    (motion_id, t) falls into) can compute the IDENTICAL layout independently, with nothing
+    about it sent over the wire -- only the (motion_duration-derived, deterministic) list
+    itself and the evolving per-bin probabilities need to agree, and they agree by construction.
+
+    Returns: list of (motion_idx, t_start, t_end) tuples, one per global bin.
+    """
+    layout = []
+    for motion_idx, dur in enumerate(motion_durations):
+        n_bins = max(1, math.ceil(dur / bin_duration))
+        for b in range(n_bins):
+            t0 = b * bin_duration
+            t1 = min(dur, t0 + bin_duration)
+            layout.append((motion_idx, t0, t1))
+    return layout
+
+
+def bin_offsets(motion_durations, bin_duration):
+    """Per-motion (global_offset, num_bins) pairs matching build_bin_layout's ordering --
+    lets bin_index_for compute the inverse mapping in O(1) instead of scanning the layout."""
+    offsets = []
+    offset = 0
+    for dur in motion_durations:
+        n_bins = max(1, math.ceil(dur / bin_duration))
+        offsets.append((offset, n_bins))
+        offset += n_bins
+    return offsets
+
+
+def bin_index_for(offsets, motion_idx, t, bin_duration):
+    """Inverse of build_bin_layout: which global bin index does (motion_idx, t) fall into.
+    Used by the training-loop side to attribute a finished episode's return back to the bin it
+    started from, using only the (motion_id, t) it already receives every step -- no need for
+    the real env to report its own bin index explicitly. `offsets` from bin_offsets (same
+    motion_durations/bin_duration as whatever built it -- caller's responsibility to keep in
+    sync, see build_bin_layout's docstring on why both sides compute this independently rather
+    than send it over the wire)."""
+    base, n_bins = offsets[motion_idx]
+    local_bin = min(int(t // bin_duration), n_bins - 1)
+    local_bin = max(local_bin, 0)
+    return base + local_bin
+
+
 class ImitationTask(object):
     """Imitation reference motion task."""
 
@@ -122,7 +175,11 @@ class ImitationTask(object):
                  perturb_init_state_prob=0.0,
                  tar_obs_noise=None,
                  draw_ref_model_alpha=0.5,
-                 build_gait_pattern=False):
+                 build_gait_pattern=False,
+                 recovery_motion_names=frozenset(),
+                 recovery_init_prob=0.0,
+                 recovery_sample_prob=0.0,
+                 bin_duration=None):
         """Initializes the task.
 
     Args:
@@ -169,6 +226,42 @@ class ImitationTask(object):
       tar_obs_noise: List of the standard deviations of the noise to be applied
         to the target observations [base rotation std, base position std].
       draw_ref_model_alpha: Color transparency for drawing the reference model.
+      recovery_motion_names: Set of ref_motion_filenames basenames (e.g. {"recovery.txt"})
+        that, instead of the normal reference-tracked reset, sometimes start the episode from
+        a scripted "fallen on its back" pose (see _init_recovery_fallen_state) and skip the
+        usual non-foot-contact / large-rotation-error hard termination (see done()) -- both are
+        EXPECTED starting conditions for a recovery episode, not failures. The reward/goal
+        still tracks that motion file's own reference normally (e.g. a copy of idle.txt), so
+        the policy is pulled toward standing back up without any scripted recovery trajectory
+        to imitate. Empty by default: zero behavior change unless explicitly configured.
+      recovery_init_prob: Probability, when the active motion is in recovery_motion_names, of
+        actually applying the fallen-pose override (vs. a normal reference-tracked reset for
+        that same motion) -- lets a recovery motion still occasionally start from a normal
+        standing pose too, for variety.
+      recovery_sample_prob: Fixed probability, independent of bin_duration/set_bin_probs, that
+        a reset is forced onto a recovery motion (uniformly among recovery_motion_names if more
+        than one) -- bypassing bin-sampling's return-weighted selection for that reset entirely.
+        Exists because recovery's reward is persistently far lower than a converged gait's: if
+        recovery's own bins were left inside bin-sampling's shared softmax, its low return would
+        make the softmax assign them a share of resets that keeps climbing as other gaits
+        improve (a converged gait's rising G makes recovery's relatively lower G look even worse
+        by comparison), eventually starving the shared world model/policy of everything else --
+        exactly what happened the first time recovery was trained this way (see project memory,
+        2026-11-08/09: recovery.txt dropped from the training mix entirely over this). This
+        decouples recovery's reset RATE from its return: it gets this fixed share no matter how
+        well or badly it's doing, while bin-sampling's softmax (if enabled) competes only among
+        the REMAINING, non-recovery bins -- see env.py's TrackingSim._push_bin_probs, which
+        zeroes out recovery's bins from that softmax to match. 0.0 (default): recovery, if
+        present in recovery_motion_names at all, is only ever reached via the normal bin-
+        sampling/uniform path like any other motion (the original, unprotected behavior).
+      bin_duration: If set, enables return-based reset-bin sampling (SuperMimic paper Appendix
+        D.1): each reference motion's duration is split into bin_duration-second bins
+        (build_bin_layout), concatenated into one global bin space across all motions, and a
+        reset samples a (motion, time-range) bin from an externally-pushed probability
+        distribution (see set_bin_probs) instead of picking the motion and time uniformly at
+        random. None (default) keeps the original uniform behavior -- the training loop (which
+        owns the per-bin return statistics driving the distribution) must call set_bin_probs
+        periodically for this to do anything beyond an initial uniform distribution.
     """
         self._weight = weight
         self._terminal_condition = terminal_condition
@@ -184,6 +277,14 @@ class ImitationTask(object):
         self._curr_episode_warmup = False
         self._tar_frame_steps = tar_frame_steps
         self._ref_motion_filenames = ref_motion_filenames
+        self._recovery_motion_names = frozenset(recovery_motion_names)
+        self._recovery_init_prob = recovery_init_prob
+        self._recovery_sample_prob = recovery_sample_prob
+        self._bin_duration = bin_duration
+        self._bin_layout = None  # built lazily once motions are loaded, see reset()
+        self._bin_probs = None
+        self._bin_time_range = None  # set per-reset when bin sampling picks a (motion, range)
+        self.last_reset_bin = -1  # -1 = this reset didn't use bin sampling; else the bin index used
         self._ref_motions = None
 
         if self._tar_frame_steps is None:
@@ -238,6 +339,11 @@ class ImitationTask(object):
         if self._ref_motions is None or self._env.hard_reset:
             self._ref_motions = self._load_ref_motions(self._ref_motion_filenames)
             self._active_motion_id = self._sample_ref_motion()
+            if self._bin_duration is not None and self._bin_layout is None:
+                durations = [m.get_duration() for m in self._ref_motions]
+                self._bin_layout = build_bin_layout(durations, self._bin_duration)
+                num_bins = len(self._bin_layout)
+                self._bin_probs = np.full(num_bins, 1.0 / num_bins)
 
         if self._ref_model is None or self._env.hard_reset:
             self._ref_model = self._build_ref_model()
@@ -262,6 +368,50 @@ class ImitationTask(object):
 
         self._sync_sim_model(perturb_state)
 
+        if self._is_recovery_motion() and self._rand_uniform(0.0, 1.0) < self._recovery_init_prob:
+            self._init_recovery_fallen_state()
+
+        return
+
+    def _is_recovery_motion(self):
+        """True if the currently-sampled active motion is flagged for fallen-start recovery
+    training -- see recovery_motion_names in __init__'s docstring."""
+        if not self._recovery_motion_names:
+            return False
+        name = os.path.basename(self._ref_motion_filenames[self._active_motion_id])
+        return name in self._recovery_motion_names
+
+    def _init_recovery_fallen_state(self):
+        """Overrides the just-synced (normal, reference-tracked) pose with a scripted
+    "fallen on its back" starting state instead -- belly-up, legs in a neutral/splayed
+    configuration, root height/orientation matching the real settled-on-back equilibrium found
+    experimentally for this robot (quadruped_envs/urdf/od.urdf's capsule collision geometry):
+    flipped 180 degrees about x (roll) from upright, settling at root height ~0.09m (the body
+    capsule's own radius -- it rests directly on that capsule, not on its legs). Random yaw and
+    a small per-joint jitter add variety across episodes so the policy doesn't just memorize one
+    exact starting configuration. The reward/goal keeps tracking this motion's own reference
+    (e.g. a standing-still clip) throughout the episode -- only the INITIAL pose is overridden,
+    nothing about reward/goal computation changes, so the policy has to find its own way from
+    "on its back" to that reference with no scripted recovery trajectory to imitate.
+    """
+        pyb = self._get_pybullet_client()
+        phys_model = self._env.robot.quadruped
+
+        yaw = self._rand_uniform(-np.pi, np.pi)
+        flip_and_yaw = pyb.multiplyTransforms(
+            [0, 0, 0], pyb.getQuaternionFromEuler([0, 0, yaw]),
+            [0, 0, 0], pyb.getQuaternionFromEuler([np.pi, 0, 0]))[1]
+        root_height = 0.09
+        pyb.resetBasePositionAndOrientation(phys_model, [0, 0, root_height], flip_and_yaw)
+        pyb.resetBaseVelocity(phys_model, [0, 0, 0], [0, 0, 0])
+
+        neutral_q = np.array([0.0, 0.5, -1.0] * 4)
+        jitter = self._rand_uniform(-0.1, 0.1, size=neutral_q.shape)
+        q = neutral_q + jitter
+        for j in range(len(q)):
+            pyb.resetJointState(phys_model, j, q[j], 0.0)
+
+        self._resolve_initial_penetration(phys_model)
         return
 
     def get_foot_contacts_for_body(self, body):
@@ -353,6 +503,16 @@ class ImitationTask(object):
     def done(self, env):
         """Checks if the episode is over."""
         del env
+        if self._is_recovery_motion():
+            # The default terminal_condition's non-foot-contact and large-rotation-error
+            # checks assume a normal gait episode, where either one means a fall -- but for a
+            # recovery episode, starting belly-up with the torso resting on the ground (and a
+            # large root-orientation error vs. the standing reference it's being rewarded
+            # toward) is the EXPECTED initial condition, not a failure. Only end early if the
+            # reference clip itself says it's over; otherwise let the episode-length curriculum
+            # (elsewhere) be the only thing that ends it, giving the policy the full episode to
+            # work with.
+            return self.is_motion_over()
         done = self._terminal_condition(self._env)
         if done and self._build_gait_pattern:
             self.plot_gate()
@@ -746,14 +906,45 @@ class ImitationTask(object):
 
         return
 
+    def set_bin_probs(self, probs):
+        """Externally-pushed reset-bin sampling distribution (see __init__'s bin_duration
+        docstring) -- called by the training loop (TrackingSim, which owns the per-bin return
+        statistics) whenever it has an updated distribution. No-op if bin sampling isn't
+        enabled (bin_duration=None) or the layout hasn't been built yet (first reset not done)."""
+        if self._bin_layout is None:
+            return
+        probs = np.asarray(probs, dtype=np.float64)
+        assert probs.shape == (len(self._bin_layout),), (probs.shape, len(self._bin_layout))
+        self._bin_probs = probs
+        return
+
     def _reset_ref_motion(self):
         """Reset reference motion.
 
     First randomly select a new reference motion from
     the set of available motions, and then resets to a random point along the
-    selected motion.
+    selected motion. If return-based reset-bin sampling is enabled (bin_duration set), the
+    motion AND time range are instead chosen jointly by sampling a (motion, time-range) bin
+    from the externally-pushed self._bin_probs distribution (SuperMimic paper Appendix D.1).
     """
-        self._active_motion_id = self._sample_ref_motion()
+        self.last_reset_bin = -1
+        recovery_ids = [i for i, f in enumerate(self._ref_motion_filenames)
+                       if os.path.basename(f) in self._recovery_motion_names]  # fmt: skip
+        if recovery_ids and self._rand_uniform(0.0, 1.0) < self._recovery_sample_prob:
+            # Forced recovery reset -- see recovery_sample_prob's docstring: bypasses bin-
+            # sampling/uniform selection entirely so recovery's reset rate is fixed, not driven
+            # by its own (persistently low) return.
+            self._active_motion_id = recovery_ids[self._randint(0, len(recovery_ids))]
+            self._bin_time_range = None
+        elif self._bin_layout is not None:
+            bin_idx = self._rand_choice(self._bin_probs)
+            motion_idx, t0, t1 = self._bin_layout[bin_idx]
+            self._active_motion_id = motion_idx
+            self._bin_time_range = (t0, t1)
+            self.last_reset_bin = bin_idx
+        else:
+            self._active_motion_id = self._sample_ref_motion()
+            self._bin_time_range = None
         self._origin_offset_rot = np.array([0, 0, 0, 1])
         self._origin_offset_pos.fill(0.0)
 
@@ -843,7 +1034,34 @@ class ImitationTask(object):
             pose, vel = self._apply_state_perturb(pose, vel)
 
         self._set_state(self._env.robot.quadruped, pose, vel)
+        self._resolve_initial_penetration(self._env.robot.quadruped)
         self._env.robot.ReceiveObservation()
+        return
+
+    def _resolve_initial_penetration(self, phys_model, clearance=0.002):
+        """_set_state() teleports phys_model straight to the reference pose with no physics
+    settle step before the first real env.step() -- fine for a standing-height reference, but
+    a low-root-height frame (e.g. get_up.txt's lying-down start pose, root height ~0.026m) can
+    leave the capsule collision shapes overlapping the ground plane. Left alone, the very first
+    stepSimulation() then resolves that whole overlap in one solver pass (contactERP=0.8,
+    splitImpulsePenetrationThreshold=-0.01 -- see od_gym_env.py's hard-reset physics params),
+    producing one large corrective impulse that looks like the robot being launched into the
+    air. Fix: after teleporting, run collision detection only (no dynamics step, so this can't
+    disturb the velocity _set_state just set from the reference motion) and lift the root
+    straight up by the worst penetration depth found, if any.
+    """
+        pyb = self._get_pybullet_client()
+        ground = self._env.get_ground()
+        pyb.performCollisionDetection()
+        contacts = pyb.getContactPoints(bodyA=phys_model, bodyB=ground)
+        if not contacts:
+            return
+        max_penetration = max(0.0, -min(c[8] for c in contacts))
+        if max_penetration <= 0.0:
+            return
+        root_pos, root_rot = pyb.getBasePositionAndOrientation(phys_model)
+        lifted_pos = (root_pos[0], root_pos[1], root_pos[2] + max_penetration + clearance)
+        pyb.resetBasePositionAndOrientation(phys_model, lifted_pos, root_rot)
         return
 
     def _set_state(self, phys_model, pose, vel):
@@ -1200,9 +1418,19 @@ class ImitationTask(object):
     """
         motion = self.get_active_motion()
         dur = motion.get_duration()
-        offset = self._rand_uniform(0, dur)
+        if self._bin_time_range is not None:
+            t0, t1 = self._bin_time_range
+            offset = self._rand_uniform(t0, min(t1, dur))
+        else:
+            offset = self._rand_uniform(0, dur)
 
         return offset
+
+    def _rand_choice(self, probs):
+        """Samples a single index from [0, len(probs)) weighted by probs (must sum to ~1)."""
+        if hasattr(self._env, "np_random"):
+            return self._env.np_random.choice(len(probs), p=probs)
+        return np.random.choice(len(probs), p=probs)
 
     def _rand_uniform(self, val_min, val_max, size=None):
         """Samples random float between [val_min, val_max]."""
