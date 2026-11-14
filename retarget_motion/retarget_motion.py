@@ -2629,7 +2629,11 @@ def process_motion(p):
 
             set_pose(robot, pose)
             set_maker_pos(ref_joint_pos, marker_ids)
-            build_bones(ref_joint_pos, marker_ids)
+            # build_bones() issues addUserDebugLine() every frame; on this machine's
+            # PyBullet/Metal GL backend that reliably desyncs the shared-memory
+            # connection after ~60-70 frames (GetBasePositionAndOrientation then fails).
+            # Disabled for now -- markers alone are enough for live playback.
+            # build_bones(ref_joint_pos, marker_ids)
 
             update_camera(robot)
             p.configureDebugVisualizer(p.COV_ENABLE_SINGLE_STEP_RENDERING, 1)

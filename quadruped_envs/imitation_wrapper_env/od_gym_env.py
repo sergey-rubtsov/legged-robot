@@ -33,6 +33,61 @@ _NUM_SIMULATION_ITERATION_STEPS = 300
 _LOG_BUFFER_LENGTH = 5000
 OPTIMAL_ACTION_SPACE_LIMIT = 1
 
+# Reflected motor/gearbox rotor inertia ("armature" in MuJoCo's terminology), added to each leg
+# joint's own rotational inertia about its rotation axis. Added 2026-11-07 after a live demo
+# showed the trained policy commanding physically-impossible torque swings (measured directly:
+# gallop's mean per-tick action change implies an 18.98 Nm average torque swing every 5ms
+# control tick, p95 hitting the full 50 Nm swing in one tick, and root angular speed up to
+# 58.5 rad/s during recovery -- see project memory for the full measurement). Root cause: this
+# project's TORQUE-mode actuator model (od_motor.py) is a pure instantaneous
+# `torque = action * 25 Nm` with NO modeled actuator inertia at all -- a real quasi-direct-drive
+# actuator's rotor, geared through its reduction ratio, reflects back a real additional inertia
+# the joint "feels" (reflected_inertia = rotor_inertia * gear_ratio^2) that this sim has always
+# been missing, on top of ACTION_RATE_WEIGHT's reward-side fix (mdp.py) -- that one only makes
+# the POLICY prefer smoothness; this one makes the SIMULATOR itself physically incapable of the
+# same instantaneous torque-to-acceleration response regardless of what the policy commands.
+#
+# PyBullet has NO native "armature" URDF/API support (confirmed empirically: loading a test URDF
+# with a <dynamics armature="..."/> attribute at various values produced IDENTICAL resulting
+# joint velocities under an identical torque sequence -- the attribute is silently ignored, see
+# project memory). Approximated instead via `changeDynamics`'s `localInertiaDiagonal`: every OD
+# leg joint's rotation axis happens to align EXACTLY (confirmed via getDynamicsInfo, dot product
+# 1.000 for all 12 joints) with one of its own child link's principal inertia axes, so bumping
+# that one diagonal component is an exact correction for THIS robot's geometry, not a lossy
+# approximation across a misaligned axis.
+#
+# 0.003 kg*m^2 is a starting estimate (not derived from a real actuator datasheet -- this is a
+# fictional robot): current per-joint inertia along the rotation axis ranges ~0.0004 (lower
+# leg/knee) to ~0.0045 (upper leg) kg*m^2, so this roughly doubles the lightest joints' effective
+# inertia while adding a smaller relative amount to the heavier upper-leg joints -- expect this
+# needs its own empirical calibration pass (same pattern as this project's other physical
+# constants) once its effect on real deployed jerk/angular-velocity is measured.
+ARMATURE_INERTIA = 0.003
+
+
+def _apply_joint_armature(pybullet_client, body_id, armature):
+    """Add `armature` (kg*m^2) to each non-fixed joint's own rotational inertia about its
+    rotation axis -- see ARMATURE_INERTIA's module note for why/how. Call once per robot
+    instance (not per episode reset): this is a fixed physical property, not something that
+    should re-randomize every episode the way xi's friction/joint-offset do."""
+    for j in range(pybullet_client.getNumJoints(body_id)):
+        info = pybullet_client.getJointInfo(body_id, j)
+        if info[2] == pybullet_client.JOINT_FIXED:
+            continue
+        axis = np.array(info[13], dtype=np.float64)
+        dyn = pybullet_client.getDynamicsInfo(body_id, j)
+        diag = list(dyn[2])
+        local_inertial_orn = dyn[4]
+        R = np.array(pybullet_client.getMatrixFromQuaternion(local_inertial_orn)).reshape(3, 3)
+        # Rotate the joint's rotation axis (expressed in the link/joint frame) into the link's
+        # own principal-inertia frame (the frame localInertiaDiagonal's 3 components refer to) --
+        # for this URDF the result is confirmed to land almost exactly on one basis vector for
+        # every leg joint, so picking its largest-magnitude component is exact, not approximate.
+        axis_in_inertial = R.T @ axis
+        axis_idx = int(np.argmax(np.abs(axis_in_inertial)))
+        diag[axis_idx] += armature
+        pybullet_client.changeDynamics(body_id, j, localInertiaDiagonal=diag)
+
 
 class LocomotionGymEnv(gym.Env):
     """The gym environment for the locomotion tasks."""
@@ -102,6 +157,10 @@ class LocomotionGymEnv(gym.Env):
         # The wall-clock time at which the last frame is rendered.
         self._last_frame_time = 0.0
         self._show_reference_id = -1
+        self._last_ref_alpha = None  # forces the first step() to apply the ref model's color once
+        self._delay_param_readable = None  # probed lazily once, see step()'s use of _delay_id
+        self._ref_alpha_param_readable = None  # probed lazily once, see step()'s use of _show_reference_id
+        self._last_camera_follow_time = 0.0  # throttles the chase-cam re-center, see step()
 
         if self._is_render:
             self._pybullet_client = bullet_client.BulletClient(
@@ -218,6 +277,14 @@ class LocomotionGymEnv(gym.Env):
             self._pybullet_client.resetSimulation()
             self._pybullet_client.setPhysicsEngineParameter(
                 numSolverIterations=self._num_bullet_solver_iterations)
+            # Split impulse + a higher contact ERP cut down on deep foot/ground penetration
+            # during high-speed impacts (observed up to ~6.6cm with PyBullet's defaults on
+            # this robot, correlated with high-force contact events -- i.e. hard falls, not
+            # normal stance). Split impulse separates the penetration-recovery impulse from
+            # the velocity-resolving one so correcting deep penetration doesn't inject extra
+            # energy into the contact.
+            self._pybullet_client.setPhysicsEngineParameter(
+                useSplitImpulse=1, splitImpulsePenetrationThreshold=-0.01, contactERP=0.8)
             self._pybullet_client.setTimeStep(self._sim_time_step)
             self._pybullet_client.setGravity(0, 0, -10)
 
@@ -231,6 +298,18 @@ class LocomotionGymEnv(gym.Env):
                 pybullet_client=self._pybullet_client,
                 sensors=self._robot_sensors,
                 on_rack=self._on_rack,
+                # Must match self._sim_time_step (just passed to setTimeStep() above) -- od.OD's
+                # own constructor default (TIME_STEP=0.01 in od.py) does NOT match this env's
+                # real 0.005s physics step, and nothing else here overrides it (env.set_time_step(),
+                # the one method that calls robot.SetTimeSteps() to fix this up, is never called
+                # anywhere -- dead code). Left unfixed, the robot's internal clock
+                # (GetTimeSinceReset(), used by ImitationTask._get_motion_time() for every
+                # reference-motion lookup) reports exactly 2x the real elapsed physics time
+                # (confirmed empirically: 20 real steps of 0.005s each measured as 0.2s instead
+                # of 0.1s) -- i.e. the reference motion was being chased at double its real-time
+                # pace relative to the robot's actual physics for every training run before this
+                # fix (pace_run1 through pace_run9).
+                time_step=self._sim_time_step,
                 action_repeat=self._gym_config.simulation_parameters.
                     num_action_repeat,
                 motor_control_mode=self._gym_config.simulation_parameters.
@@ -244,6 +323,7 @@ class LocomotionGymEnv(gym.Env):
                     enable_action_interpolation,
                 allow_knee_contact=self._gym_config.simulation_parameters.
                     allow_knee_contact)
+            _apply_joint_armature(self._pybullet_client, self._robot.quadruped, ARMATURE_INERTIA)
 
         # Reset the pose of the robot.
         self._robot.Reset(reload_urdf=False,
@@ -312,23 +392,63 @@ class LocomotionGymEnv(gym.Env):
             base_pos = self._robot.GetBasePosition()
 
             # Also keep the previous orientation of the camera set by the user.
-            [yaw, pitch,
-             dist] = self._pybullet_client.getDebugVisualizerCamera()[8:11]
-            self._pybullet_client.resetDebugVisualizerCamera(dist, yaw, pitch,
-                                                             base_pos)
+            # Throttled to ~15 Hz: this read-then-write of the camera transform used to run at
+            # whatever the (slow, ~16 Hz) step rate happened to be -- now that step+render is
+            # ~8ms (see mean-step-time fix), calling it every step means ~125 reads+writes/sec,
+            # which races PyBullet's own async mouse-drag handling closely enough that manual
+            # camera rotation stopped visibly working. Decoupling this from the step rate
+            # restores a usable gap between re-centers for a drag gesture to register, without
+            # slowing the simulation itself back down.
+            now = time.time()
+            if now - self._last_camera_follow_time >= 1.0 / 15:
+                self._last_camera_follow_time = now
+                [yaw, pitch,
+                 dist] = self._pybullet_client.getDebugVisualizerCamera()[8:11]
+                self._pybullet_client.resetDebugVisualizerCamera(dist, yaw, pitch,
+                                                                 base_pos)
             self._pybullet_client.configureDebugVisualizer(
                 self._pybullet_client.COV_ENABLE_SINGLE_STEP_RENDERING, 1)
+            # Same hidden-panel gotcha as the "delay" slider below: self._show_reference_id is
+            # a valid (>=0) parameter id even when the slider panel itself isn't shown
+            # (enable_rendering_gui=False, the default), but reading it then raises
+            # pybullet.error rather than returning a default -- probe once and fall back to
+            # fully-opaque (alpha=1) if there's no panel to read.
             alpha = 1.
-            if self._show_reference_id >= 0:
-                alpha = self._pybullet_client.readUserDebugParameter(self._show_reference_id)
+            if self._show_reference_id >= 0 and self._ref_alpha_param_readable is not False:
+                try:
+                    alpha = self._pybullet_client.readUserDebugParameter(self._show_reference_id)
+                    self._ref_alpha_param_readable = True
+                except self._pybullet_client.error:
+                    self._ref_alpha_param_readable = False
 
             ref_col = [1, 1, 1, alpha]
-            if hasattr(self._task, '_ref_model'):
+            # changeVisualShape is a relatively expensive GUI call, looped here over every
+            # joint of the reference ghost model -- measured costing the bulk of a ~61ms
+            # per-step wall-clock time at --enable_rendering (vs. ~1ms headless), making live
+            # playback run at ~12x slower than real time regardless of the real-time pacing
+            # sleep just above. The alpha value only ever changes when the user moves the
+            # "show reference" GUI slider, so skip the whole loop when it hasn't -- same visual
+            # result, without paying this cost every single step.
+            if hasattr(self._task, '_ref_model') and alpha != self._last_ref_alpha:
+                self._last_ref_alpha = alpha
                 self._pybullet_client.changeVisualShape(self._task._ref_model, -1, rgbaColor=ref_col)
                 for l in range(self._pybullet_client.getNumJoints(self._task._ref_model)):
                     self._pybullet_client.changeVisualShape(self._task._ref_model, l, rgbaColor=ref_col)
 
-            delay = 0.01
+            # Was hardcoded to 0.01 regardless of the "delay" GUI slider (added above, range
+            # 0-0.3, default 0) -- read the slider's actual value instead, so a live demo isn't
+            # silently paying a fixed 10ms/step unless the user actually asks for it. The slider
+            # panel itself only exists when enable_rendering_gui=True (default False), in which
+            # case there's no control to have set a nonzero delay with anyway -- probe once
+            # (raising/catching an exception every step in a tight render loop is itself not
+            # free) and fall back to 0 if there's no panel to read.
+            delay = 0.0
+            if self._delay_param_readable is not False:
+                try:
+                    delay = self._pybullet_client.readUserDebugParameter(self._delay_id)
+                    self._delay_param_readable = True
+                except self._pybullet_client.error:
+                    self._delay_param_readable = False
             if (delay > 0):
                 time.sleep(delay)
 

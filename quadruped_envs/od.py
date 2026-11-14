@@ -120,8 +120,26 @@ COM_OFFSET = -np.array([0, 0, 0])
 HIP_OFFSETS = np.array([[0, 0, 0.], [0, 0, 0.],
                         [0, 0, 0.], [0, 0, 0.]
                         ]) + COM_OFFSET
-K_P = 1.0
-K_D = 0.01
+# Real bug found and fixed 2026-11-09: K_P/K_D/MAX_TORQUE below were stale legacy-pipeline
+# placeholders (K_P=1.0, K_D=0.01, MAX_TORQUE=1 Nm -- with a dead "# MAX_TORQUE = 300 for
+# position" comment hinting someone once meant to revisit this and never did). MAX_TORQUE=1 is
+# a REAL problem regardless of which motor_control_mode actual RL training uses: od.OD's
+# `_SettleDownForReset` ALWAYS drives the robot in POSITION mode for its 500+reset_time settle
+# steps on every single reset, for every run this whole project has ever done (torque-control
+# training included) -- meaning every reset's settle phase has been capped to roughly 1/25th of
+# the robot's real, separately-derived torque budget (od_motor.py's DEFAULT_TORQUE_LIMIT=25,
+# itself derived from this robot's actual static-stance torque need) for its entire history,
+# silently. Also note: od_motor.py's `convert_to_torque` multiplies the PD-computed torque by
+# `strength_ratios` (=TORQUE_MULTIPLIER=25) in POSITION/HYBRID mode, same as it scales a raw
+# TORQUE-mode command -- so K_P/K_D here are RAW gains fed through that same 25x multiplier, not
+# the final effective stiffness/damping (effective_kp = K_P * TORQUE_MULTIPLIER). Chosen to match
+# this project's own already-derived, validated torque budget (not the stale comment's
+# unrelated "300"): effective 20 Nm/rad stiffness, 0.5 Nm-per-rad/s damping -- the same
+# starting-guess values already used for supermimic/networks.py's `ref_pd` bias this session,
+# for the same underlying reason (a physically-plausible PD baseline for this robot's mass
+# class, not a full dynamics analysis -- needs its own empirical tuning pass).
+K_P = 20.0 / od_motor.TORQUE_MULTIPLIER
+K_D = 0.5 / od_motor.TORQUE_MULTIPLIER
 ABDUCTION_P_GAIN = K_P
 ABDUCTION_D_GAIN = K_D
 HIP_P_GAIN = K_P
@@ -129,8 +147,7 @@ HIP_D_GAIN = K_D
 KNEE_P_GAIN = K_P
 KNEE_D_GAIN = K_D
 
-MAX_TORQUE = 1  # for torque
-# MAX_TORQUE = 300  # for position
+MAX_TORQUE = od_motor.DEFAULT_TORQUE_LIMIT  # 25 Nm -- see the module note above, was a stale "1"
 TORQUE_LIMITS = np.full(NUM_MOTORS, MAX_TORQUE)
 
 # Bases on the readings from robot's default pose.
