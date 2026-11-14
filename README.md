@@ -2,14 +2,34 @@
 
 A custom 12-DoF quadruped ("OD"), simulated in PyBullet, trained to track reference motion-capture
 gaits (pace/trot/gallop/turn/idle + a get-up-from-a-fall recovery task) via DeepMimic-style
-imitation reward. Two independent training paths live side by side for comparison:
+imitation reward.
+
+![Trained OD quadruped galloping in PyBullet](docs/trained_gallop.gif)
+
+**Highlights:**
+
+- **A from-scratch port of SuperMimic** (*Scaling Humanoid Whole-Body Control with One
+  Differentiable World Model*) running entirely on consumer Apple Silicon -- no GPU cluster, no
+  thousands of simulated envs. World model + BPTT over imagined rollouts instead of
+  policy-gradient on real experience, trading the paper's 4096 GPU-simulated environments for
+  ~16 real PyBullet CPU workers on an M-series Mac (CPU or MPS).
+- **A measured, apples-to-apples speed comparison against classic PPO/SAC**, not just an anecdote:
+  same reward function, same PD-position-control actuator model, same task, audited for fairness
+  (see "Comparing PPO/SAC vs SuperMimic" below) -- SuperMimic reaches a higher skill plateau using
+  roughly two orders of magnitude fewer real environment steps.
+
+The SuperMimic port itself is vibe-coded -- built conversationally with an AI coding assistant
+from the paper's own formulas, not hand-translated line by line from an existing implementation.
+That it's a working, measurably-functioning port at all is itself a small data
+point for how far AI-assisted implementation of a freshly-published RL paper has come.
+
+Two independent training paths live side by side for this comparison:
 
 - **Legacy PPO/SAC** (`quadruped_envs/train.py`/`enjoy.py`), via a vendored rl-baselines3-zoo
   harness -- the project's original 2021 approach.
-- **SuperMimic port** (`quadruped_envs/supermimic/`) -- a from-scratch port of
-  *SuperMimic: Scaling Humanoid Whole-Body Control with One Differentiable World Model*
-  (world model + BPTT over imagined rollouts instead of policy-gradient on real rollouts),
-  replacing GPU-cluster-scale parallelism with ~16 real PyBullet CPU workers.
+- **SuperMimic port** (`quadruped_envs/supermimic/`), replacing policy-gradient-on-real-rollouts
+  with a differentiable world model trained jointly with the policy via BPTT over imagined
+  rollouts.
 
 Both now share the same reward function and PD position-control actuator model by default, so
 training speed/quality between them is directly comparable (see "Comparing PPO/SAC vs
