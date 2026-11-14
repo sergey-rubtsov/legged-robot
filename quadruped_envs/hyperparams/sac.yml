@@ -18,7 +18,20 @@ OpenDynamicImitationEnv-v0:
   policy: 'MlpPolicy'
   learning_rate: lin_3e-4
   buffer_size: 1000000
-  batch_size: 32768
+  # Added 2026-11-13: this entry had no n_envs key, so exp_manager.py defaulted it to 1 --
+  # confirmed via the live log ("Using 1 environments") -- while ppo.yml's same-env entry
+  # explicitly uses 8. Not a deliberate choice, just an untuned default that gave SAC a real,
+  # unfair handicap in a PPO/SAC/SuperMimic speed comparison (SAC never got a fair shot at
+  # parallel real-env collection). Matched to PPO's n_envs for a fair comparison.
+  n_envs: 8
+  # Confirmed bug, fixed 2026-11-13: this was 32768, apparently copy-pasted from ppo.yml's
+  # same-env entry, where that value is correct (n_steps=4096 * n_envs=8 -- the whole on-policy
+  # rollout as one batch). For SAC's per-env-step replay-buffer update (train_freq=1,
+  # gradient_steps=1), a 32768 batch size means one gradient step on 32768 transitions EVERY
+  # single env step -- measured throughput collapsed to ~1.5 steps/sec (a 40M-step run would
+  # have taken ~313 days). 64 matches the sibling OpenDynamicQuadrupedEnv-v0 entry above, a
+  # normal SAC batch size.
+  batch_size: 64
   ent_coef: 'auto'
   train_freq: 1
   gradient_steps: 1

@@ -10,7 +10,6 @@ import gym
 import numpy as np
 import optuna
 import yaml
-from optuna.integration.skopt import SkoptSampler
 from optuna.pruners import BasePruner, MedianPruner, SuccessiveHalvingPruner
 from optuna.samplers import BaseSampler, RandomSampler, TPESampler
 from stable_baselines3.common.base_class import BaseAlgorithm
@@ -560,6 +559,14 @@ class ExperimentManager(object):
             # cf https://scikit-optimize.github.io/#skopt.Optimizer
             # GP: gaussian process
             # Gradient boosted regression: GBRT
+            try:
+                from optuna.integration.skopt import SkoptSampler
+            except ImportError as e:
+                raise ImportError(
+                    "The 'skopt' sampler needs optuna's (now removed/relocated) skopt "
+                    "integration -- not available on the optuna version pinned in "
+                    "requirements.txt. Use --sampler tpe or random instead."
+                ) from e
             sampler = SkoptSampler(skopt_kwargs={"base_estimator": "GP", "acq_func": "gp_hedge"})
         else:
             raise ValueError(f"Unknown sampler: {sampler_method}")
